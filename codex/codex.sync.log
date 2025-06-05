@@ -1,0 +1,5 @@
+[2025-06-05T14:00:32Z] START codex sync
+Task: import SYMBOLZEIT from aeon-shell - FAILED (repository not found)
+Task: validate CREPPhaseMatrix.yaml schema - FAILED (file missing)
+Task: map genesis-core into internal state engine - FAILED (dependency not found)
+[2025-06-05T14:00:32Z] END codex sync
