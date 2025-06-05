@@ -1,0 +1,8 @@
+output:
+  path: codex/codex.sync.log
+  type: log
+plan: boot genesisos and align CREP matrix
+tasks:
+- import SYMBOLZEIT from aeon-shell
+- validate CREPPhaseMatrix.yaml schema
+- map genesis-core into internal state engine
