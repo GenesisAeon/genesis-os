@@ -1,0 +1,10 @@
+output:
+  target: test-results/integration-summary.md
+  type: report
+tests:
+- expect: aeon-shell exports SYMBOLZEIT to aeon-genesisos
+  name: check-symbolzeit-sync
+- expect: CREPPhaseMatrix.yaml exists and follows schema
+  name: validate-crep-phase-matrix
+- expect: genesis-sigillin-core available and used in CREP logic
+  name: import-sigillin-core
