@@ -1,0 +1,25 @@
+todo:
+  - name: "CREP-Grundsystem entwickeln"
+    details:
+      - "Module laut build.yaml aufsetzen: CREPContext, CREPManager, SymbolzeitModulator, BackupManager"
+      - "Bibliothek für aeon-shell und sharedream-interface exportieren"
+  - name: "Symbolzeit integrieren"
+    details:
+      - "SYMBOLZEIT aus aeon-shell importieren und Zyklenverwaltung verbinden"
+      - "CREPPhaseMatrix.yaml validieren und in Statusengine einbinden"
+  - name: "Genesis-Interface umsetzen"
+    details:
+      - "UI-Komponenten wie CREPPanel.tsx und SigillinTimeline.tsx gemäß Interface-Masterplan entwickeln"
+      - "Zustand/EventHub verwenden und WebSocket-Feeds vorbereiten"
+  - name: "Codex-Automation vorbereiten"
+    details:
+      - "codex.sync.yaml Aufgaben lauffähig machen"
+      - "Antwortsystem im Ordner /codex-sync/ vorbereiten"
+  - name: "Repos initialisieren"
+    details:
+      - "AeonShell und AeonGenesisOS gemäß mastercanvas anlegen"
+      - "pnpm workspace und Deploymentlinks aus phase2-map.yaml nutzen"
+  - name: "Dokumentation erweitern"
+    details:
+      - "Typedoc-Build gemäß docs-build Sigillin integrieren"
+      - "README mit Vision und Interface-Verweis aktualisieren"
