@@ -1,0 +1,19 @@
+sigillin_id: aeon:todo-sigil
+Titel: "Offene Aufgaben"
+datum: 2025-06-04
+autor: CodexAgent
+notizen:
+  - quelle: docs/mastercanvas.yaml
+    zeile: 34
+    text: "Noch nicht alle in Map & UI integriert (→ Phase 1 TODO)"
+  - quelle: .git/hooks/sendemail-validate.sample
+    zeilen: [22, 27, 35, 41]
+    text: "Sample-Hook mit echten Checks füllen"
+  - quelle: ToDo.yaml
+    aufgaben:
+      - "CREP-Grundsystem entwickeln"
+      - "Symbolzeit integrieren"
+      - "Genesis-Interface umsetzen"
+      - "Codex-Automation vorbereiten"
+      - "Repos initialisieren"
+      - "Dokumentation erweitern"
