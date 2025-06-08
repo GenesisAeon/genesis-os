@@ -23,3 +23,15 @@ todo:
     details:
       - "Typedoc-Build gemäß docs-build Sigillin integrieren"
       - "README mit Vision und Interface-Verweis aktualisieren"
+  - name: "UnifiedMandala Modul finalisieren"
+    details:
+      - "CREP-Grafik, Audio und Exportfunktion implementieren"
+      - "Farbgebung dynamisch nach Symbolzeit anpassen"
+  - name: "Nukleon-Scanner entwickeln"
+    details:
+      - "Resonanzanalyse-Tool basierend auf conversations.json"
+      - "Version v0.6 laut Planung umsetzen"
+  - name: "Landing Page erstellen"
+    details:
+      - "Symbolische Navigation zu den Mandala-Repositories"
+      - "Einbindung eines GPT-Sharelinks für Demo-Zugang"
