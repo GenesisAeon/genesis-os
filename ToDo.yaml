@@ -35,3 +35,18 @@ todo:
     details:
       - "Symbolische Navigation zu den Mandala-Repositories"
       - "Einbindung eines GPT-Sharelinks für Demo-Zugang"
+  - name: "Conversations-Management implementieren"
+    details:
+      - "split-conversations.js zum Aufteilen großer JSON-Dateien schreiben"
+      - "filter-conversations.js für Schlagwortsuche"
+      - "mark-fragment.js für Fortschritts-Tracking"
+  - name: "Big Files Policy einführen"
+    details:
+      - "docs/sigil/big-files.sigil.yaml erstellen und pflegen"
+      - "Große Daten wie conversations.json in Fragmente überführen"
+  - name: "Codex-Roadmap erweitern"
+    details:
+      - "codex-roadmap.yaml als zentrale Planungsdatei anlegen"
+      - "Website-Inhalte automatisch in YAML übertragen"
+      - "GitHub Action Trigger für Codex-Automation"
+      - "GPT-Kommentierung über GPT-AEONPOET einbinden"

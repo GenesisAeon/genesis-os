@@ -1,0 +1,9 @@
+sigillin_id: aeon:big-files-policy
+Titel: "Policy für große Dateien"
+beschreibung:
+  - "Das Projekt enthält Dateien wie docs/sigils/conversations.json (>40MB)."
+  - "Solche Dateien sollen in kleinere Fragmente zerlegt werden."
+  - "Verwende scripts/split-conversations.js <chunkSize> zum Aufteilen."
+  - "scripts/filter-conversations.js <keyword> filtert gezielt Einträge."
+  - "Bearbeitete Fragmente werden über scripts/mark-fragment.js in docs/sigils/conversations-progress.json markiert."
+  - "Große Binärdateien oder Archive sollten als ZIP abgelegt oder via Git LFS verwaltet werden."
