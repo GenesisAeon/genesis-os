@@ -6,6 +6,15 @@ notizen:
   - quelle: docs/mastercanvas.yaml
     zeile: 34
     text: "Noch nicht alle in Map & UI integriert (→ Phase 1 TODO)"
+  - quelle: docs/mastercanvas.yaml
+    zeilen: [16, 17, 18, 19, 20]
+    text: "Repos AeonShell, AeonGenesisOS, AeonFraktalurs, AeonResoEcho und SharedreamInterface anlegen"
+  - quelle: docs/mastercanvas.yaml
+    zeilen: [42, 43, 44, 45]
+    text: "Codex-Integration: zentrale codex-roadmap.yaml, Website-zu-YAML, GitHub Actions Trigger, GPT-Kommentierung"
+  - quelle: docs/mastercanvas.yaml
+    zeile: 84
+    text: "SigillinNodes erweitern + Visual Map updaten"
   - quelle: .git/hooks/sendemail-validate.sample
     zeilen: [22, 27, 35, 41]
     text: "Sample-Hook mit echten Checks füllen"
