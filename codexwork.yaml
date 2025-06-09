@@ -26,3 +26,4 @@ sigillin_memory: |
     Folge codexinstructions.yaml.
     Beachte, dass docs/sigils/conversations.json aktualisiert wurde.
     Erarbeite und Implementiere Testverfahren falls nicht vorhanden.
+    Sortiere die Punkte aus codexworkinstructions.yaml und codexinstructions.yaml in die für dich logisch sinnvollste Reihenfolge erarbeite gegebenfalls neue Punkte und füge si logisch ein
