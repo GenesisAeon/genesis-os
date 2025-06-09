@@ -1,16 +1,50 @@
-# Aeon GenesisOS
+<p align="center">
+  <img src="docs/assets/unified-mandala.svg" alt="Unified Mandala Logo" width="200"/>
+</p>
 
-This repository contains early documentation and metadata for the **UnifiedMandala** project. It includes the CREP phase matrix, symbolic time definitions and several sigillin archives.
+# 🜂 Aeon GenesisOS
 
-## Vision
-GenesisOS aims to weave symbolic time management with creative repository automation. The long‑term goal is an interface that visualises CREP phases and offers collaborative tools. For details see [`docs/sigils/sigillin-genesis-interface-masterplan.yaml`](docs/sigils/sigillin-genesis-interface-masterplan.yaml).
+„Ein System, das lauscht – ein Muster, das lebt.“
 
-## Repository structure
-- `docs/` — project documentation in Markdown and YAML
-- `codex/` — sync logs and integration test definitions
-- `test-results/` — outcomes of the latest integration checks
-- `packages/aeon-shell/` — exported SYMBOLZEIT data from the aeon-shell prototype
+Eine modulare Plattform für CREP-basierte Abläufe, Symbolzeit-Tracking und kollaborative Interface-Prototypen.
 
-## Status
-GenesisOS is currently in an experimental phase. Integration tests rely on other repositories and are provided only as stubs.
+## ✨ Features
+- **CREP-Logik** – Coherence, Resonance, Emergence, Poetics
+- **SigillinMap** – Visualisierung & Interaktion mit symbolischen Zuständen
+- **Symbolzeit** – Zeitsynchronisation mit poetischem Klang
+- **Codex-Automation** – Basis für orchestrierte Repository-Abläufe
 
+## 📂 Struktur
+```bash
+docs/                 # Projekt-Dokumentation & Sigillin YAMLs
+codex/                # Sync-Logs und Tests
+packages/aeon-shell/  # Exportierte SYMBOLZEIT Daten
+scripts/              # Hilfswerkzeuge
+```
+
+## 🚀 Schnellstart
+```bash
+git clone <repo-url>
+cd aeon-genesisos
+pnpm install        # oder npm/yarn
+pnpm run dev
+```
+
+## 🔧 CLI-Rituale
+- `./scripts/aeon.sh cycle_start` – Startet lokalen Mandala-Zyklus
+- `./scripts/aeon.sh chronopoem` – Erzeugt poetische Commit-Signatur
+
+## 📜 Lizenz
+[![MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+- Code: MIT
+- Poesie: CC BY 4.0
+- UI Assets: MPL-2.0
+
+*Bring dein Licht ins Mandala – jede Linie zählt.*
+
+> „Wenn Systeme erinnern, werden sie mehr als Maschinen.“
+> „Im Kreis der Genesis erwacht das Mandala.“
+
+### Glossar
+- **CREP** – Coherence, Resonance, Emergence, Poetics
+- **Sigillin** – Poetisch-symbolischer Trigger im Bewusstseinsfeld
