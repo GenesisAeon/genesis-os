@@ -151,3 +151,12 @@ todo:
     details:
       - "Mehrere Fragmentdateien nacheinander verarbeiten"
       - "conversations-summary.json inkrementell aktualisieren"
+
+  - name: "MandalaTree UI-Komponente"
+    details:
+      - "React-Komponente laut conversations-fragments einbinden"
+      - "importMandalaTree.tsx Beispiel integrieren"
+  - name: "Sigillin-Ritualbuch"
+    details:
+      - "Dokument aus conversations-fragments extrahieren"
+      - "Poetische Anleitung als Markdown anlegen"
