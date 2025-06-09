@@ -27,7 +27,10 @@ const summaries = data.map(conv => {
       }
     }
   }
-  const summary = firstMsg ? firstMsg.split(/\s+/).slice(0,10).join(' ') : '';
+  let summary = '';
+  if (firstMsg && typeof firstMsg === 'string') {
+    summary = firstMsg.split(/\s+/).slice(0,10).join(' ');
+  }
   return { title, summary };
 });
 
