@@ -35,6 +35,9 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [57, 58, 59]
     text: "Test Conversation Utilities: einfacher Node-Test für split/filter/mark"
+  - quelle: ToDo.yaml
+    zeilen: [68, 69, 70, 71]
+    text: "Basis package.json einrichten für pnpm-Kommandos"
   - quelle: codexinstructions.yaml
     zeilen: [7, 8, 9]
     text: "Tests ausführen und neue ToDos aus conversations ableiten"

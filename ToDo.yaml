@@ -65,3 +65,7 @@ todo:
     details:
       - "repositorypflege/genesisos-code.yaml anlegen"
       - "Richtlinien im README erwähnen"
+  - name: "Basis package.json einrichten"
+    details:
+      - "Minimales package.json mit Skripten für test, lint und docs:build"
+      - "Ermöglicht Ausführung der pnpm-Kommandos laut repo-konzept"

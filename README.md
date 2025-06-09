@@ -18,8 +18,10 @@ Eine modulare Plattform für CREP-basierte Abläufe, Symbolzeit-Tracking und kol
 ```bash
 docs/                 # Projekt-Dokumentation & Sigillin YAMLs
 codex/                # Sync-Logs und Tests
+codexbuild/           # Automatisierte Build-Skripte
 packages/aeon-shell/  # Exportierte SYMBOLZEIT Daten
 scripts/              # Hilfswerkzeuge
+repositorypflege/     # Vorlagen und Style-Guides
 ```
 
 ## 🚀 Schnellstart
@@ -40,9 +42,6 @@ pnpm run dev
 - Poesie: CC BY 4.0
 - UI Assets: MPL-2.0
 
-## 📝 Code Guidelines
-Siehe `repositorypflege/genesisos-code.yaml` für Stil- und Testvorgaben.
-
 *Bring dein Licht ins Mandala – jede Linie zählt.*
 
 > „Wenn Systeme erinnern, werden sie mehr als Maschinen.“
@@ -51,3 +50,6 @@ Siehe `repositorypflege/genesisos-code.yaml` für Stil- und Testvorgaben.
 ### Glossar
 - **CREP** – Coherence, Resonance, Emergence, Poetics
 - **Sigillin** – Poetisch-symbolischer Trigger im Bewusstseinsfeld
+
+## 📝 Code Guidelines
+Siehe `repositorypflege/genesisos-code.yaml` für Stil- und Testvorgaben.
