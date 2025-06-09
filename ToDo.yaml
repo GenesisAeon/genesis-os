@@ -81,6 +81,11 @@ todo:
   - name: "GitHub Actions für Tests"
     details:
       - "Workflow läuft npm test und lint bei Pull Requests"
+
+  - name: "Unified Mandala Export-Workflow"
+    details:
+      - "Automatischer Export von CREP-Grafik und Audiodateien"
+      - "CLI-Befehl für einfache Nutzung bereitstellen"
   - name: "GPT Bridge konfigurieren"
     details:
       - "codex-gpt-bridge.json erstellen"
