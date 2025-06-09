@@ -43,3 +43,9 @@ notizen:
     text: "Tests ausführen und neue ToDos aus conversations ableiten"
   - quelle: repositorypflege/genesisos-code.yaml
     text: "Code-Richtlinien definieren und im README erwähnen"
+  - quelle: repositorypflege/repository_map.yaml
+    zeilen: [72, 73, 74, 75]
+    text: "CI/CD Hooks (sigillin-lint, crep-smoke-test, ai-policy-check) implementieren"
+  - quelle: repositorypflege/repository_map.yaml
+    zeilen: [77, 78, 79, 80, 81, 82, 83, 84, 85, 86]
+    text: "GPT Bridge codex-gpt-bridge.json mit GenesisPoetGPT, CREPJudgeGPT und EchoGPT konfigurieren"
