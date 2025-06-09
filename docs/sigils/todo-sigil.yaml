@@ -18,6 +18,8 @@ notizen:
   - quelle: .git/hooks/sendemail-validate.sample
     zeilen: [22, 27, 35, 41]
     text: "Sample-Hook mit echten Checks füllen"
+    erledigt: true
+    notiz: "Basis-Validierung implementiert (Signed-off-by, TODO-Marker, Whitespace, npm test)"
   - quelle: ToDo.yaml
     aufgaben:
       - "CREP-Grundsystem entwickeln"
@@ -89,8 +91,9 @@ notizen:
     zeilen: [299, 314]
     text: "ZIP-Mem-Sigillin Anweisung implementieren"
   - quelle: ToDo.yaml
-    zeilen: [145, 146, 147, 148]
+    zeilen: [145, 146, 147, 148, 149]
     text: "Conversation Search Interface: Index conversation summaries und einfache CLI + Web UI"
+    notiz: "CLI vorhanden"
   - quelle: ToDo.yaml
     zeilen: [149, 150, 151, 152]
     text: "Summarizer Verbesserungen: Fragmente sequentiell verarbeiten und Summary inkrementell schreiben"

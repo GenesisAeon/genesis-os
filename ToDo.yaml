@@ -146,6 +146,7 @@ todo:
     details:
       - "Index conversation summaries for quick search"
       - "Provide simple CLI and web UI"
+      - "CLI umgesetzt in scripts/search-conversations.js"
   - name: "Summarizer Verbesserungen"
     details:
       - "Mehrere Fragmentdateien nacheinander verarbeiten"
