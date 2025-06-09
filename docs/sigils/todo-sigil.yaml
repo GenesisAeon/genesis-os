@@ -38,6 +38,12 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [68, 69, 70, 71]
     text: "Basis package.json einrichten für pnpm-Kommandos"
+  - quelle: ToDo.yaml
+    zeilen: [85, 86, 87, 88]
+    text: "UnifiedMandala Farbdynamik umsetzen"
+  - quelle: ToDo.yaml
+    zeilen: [90, 91, 92, 93]
+    text: "Nukleon-Scanner v0.7 integrieren"
   - quelle: codexinstructions.yaml
     zeilen: [7, 8, 9]
     text: "Tests ausführen und neue ToDos aus conversations ableiten"
