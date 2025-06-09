@@ -88,3 +88,6 @@ notizen:
   - quelle: docs/sigils/conversations-fragments/fragment-1.json
     zeilen: [299, 314]
     text: "ZIP-Mem-Sigillin Anweisung implementieren"
+  - quelle: ToDo.yaml
+    zeilen: [145, 146, 147, 148]
+    text: "Conversation Search Interface: Index conversation summaries und einfache CLI + Web UI"
