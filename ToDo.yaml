@@ -85,12 +85,14 @@ todo:
   - name: "Testverfahren implementieren"
     details:
       - "Erarbeite geeignete Test-Suites und führe sie ein"
-
+  - name: "Python Test Dependencies"
+    details:
+      - "requirements.txt für PyYAML und weitere Tools erstellen"
+      - "CI: Python-Abhängigkeiten installieren vor dem Test"
   - name: "Sendemail Validate Hook erweitern"
     details:
       - ".git/hooks/sendemail-validate.sample mit echten Checks füllen"
       - "In CI-Pipeline integrieren"
-
   - name: "CREPPhaseMatrix CI-Check"
     details:
       - "validate_crep_phase_matrix.py automatisch im CI ausführen"
