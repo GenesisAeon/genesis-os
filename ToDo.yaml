@@ -137,3 +137,8 @@ todo:
     details:
       - "ZIP-Dateien wie genesis_memory entpacken und Sigillin extrahieren"
       - "Gedächtnisanker in conversations-progress aufnehmen"
+
+  - name: "Conversation Search Interface"
+    details:
+      - "Index conversation summaries for quick search"
+      - "Provide simple CLI and web UI"
