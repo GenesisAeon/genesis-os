@@ -146,3 +146,7 @@ todo:
     details:
       - "Index conversation summaries for quick search"
       - "Provide simple CLI and web UI"
+  - name: "Summarizer Verbesserungen"
+    details:
+      - "Mehrere Fragmentdateien nacheinander verarbeiten"
+      - "conversations-summary.json inkrementell aktualisieren"
