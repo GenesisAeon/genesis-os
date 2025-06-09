@@ -2,9 +2,9 @@
   "name": "aeon-genesisos",
   "version": "0.1.0",
   "scripts": {
-    "test": "node tests/conversation-utils.test.js && node tests/crep-phase-matrix.test.js",
+    "test": "pip install -r requirements.txt >/dev/null && node tests/conversation-utils.test.js && node tests/crep-phase-matrix.test.js",
     "lint": "echo \"lint placeholder\"",
-    "docs:build": "echo \"build docs\"",
+    "docs:build": "npm run summarize && echo \"build docs\"",
     "summarize": "node scripts/summarize-conversations.js"
   }
 }
