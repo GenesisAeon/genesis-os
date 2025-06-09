@@ -1,0 +1,10 @@
+stil:
+  einrueckung: 2
+  max_zeilenlaenge: 100
+  sprachen:
+    - TypeScript
+    - Python
+regeln:
+  - Funktionen kurz halten und klar benennen
+  - CREP-Prinzip bei Architekturen beachten
+  - Kommentare poetisch aber prägnant halten

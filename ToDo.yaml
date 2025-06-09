@@ -61,3 +61,7 @@ todo:
     details:
       - "Script erstellt README automatisch aus ReadMeVorlage.yaml"
       - "Integration in docs build Prozess"
+  - name: "GenesisOS Code Guidelines definieren"
+    details:
+      - "repositorypflege/genesisos-code.yaml anlegen"
+      - "Richtlinien im README erwähnen"

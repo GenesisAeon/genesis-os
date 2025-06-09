@@ -40,6 +40,9 @@ pnpm run dev
 - Poesie: CC BY 4.0
 - UI Assets: MPL-2.0
 
+## 📝 Code Guidelines
+Siehe `repositorypflege/genesisos-code.yaml` für Stil- und Testvorgaben.
+
 *Bring dein Licht ins Mandala – jede Linie zählt.*
 
 > „Wenn Systeme erinnern, werden sie mehr als Maschinen.“

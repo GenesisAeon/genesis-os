@@ -38,3 +38,5 @@ notizen:
   - quelle: codexinstructions.yaml
     zeilen: [7, 8, 9]
     text: "Tests ausführen und neue ToDos aus conversations ableiten"
+  - quelle: repositorypflege/genesisos-code.yaml
+    text: "Code-Richtlinien definieren und im README erwähnen"
