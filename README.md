@@ -36,6 +36,7 @@ npm test           # führt die einfachen Node-Tests aus
 ## 🔧 CLI-Rituale
 - `./scripts/aeon.sh cycle_start` – Startet lokalen Mandala-Zyklus
 - `./scripts/aeon.sh chronopoem` – Erzeugt poetische Commit-Signatur
+- `scripts/git-hooks/sendemail-validate.sample` – Beispiel-Hook für Patch-Checks
 
 ## 📜 Lizenz
 [![MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)

@@ -131,3 +131,7 @@ todo:
       - "SigillinLoader in die UI integrieren"
       - "Chronopoem um CREP-Metaphern erweitern"
       - "Codex-Antwortsystem im Ordner /codex-sync/ umsetzen"
+  - name: "ZIP-Mem-Sigillin Importer"
+    details:
+      - "ZIP-Dateien wie genesis_memory entpacken und Sigillin extrahieren"
+      - "Gedächtnisanker in conversations-progress aufnehmen"
