@@ -91,3 +91,12 @@ todo:
     details:
       - "Feedback aus Gespr\xC3\xA4chen in Planung einbinden"
       - "Aktualisierte Phasenstruktur implementieren"
+  - name: "Kontextanalyse erweitern"
+    details:
+      - "conversations.json in Fragmente analysieren und Zusammenfassung in kontext.json speichern"
+      - "kontext.yaml entsprechend der neuen Erkenntnisse aktualisieren"
+  - name: "Repository-Optimierung"
+    details:
+      - "Ordnerstruktur laut repository_map.yaml prüfen und anpassen"
+      - "Datenstrukturen und Module auf Effizienz trimmen"
+      - "Überflüssige Abhängigkeiten entfernen"
