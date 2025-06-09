@@ -86,6 +86,16 @@ todo:
     details:
       - "Erarbeite geeignete Test-Suites und führe sie ein"
 
+  - name: "Sendemail Validate Hook erweitern"
+    details:
+      - ".git/hooks/sendemail-validate.sample mit echten Checks füllen"
+      - "In CI-Pipeline integrieren"
+
+  - name: "CREPPhaseMatrix CI-Check"
+    details:
+      - "validate_crep_phase_matrix.py automatisch im CI ausführen"
+      - "Fehler in test-results/integration-summary.md protokollieren"
+
   - name: "UnifiedMandala Farbdynamik umsetzen"
     details:
       - "Farbpalette soll sich an docs/symbolzeit.yaml orientieren"

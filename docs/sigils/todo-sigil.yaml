@@ -1,6 +1,6 @@
 sigillin_id: aeon:todo-sigil
 Titel: "Offene Aufgaben"
-datum: 2025-06-04
+datum: 2025-06-09
 autor: CodexAgent
 notizen:
   - quelle: docs/mastercanvas.yaml
@@ -67,3 +67,9 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [98, 99, 100, 101]
     text: "Repository-Optimierung: Struktur laut repository_map.yaml anpassen und Module optimieren"
+  - quelle: ToDo.yaml
+    zeilen: [89, 90, 91, 92]
+    text: "Sendemail Validate Hook erweitern und CI-Anbindung"
+  - quelle: ToDo.yaml
+    zeilen: [94, 95, 96, 97]
+    text: "CREPPhaseMatrix CI-Check automatisieren"
