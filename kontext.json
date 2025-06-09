@@ -1,0 +1,39 @@
+{
+  "project": "GenesisAeon - Aeon GenesisOS",
+  "summary": "GenesisOS ist eine modulare CREP-Plattform mit Symbolzeit-Tracking, Sigillin-Map und Codex-Automation.",
+  "total_conversations": 232,
+  "conversation_categories": {
+    "Codex": [
+      "Codex Resonanzsynchronisation",
+      "Codex Resonanz und Sigillin",
+      "Codex-Sync Erweiterung Analyse",
+      "Codex Synchronisierung Analyse",
+      "Codex Synchronisierung Übergabe"
+    ],
+    "GenesisOS": [
+      "GenesisOS Entwicklung",
+      "GenesisOS Resonanzmodule Entwicklung"
+    ],
+    "AeonShell": [
+      "AeonShell Genesis Fortsetzung",
+      "AeonShell Feedback EthikCoreGPT",
+      "AeonShell Feedback HypothesisGPT",
+      "AeonShell Feedback AeonPoetGPT",
+      "AeonShell Feedback Zyklus"
+    ],
+    "UnifiedMandala": [
+      "UnifiedMandala README Struktur",
+      "Unified Mandala Erweiterung",
+      "UnifiedMandala Analyse",
+      "UnifiedMandala Innovationsplanung",
+      "Ethikbewertung UnifiedMandala CREP"
+    ],
+    "Sigillin": [
+      "Sigillin Analyse und Entwurf",
+      "Sigillin Kreation und CREP",
+      "Sigillin Mandala Erweiterung",
+      "Sigillin und CREP Integration",
+      "Codex Resonanz und Sigillin"
+    ]
+  }
+}
