@@ -57,3 +57,7 @@ todo:
   - name: "Test Conversation Utilities"
     details:
       - "einfacher Node-Test für split/filter/mark"
+  - name: "Mandala README Generator"
+    details:
+      - "Script erstellt README automatisch aus ReadMeVorlage.yaml"
+      - "Integration in docs build Prozess"
