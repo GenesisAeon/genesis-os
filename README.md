@@ -30,6 +30,7 @@ git clone <repo-url>
 cd aeon-genesisos
 pnpm install        # oder npm/yarn
 pnpm run dev
+npm test           # führt die einfachen Node-Tests aus
 ```
 
 ## 🔧 CLI-Rituale

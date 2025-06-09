@@ -81,3 +81,13 @@ todo:
   - name: "Testverfahren implementieren"
     details:
       - "Erarbeite geeignete Test-Suites und führe sie ein"
+
+  - name: "UnifiedMandala Farbdynamik umsetzen"
+    details:
+      - "Farbpalette soll sich an docs/symbolzeit.yaml orientieren"
+      - "Reaktive Anpassung in der Mandala UI testen"
+
+  - name: "Nukleon-Scanner v0.7 integrieren"
+    details:
+      - "Feedback aus Gespr\xC3\xA4chen in Planung einbinden"
+      - "Aktualisierte Phasenstruktur implementieren"
