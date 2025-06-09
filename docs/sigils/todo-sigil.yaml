@@ -57,6 +57,7 @@ notizen:
     text: "Erarbeite und Implementiere Testverfahren falls nicht vorhanden"
   - quelle: repositorypflege/genesisos-code.yaml
     text: "Code-Richtlinien definieren und im README erwähnen"
+    erledigt: true
   - quelle: repositorypflege/repository_map.yaml
     zeilen: [72, 73, 74, 75]
     text: "CI/CD Hooks (sigillin-lint, crep-smoke-test, ai-policy-check) implementieren"
@@ -97,3 +98,30 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [149, 150, 151, 152]
     text: "Summarizer Verbesserungen: Fragmente sequentiell verarbeiten und Summary inkrementell schreiben"
+  - quelle: ToDo.yaml
+    zeilen: [38, 39, 40, 41, 42]
+    text: "Conversations-Management implementieren: split/filter/mark Scripts"
+  - quelle: ToDo.yaml
+    zeilen: [43, 44, 45, 46]
+    text: "Big Files Policy einführen und conversations.json fragmentieren"
+  - quelle: ToDo.yaml
+    zeilen: [64, 65, 66, 67]
+    text: "Mandala README Generator einbinden"
+  - quelle: ToDo.yaml
+    zeilen: [91, 92, 93, 94]
+    text: "Python Test Dependencies für CI definieren"
+  - quelle: ToDo.yaml
+    zeilen: [118, 119, 120, 121, 122]
+    text: "Repository-Optimierung gemäß repository_map.yaml"
+  - quelle: ToDo.yaml
+    zeilen: [123, 124, 125, 126, 127, 128]
+    text: "Web-Frontend Repository mit SigilSync Upload-UI"
+  - quelle: ToDo.yaml
+    zeilen: [129, 130, 131, 132, 133]
+    text: "NAS/Private Inhalte via WebDAV/SMB und MemoryDaemon"
+  - quelle: ToDo.yaml
+    zeilen: [155, 156, 157, 158]
+    text: "MandalaTree UI-Komponente integrieren"
+  - quelle: ToDo.yaml
+    zeilen: [159, 160, 161, 162]
+    text: "Sigillin-Ritualbuch als Markdown anlegen"
