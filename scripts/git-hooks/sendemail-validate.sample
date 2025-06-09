@@ -1,0 +1,38 @@
+# Sample sendemail-validate hook
+# Validates cover letter and patches before emailing
+
+validate_cover_letter() {
+  file="$1"
+  if ! grep -q "Signed-off-by" "$file"; then
+    echo "Cover letter missing Signed-off-by" >&2
+    return 1
+  fi
+  return 0
+}
+
+validate_patch() {
+  file="$1"
+  git apply --check "$file" || {
+    echo "Patch does not apply cleanly" >&2
+    return 1
+  }
+  return 0
+}
+
+validate_series() {
+  npm test >/tmp/series.log && return 0
+  cat /tmp/series.log
+  return 1
+}
+
+if [ "$GIT_SENDEMAIL_FILE_COUNTER" = 1 ]; then
+  remote=$(git config --default origin --get sendemail.validateRemote) &&
+  remote_ref=$(git config --default HEAD --get sendemail.validateRemoteRef)
+fi
+
+case "$1" in
+  *cover-letter*) validate_cover_letter "$1";;
+  *) validate_patch "$1";;
+esac
+
+[ "$GIT_SENDEMAIL_FILE_TOTAL" = "$GIT_SENDEMAIL_FILE_COUNTER" ] && validate_series

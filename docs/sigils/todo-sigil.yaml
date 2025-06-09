@@ -82,3 +82,6 @@ notizen:
   - quelle: docs/mastercanvas.yaml
     zeilen: [85, 86, 87, 88, 89]
     text: "GPT-Orchestrierung vorbereiten, Website-Repo anlegen, SigillinLoader und Chronopoem erweitern, Codex-Antwortsystem entwickeln"
+  - quelle: docs/sigils/conversations-fragments/fragment-1.json
+    zeilen: [299, 314]
+    text: "ZIP-Mem-Sigillin Anweisung implementieren"
