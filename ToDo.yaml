@@ -78,6 +78,9 @@ todo:
       - "sigillin-lint als Pre-Commit Hook einbinden"
       - "crep-smoke-test für Schnellprüfung"
       - "ai-policy-check zur Sicherung ethischer Vorgaben"
+  - name: "GitHub Actions für Tests"
+    details:
+      - "Workflow läuft npm test und lint bei Pull Requests"
   - name: "GPT Bridge konfigurieren"
     details:
       - "codex-gpt-bridge.json erstellen"
@@ -93,6 +96,7 @@ todo:
     details:
       - ".git/hooks/sendemail-validate.sample mit echten Checks füllen"
       - "In CI-Pipeline integrieren"
+      - "Basisprüfungen für TODO-Marker und Whitespace implementieren"
   - name: "CREPPhaseMatrix CI-Check"
     details:
       - "validate_crep_phase_matrix.py automatisch im CI ausführen"
