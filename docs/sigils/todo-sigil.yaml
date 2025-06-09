@@ -33,6 +33,9 @@ notizen:
     zeilen: [53, 54, 55, 56]
     text: "Conversation Summaries: summarize-conversations.js und Ausgabe in conversations-summary.json"
   - quelle: ToDo.yaml
+    zeilen: [57, 58, 59, 60]
+    text: "Conversation Summary Integration: Script automatisch im docs:build Prozess ausführen"
+  - quelle: ToDo.yaml
     zeilen: [57, 58, 59]
     text: "Test Conversation Utilities: einfacher Node-Test für split/filter/mark"
   - quelle: ToDo.yaml

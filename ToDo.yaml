@@ -54,6 +54,10 @@ todo:
     details:
       - "summarize-conversations.js für kurze Overviews"
       - "Ausgabe in docs/sigils/conversations-summary.json"
+  - name: "Conversation Summary Integration"
+    details:
+      - "summarize-conversations.js automatisch im docs:build Prozess ausführen"
+      - "Summary-Datei regelmäßig aktualisieren"
   - name: "Test Conversation Utilities"
     details:
       - "einfacher Node-Test für split/filter/mark"
