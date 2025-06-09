@@ -69,3 +69,12 @@ todo:
     details:
       - "Minimales package.json mit Skripten für test, lint und docs:build"
       - "Ermöglicht Ausführung der pnpm-Kommandos laut repo-konzept"
+  - name: "CI/CD Hooks umsetzen"
+    details:
+      - "sigillin-lint als Pre-Commit Hook einbinden"
+      - "crep-smoke-test für Schnellprüfung"
+      - "ai-policy-check zur Sicherung ethischer Vorgaben"
+  - name: "GPT Bridge konfigurieren"
+    details:
+      - "codex-gpt-bridge.json erstellen"
+      - "Verbindungen zu GenesisPoetGPT, CREPJudgeGPT und EchoGPT anlegen"
