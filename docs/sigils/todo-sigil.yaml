@@ -79,6 +79,7 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [81, 82, 83]
     text: "GitHub Action für automatisierte Tests"
+    erledigt: true
   - quelle: docs/mastercanvas.yaml
     zeilen: [55, 56, 57, 58]
     text: "Web-Frontend-Repo, Deployment via Pages/Netlify, SigilSync Upload-Modul und Upload-UI umsetzen"
