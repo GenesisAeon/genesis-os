@@ -58,3 +58,9 @@ notizen:
   - quelle: repositorypflege/repository_map.yaml
     zeilen: [77, 78, 79, 80, 81, 82, 83, 84, 85, 86]
     text: "GPT Bridge codex-gpt-bridge.json mit GenesisPoetGPT, CREPJudgeGPT und EchoGPT konfigurieren"
+  - quelle: ToDo.yaml
+    zeilen: [94, 95, 96]
+    text: "Kontextanalyse erweitern: conversations.json auswerten und kontext.yaml aktualisieren"
+  - quelle: ToDo.yaml
+    zeilen: [98, 99, 100, 101]
+    text: "Repository-Optimierung: Struktur laut repository_map.yaml anpassen und Module optimieren"
