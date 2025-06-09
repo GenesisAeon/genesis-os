@@ -50,3 +50,10 @@ todo:
       - "Website-Inhalte automatisch in YAML übertragen"
       - "GitHub Action Trigger für Codex-Automation"
       - "GPT-Kommentierung über GPT-AEONPOET einbinden"
+  - name: "Conversation Summaries"
+    details:
+      - "summarize-conversations.js für kurze Overviews"
+      - "Ausgabe in docs/sigils/conversations-summary.json"
+  - name: "Test Conversation Utilities"
+    details:
+      - "einfacher Node-Test für split/filter/mark"
