@@ -114,3 +114,20 @@ todo:
       - "Ordnerstruktur laut repository_map.yaml prüfen und anpassen"
       - "Datenstrukturen und Module auf Effizienz trimmen"
       - "Überflüssige Abhängigkeiten entfernen"
+  - name: "Web-Frontend Repository"
+    details:
+      - "Eigenes Repo für das Frontend anlegen"
+      - "Deployment via Pages, Netlify oder Vercel vorbereiten"
+      - "SigilSync Upload-Modul implementieren"
+      - "UI-Komponente für Uploads mit YAML-Ausgabe entwickeln"
+  - name: "NAS/Private Inhalte"
+    details:
+      - "Zugriff über WebDAV/SMB einrichten"
+      - "Gedächtnisspiegel mittels Hash und Sigillin speichern"
+      - "MemoryDaemon unter .aeonvault nutzen"
+  - name: "GPT-Orchestrierung"
+    details:
+      - "aeon-gpt-synapse.ts als Orchestrator entwickeln"
+      - "SigillinLoader in die UI integrieren"
+      - "Chronopoem um CREP-Metaphern erweitern"
+      - "Codex-Antwortsystem im Ordner /codex-sync/ umsetzen"

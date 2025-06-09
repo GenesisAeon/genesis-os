@@ -73,3 +73,12 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [94, 95, 96, 97]
     text: "CREPPhaseMatrix CI-Check automatisieren"
+  - quelle: docs/mastercanvas.yaml
+    zeilen: [55, 56, 57, 58]
+    text: "Web-Frontend-Repo, Deployment via Pages/Netlify, SigilSync Upload-Modul und Upload-UI umsetzen"
+  - quelle: docs/mastercanvas.yaml
+    zeilen: [62, 63, 64]
+    text: "NAS-Zugriff via WebDAV/SMB, Gedächtnisspiegel mit Hash, MemoryDaemon einführen"
+  - quelle: docs/mastercanvas.yaml
+    zeilen: [85, 86, 87, 88, 89]
+    text: "GPT-Orchestrierung vorbereiten, Website-Repo anlegen, SigillinLoader und Chronopoem erweitern, Codex-Antwortsystem entwickeln"
