@@ -7,6 +7,10 @@ validate_cover_letter() {
     echo "Cover letter missing Signed-off-by" >&2
     return 1
   fi
+  if [ "$(wc -l < "$file")" -lt 3 ]; then
+    echo "Cover letter too short" >&2
+    return 1
+  fi
   return 0
 }
 
@@ -16,6 +20,11 @@ validate_patch() {
     echo "Patch does not apply cleanly" >&2
     return 1
   }
+  if grep -q 'TODO' "$file"; then
+    echo "Patch contains TODO markers" >&2
+    return 1
+  fi
+  git diff --check HEAD || return 1
   return 0
 }
 
