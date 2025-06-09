@@ -78,3 +78,6 @@ todo:
     details:
       - "codex-gpt-bridge.json erstellen"
       - "Verbindungen zu GenesisPoetGPT, CREPJudgeGPT und EchoGPT anlegen"
+  - name: "Testverfahren implementieren"
+    details:
+      - "Erarbeite geeignete Test-Suites und führe sie ein"

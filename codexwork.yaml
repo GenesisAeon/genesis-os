@@ -19,9 +19,10 @@ sigillin_memory: |
   conversations. Updates to the progress file signal which Sigillin fragments have
   been processed. Agents should reference this memory before operating on the repo.
 
-note: |
-  Automated agents must read this YAML before modifying repository content to
-  maintain consistent handling of the conversation memory and Sigillin files.
-  Beachte bei allen Arbeiten repositorypflege/repository_map.yaml als GenesisAeongesamtstruktur.
-  Folge codexinstructions.yaml.
-  Beachte, dass docs/sigils/conversations.json aktualisiert wurde.
+  note: |
+    Automated agents must read this YAML before modifying repository content to
+    maintain consistent handling of the conversation memory and Sigillin files.
+    Beachte bei allen Arbeiten repositorypflege/repository_map.yaml als GenesisAeongesamtstruktur.
+    Folge codexinstructions.yaml.
+    Beachte, dass docs/sigils/conversations.json aktualisiert wurde.
+    Erarbeite und Implementiere Testverfahren falls nicht vorhanden.
