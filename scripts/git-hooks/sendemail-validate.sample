@@ -24,6 +24,10 @@ validate_patch() {
     echo "Patch contains TODO markers" >&2
     return 1
   fi
+  if grep -n "[[:space:]]$" "$file"; then
+    echo "Patch has trailing whitespace" >&2
+    return 1
+  fi
   git diff --check HEAD || return 1
   return 0
 }
