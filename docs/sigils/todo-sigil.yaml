@@ -126,3 +126,9 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [159, 160, 161, 162]
     text: "Sigillin-Ritualbuch als Markdown anlegen"
+  - quelle: ToDo.yaml
+    zeilen: [168, 169, 170, 171]
+    text: "Conversation Utilities Error Handling"
+  - quelle: ToDo.yaml
+    zeilen: [172, 173, 174, 175]
+    text: "Nukleon-Scanner CLI Anbindung"
