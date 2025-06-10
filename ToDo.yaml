@@ -165,3 +165,11 @@ todo:
     details:
       - "Dokument aus conversations-fragments extrahieren"
       - "Poetische Anleitung als Markdown anlegen"
+  - name: "Conversation Utilities Error Handling"
+    details:
+      - "Verbesserte Fehlermeldungen und Exit-Codes in split-, filter- und mark-Scripts"
+      - "Unit Tests erweitern"
+  - name: "Nukleon-Scanner CLI Anbindung"
+    details:
+      - "Suchfunktionen der conversation-utils im Nukleon-Scanner verwenden"
+      - "CLI-Optionen definieren und dokumentieren"
