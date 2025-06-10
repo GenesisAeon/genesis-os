@@ -97,6 +97,6 @@ sections:
         definition: "Poetisch-symbolischer Trigger im Bewusstseinsfeld"
 
 notes:
-  - Diese YAML-Vorlage kann für Projekte, Module oder Prototypen genutzt werden
-  - Optional: Automatisch in Markdown übersetzen lassen
-  - Empfohlen: `readme-from-template.ts` oder `README.generator.ts` verwenden
+  - "Diese YAML-Vorlage kann für Projekte, Module oder Prototypen genutzt werden"
+  - "Optional: Automatisch in Markdown übersetzen lassen"
+  - "Empfohlen: `readme-from-template.ts` oder `README.generator.ts` verwenden"
