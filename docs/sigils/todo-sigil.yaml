@@ -132,3 +132,9 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [172, 173, 174, 175]
     text: "Nukleon-Scanner CLI Anbindung"
+  - quelle: ToDo.yaml
+    zeilen: [178, 179, 180, 181]
+    text: "Conversation Statistics Script erstellen"
+  - quelle: ToDo.yaml
+    zeilen: [183, 184, 185, 186]
+    text: "Resonanz-Impuls Scheduler implementieren"
