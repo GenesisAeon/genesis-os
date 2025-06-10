@@ -179,3 +179,8 @@ todo:
     details:
       - "generate-conversation-stats.js wertet conversations-summary.json aus"
       - "Aktualisiert kontext.json mit Kategorien und Z\u00e4hlern"
+
+  - name: "Resonanz-Impuls Scheduler"
+    details:
+      - "Regelmäßige Prompts an den GENESISAEON-Kollektiv senden"
+      - "ICS-ähnliche Zeitpläne aus conversations.json verwenden"
