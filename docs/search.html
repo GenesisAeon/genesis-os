@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Conversation Search</title>
+<style>
+body { font-family: sans-serif; margin: 2em; }
+#results li { margin-bottom: .5em; }
+</style>
+</head>
+<body>
+<h1>Conversation Search</h1>
+<input id="query" type="text" placeholder="keyword" />
+<button onclick="search()">Search</button>
+<ul id="results"></ul>
+<script>
+async function search() {
+  const q = document.getElementById('query').value.toLowerCase();
+  const res = await fetch('sigils/conversations-summary.json');
+  const data = await res.json();
+  const list = document.getElementById('results');
+  list.innerHTML = '';
+  data.forEach(item => {
+    if (item.title.toLowerCase().includes(q) ||
+        (item.summary && item.summary.toLowerCase().includes(q))) {
+      const li = document.createElement('li');
+      li.textContent = `${item.title}: ${item.summary}`;
+      list.appendChild(li);
+    }
+  });
+}
+</script>
+</body>
+</html>

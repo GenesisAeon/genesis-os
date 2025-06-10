@@ -152,6 +152,7 @@ todo:
       - "Index conversation summaries for quick search"
       - "Provide simple CLI and web UI"
       - "CLI umgesetzt in scripts/search-conversations.js"
+      - "Einfache Weboberfläche in docs/search.html angelegt"
   - name: "Summarizer Verbesserungen"
     details:
       - "Mehrere Fragmentdateien nacheinander verarbeiten"
@@ -173,3 +174,8 @@ todo:
     details:
       - "Suchfunktionen der conversation-utils im Nukleon-Scanner verwenden"
       - "CLI-Optionen definieren und dokumentieren"
+
+  - name: "Conversation Statistics Script"
+    details:
+      - "generate-conversation-stats.js wertet conversations-summary.json aus"
+      - "Aktualisiert kontext.json mit Kategorien und Z\u00e4hlern"
