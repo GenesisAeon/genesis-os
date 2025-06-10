@@ -95,7 +95,7 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [145, 146, 147, 148, 149]
     text: "Conversation Search Interface: Index conversation summaries und einfache CLI + Web UI"
-    notiz: "CLI vorhanden"
+    notiz: "CLI vorhanden, einfache Weboberfläche in docs/search.html"
   - quelle: ToDo.yaml
     zeilen: [149, 150, 151, 152]
     text: "Summarizer Verbesserungen: Fragmente sequentiell verarbeiten und Summary inkrementell schreiben"
