@@ -150,3 +150,7 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [200, 201, 202]
     text: "DryAgent Test in CI integrieren"
+
+  - quelle: ToDo.yaml
+    zeilen: [215, 216, 217, 218, 219, 220, 221, 222]
+    text: "Agents Manifest Erweiterung v1.1: Agents.md schema_version, compile script, CI, Diagramm und Bundle"

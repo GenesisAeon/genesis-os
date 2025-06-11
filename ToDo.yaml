@@ -211,3 +211,12 @@ todo:
       - "crep-flow-synchronizer.ts und codex-memory-kernel.ts planen"
       - "symbolic-context-injector.ts und sigillin_bridge_engine.ts anlegen"
       - "emergence_signal_hub.ts als Schnittstelle vorbereiten"
+
+  - name: "Agents Manifest Erweiterung v1.1"
+    details:
+      - "Agents.md um schema_version und Rollenrechte ergaenzen"
+      - "compile_agents_manifest Script fuer fragmentierten YAML-Build"
+      - "CI-Workflow agents_ci.yaml mit runDryAgent.ts"
+      - "agents_chain.mmd generieren und als agents_chain.svg exportieren"
+      - "docs/agents/*.md automatisch erzeugen"
+      - "CodexAgentBundle.zip mit allen Dateien bereitstellen"
