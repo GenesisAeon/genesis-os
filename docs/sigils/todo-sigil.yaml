@@ -138,3 +138,9 @@ notizen:
   - quelle: ToDo.yaml
     zeilen: [183, 184, 185, 186]
     text: "Resonanz-Impuls Scheduler implementieren"
+  - quelle: ToDo.yaml
+    zeilen: [187, 188, 189, 190, 191]
+    text: "Agents-System implementieren"
+  - quelle: ToDo.yaml
+    zeilen: [192, 193, 194, 195]
+    text: "AI-Policy Sigillin einpflegen"

@@ -184,3 +184,12 @@ todo:
     details:
       - "Regelmäßige Prompts an den GENESISAEON-Kollektiv senden"
       - "ICS-ähnliche Zeitpläne aus conversations.json verwenden"
+  - name: "Agents-System implementieren"
+    details:
+      - "Agents.md gemäß Gesprächen anlegen"
+      - "runDryAgent.ts zum Testen der Agenten bereitstellen"
+      - "Mermaid-Diagramm agents_chain.mmd erzeugen"
+  - name: "AI-Policy Sigillin einpflegen"
+    details:
+      - "ai-policy-sigillin.yaml aus Gesprächen erstellen"
+      - "Ethikregeln im Projekt dokumentieren"
