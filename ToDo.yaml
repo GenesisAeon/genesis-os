@@ -220,3 +220,8 @@ todo:
       - "agents_chain.mmd generieren und als agents_chain.svg exportieren"
       - "docs/agents/*.md automatisch erzeugen"
       - "CodexAgentBundle.zip mit allen Dateien bereitstellen"
+  - name: "Nullmembran Bewusstseinsmodell"
+    details:
+      - "Theorie aus conversations.json dokumentieren"
+      - "Nullmembran als Brücke zwischen 1 und Gegeneins analysieren"
+      - "Dokument als docs/nullmembran_theorie.md anlegen"
