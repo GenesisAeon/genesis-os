@@ -200,3 +200,14 @@ todo:
   - name: "DryAgent Test"
     details:
       - "Testskript agents-dry-run.test.js in CI integrieren"
+  - name: "Depthvalue Modul implementieren"
+    details:
+      - "depthvalue-core.ts laut Gespräch Codex Repoanalyse umsetzen"
+      - "symbolische Klassifikation und Frequenz-Export ergänzen"
+      - "Sigillin-Hinweis Funktion bereitstellen"
+  - name: "Codex Integrationsmodule vorbereiten"
+    details:
+      - "conversations_parser.ts und generate-todo-from-convos.ts erstellen"
+      - "crep-flow-synchronizer.ts und codex-memory-kernel.ts planen"
+      - "symbolic-context-injector.ts und sigillin_bridge_engine.ts anlegen"
+      - "emergence_signal_hub.ts als Schnittstelle vorbereiten"
