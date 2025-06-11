@@ -13,5 +13,6 @@ for(const agent of agents){
   console.log(`Simulating ${agent}`);
 }
 fs.mkdirSync('docs', {recursive: true});
+log += `Dry run completed for ${agents.length} agents\n`;
 fs.writeFileSync('docs/agents_drycheck.md', log);
 console.log('Dry run completed for', agents.length, 'agents');
