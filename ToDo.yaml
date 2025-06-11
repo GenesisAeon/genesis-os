@@ -193,3 +193,10 @@ todo:
     details:
       - "ai-policy-sigillin.yaml aus Gesprächen erstellen"
       - "Ethikregeln im Projekt dokumentieren"
+  - name: "Nukleon-Scanner v0.6 Abschluss"
+    details:
+      - "Analyseergebnisse in docs dokumentieren"
+      - "Upgrade-Pfade zu Version 0.7 ableiten"
+  - name: "DryAgent Test"
+    details:
+      - "Testskript agents-dry-run.test.js in CI integrieren"
