@@ -1,0 +1,171 @@
+[build-system]
+requires = ["hatchling>=1.21.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "genesis-os"
+version = "0.1.0"
+description = "Self-reflecting OS framework with real-time phase transitions, resonance coupling, and cosmic-web simulation for GenesisAeon"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "GenesisAeon", email = "genesis@aeon.dev" }]
+keywords = [
+    "genesis",
+    "phase-transition",
+    "self-reflection",
+    "resonance",
+    "cosmic-web",
+    "CREP",
+    "entropy",
+    "lagrangian",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "typer>=0.9.0",
+    "rich>=13.0.0",
+    "numpy>=1.24.0",
+    "pydantic>=2.0.0",
+    "scipy>=1.10.0",
+]
+
+[project.optional-dependencies]
+full-stack = [
+    "aeon-ai>=0.2.0",
+    "advanced-weighting-systems>=0.1.0",
+    "fieldtheory>=0.1.0",
+    "mirror-machine>=0.1.0",
+    "cosmic-web>=0.1.0",
+    "sigillin>=0.1.0",
+    "entropy-governance>=0.1.0",
+    "utac-core>=0.1.0",
+    "mandala-visualizer>=0.1.0",
+    "sonification>=0.1.0",
+    "climate-dashboard>=0.1.0",
+    "implosive-genesis>=0.1.0",
+    "entropy-table>=0.1.0",
+    "matplotlib>=3.7.0",
+    "plotly>=5.15.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.21.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0",
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.2.0",
+    "mkdocstrings[python]>=0.23.0",
+    "mkdocs-autorefs>=0.5.0",
+]
+
+[project.scripts]
+genesis-os = "genesis_os.cli.main:app"
+
+[project.urls]
+Homepage = "https://github.com/GenesisAeon/genesis-os"
+Documentation = "https://genesisaeon.github.io/genesis-os"
+Repository = "https://github.com/GenesisAeon/genesis-os"
+"Bug Tracker" = "https://github.com/GenesisAeon/genesis-os/issues"
+Zenodo = "https://doi.org/10.5281/zenodo.genesis-os"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/genesis_os"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/docs", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.ruff]
+src = ["src"]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "W",
+    "I",
+    "N",
+    "UP",
+    "ANN",
+    "S",
+    "B",
+    "A",
+    "C4",
+    "PT",
+    "RET",
+    "SIM",
+    "TCH",
+    "ARG",
+    "PL",
+    "TRY",
+    "RUF",
+]
+ignore = [
+    "ANN101",
+    "ANN102",
+    "TRY003",
+    "S101",
+    "PLR0913",
+    "ANN401",
+    "PLC0415",
+    "RUF001",
+    "RUF002",
+    "RUF003",
+    "TRY300",
+    "TC001",
+    "TC003",
+    "TCH001",
+    "TCH003",
+    "S110",
+    "PLR2004",
+    "N815",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN", "S", "PLR2004", "ARG", "B017", "PT011", "PT012", "N802", "F841", "F601", "E501", "B007"]
+"src/genesis_os/cli/main.py" = ["E501"]
+"src/genesis_os/plugins/adapters/*.py" = ["F401", "ARG001"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=genesis_os --cov-report=term-missing --cov-fail-under=99"
+asyncio_mode = "auto"
+markers = [
+    "unit: Unit tests",
+    "contract: Contract tests with external packages",
+    "e2e: End-to-end tests",
+    "slow: Tests that take more time",
+]
+
+[tool.coverage.run]
+source = ["src"]
+omit = ["*/tests/*", "*/__main__.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "@abstractmethod",
+]
