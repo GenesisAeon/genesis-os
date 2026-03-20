@@ -25,6 +25,7 @@ from pydantic import BaseModel, Field
 
 from genesis_os.core.crep import CREPEvaluator, CREPScore
 from genesis_os.core.phase import Phase, PhaseMatrix, PhaseTransition
+from genesis_os.runtime.emergence import CosmicWebSimulator, EmergenceEvent
 
 logger = logging.getLogger(__name__)
 
@@ -73,6 +74,7 @@ class GenesisState:
     crep: CREPScore | None = None
     lagrangian: float = 0.0
     transitions: list[PhaseTransition] = field(default_factory=list)
+    emergence_events: list[EmergenceEvent] = field(default_factory=list)
     metadata: dict[str, Any] = field(default_factory=dict)
 
 
@@ -80,12 +82,15 @@ class GenesisOS:
     """Self-reflecting OS orchestrator for GenesisAeon.
 
     Implements the phase_transition_loop with integrated CREP evaluation,
-    Unified Lagrangian computation, and self-reflection updates.
+    Unified Lagrangian computation, self-reflection updates, and live
+    cosmic-web emergence simulation via :class:`CosmicWebSimulator`.
 
     Args:
         config: GenesisConfig instance (defaults to sane values).
         engine: Optional RuntimeEngine – created internally if not provided.
         plugins: Dictionary of named callables injected at each cycle.
+        emergence_threshold: Threshold for :class:`CosmicWebSimulator` node
+            emergence (default 0.3).
     """
 
     def __init__(
@@ -93,6 +98,7 @@ class GenesisOS:
         config: GenesisConfig | None = None,
         engine: Any | None = None,
         plugins: dict[str, Callable[[GenesisState], dict[str, Any]]] | None = None,
+        emergence_threshold: float = 0.3,
     ) -> None:
         self.config = config or GenesisConfig()
         self._plugins = plugins or {}
@@ -105,6 +111,10 @@ class GenesisOS:
             phi=self.config.phi_init,
         )
         self._rng = np.random.default_rng(self.config.seed)
+        self._simulator = CosmicWebSimulator(
+            emergence_threshold=emergence_threshold,
+            seed=self.config.seed,
+        )
         # Lazy import to avoid circular dependency
         if engine is not None:
             self._engine: Any = engine
@@ -198,6 +208,21 @@ class GenesisOS:
         # Self-reflection
         self.self_reflect()
 
+        # Cosmic-web emergence simulation step
+        emergence_event = self._simulator.step(
+            crep=crep,
+            lagrangian=self._state.lagrangian,
+            cycle=self._state.cycle,
+        )
+        if emergence_event is not None:
+            self._state.emergence_events.append(emergence_event)
+            logger.debug(
+                "EmergenceEvent: cycle=%d nodes=%d rate=%.4f",
+                emergence_event.cycle,
+                emergence_event.node_count,
+                emergence_event.emergence_rate,
+            )
+
         # Phase transition attempt
         transition = self._phases.advance(crep.gamma, metadata={"cycle": self._state.cycle})
         if transition is not None:
@@ -214,6 +239,8 @@ class GenesisOS:
         self._state.cycle += 1
         self._state.metadata.update(engine_result)
         self._state.metadata.update(plugin_state)
+        # Expose emergence summary in metadata
+        self._state.metadata["emergence_summary"] = self._simulator.summary()
         return self._state
 
     def phase_transition_loop(
@@ -265,10 +292,16 @@ class GenesisOS:
             pass
         return self._state
 
+    @property
+    def simulator(self) -> CosmicWebSimulator:
+        """Read-only access to the internal :class:`CosmicWebSimulator`."""
+        return self._simulator
+
     def reset(self) -> None:
         """Reset the orchestrator to its initial configuration."""
         self._crep.reset()
         self._phases.reset()
+        self._simulator.reset()
         self._state = GenesisState(
             entropy=self.config.entropy,
             phi=self.config.phi_init,

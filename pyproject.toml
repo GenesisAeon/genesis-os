@@ -4,8 +4,8 @@ build-backend = "hatchling.build"
 
 [project]
 name = "genesis-os"
-version = "0.1.0"
-description = "Self-reflecting OS framework with real-time phase transitions, resonance coupling, and cosmic-web simulation for GenesisAeon"
+version = "0.2.0"
+description = "Self-reflecting OS framework with live cosmic-web emergence simulation, Dash GUI, real-time phase transitions, and resonance coupling for GenesisAeon"
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "GenesisAeon", email = "genesis@aeon.dev" }]
@@ -46,7 +46,7 @@ full-stack = [
     "advanced-weighting-systems>=0.1.0",
     "fieldtheory>=0.1.0",
     "mirror-machine>=0.1.0",
-    "cosmic-web>=0.1.0",
+    "cosmic-web>=0.2.0",
     "sigillin>=0.1.0",
     "entropy-governance>=0.1.0",
     "utac-core>=0.1.0",
@@ -56,6 +56,11 @@ full-stack = [
     "implosive-genesis>=0.1.0",
     "entropy-table>=0.1.0",
     "matplotlib>=3.7.0",
+    "plotly>=5.15.0",
+]
+gui = [
+    "dash>=2.14.0",
+    "dash-bootstrap-components>=1.5.0",
     "plotly>=5.15.0",
 ]
 dev = [
@@ -68,6 +73,8 @@ dev = [
     "mkdocs-material>=9.2.0",
     "mkdocstrings[python]>=0.23.0",
     "mkdocs-autorefs>=0.5.0",
+    "dash>=2.14.0",
+    "dash-bootstrap-components>=1.5.0",
 ]
 
 [project.scripts]
@@ -138,6 +145,7 @@ ignore = [
 "tests/**" = ["ANN", "S", "PLR2004", "ARG", "B017", "PT011", "PT012", "N802", "F841", "F601", "E501", "B007"]
 "src/genesis_os/cli/main.py" = ["E501"]
 "src/genesis_os/plugins/adapters/*.py" = ["F401", "ARG001"]
+"src/genesis_os/dashboard/web_gui.py" = ["E501"]
 
 [tool.mypy]
 python_version = "3.10"
@@ -145,6 +153,21 @@ strict = true
 warn_return_any = true
 warn_unused_configs = true
 plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = [
+    "dash",
+    "dash.*",
+    "dash_bootstrap_components",
+    "dash_bootstrap_components.*",
+    "plotly",
+    "plotly.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["genesis_os.dashboard.web_gui"]
+ignore_errors = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

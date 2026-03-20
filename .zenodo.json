@@ -1,15 +1,34 @@
 {
-  "title": "GenesisAeon/genesis-os: v0.1.0 – Self-reflective resonance operating framework with phase-transition loop & full-stack integration",
-  "version": "0.1.0",
+  "title": "GenesisAeon/genesis-os: v0.2.0 – Live cosmic-web emergence simulation + Dash GUI",
+  "version": "0.2.0",
   "doi": "10.5281/zenodo.19140088",
   "creators": [
     {
       "name": "GenesisAeon Project"
     }
   ],
-  "description": "Complete self-reflective operating framework: GenesisOS Orchestrator with real-time PhaseMatrix, Unified Lagrangian L = T - V + Φ(H) + Γ(C,R,E,P), 13 auto-discovered adapters and live MandalaDashboard + Sonification for the GenesisAeon stack.",
-  "keywords": ["GenesisOS", "phase-transition-loop", "Unified-Lagrangian", "CREP", "self-reflection", "MandalaDashboard", "full-stack", "GenesisAeon"],
+  "description": "genesis-os v0.2.0 extends the self-reflective operating framework with: (1) CosmicWebSimulator for live cosmic-web node emergence driven by the Unified Lagrangian L = T - V + Φ(H) + Γ(C,R,E,P) and UTAC-Logistic entropy evolution; (2) a Dash-based real-time web GUI (dashboard/web_gui.py) with CREP radar, entropy/Lagrangian dual-axis chart, and emergence event visualisation; (3) extended CLI (genesis-os cycle --gui) to launch the Dash server optionally; (4) emergence_events field in GenesisState with EmergenceEvent records; and (5) >500 pytest tests with 99%+ coverage.",
+  "keywords": [
+    "GenesisOS",
+    "phase-transition-loop",
+    "Unified-Lagrangian",
+    "CREP",
+    "self-reflection",
+    "cosmic-web",
+    "emergence-simulation",
+    "MandalaDashboard",
+    "Dash-GUI",
+    "full-stack",
+    "GenesisAeon"
+  ],
   "license": "MIT",
   "upload_type": "software",
-  "access_right": "open"
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.19140088",
+      "relation": "isNewVersionOf",
+      "scheme": "doi"
+    }
+  ]
 }
