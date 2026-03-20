@@ -11,7 +11,7 @@
   <a href="https://pypi.org/project/genesis-os/"><img src="https://img.shields.io/pypi/v/genesis-os.svg" alt="PyPI version"/></a>
   <a href="https://pypi.org/project/genesis-os/"><img src="https://img.shields.io/pypi/pyversions/genesis-os.svg" alt="Python versions"/></a>
   <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://github.com/GenesisAeon/genesis-os/workflows/CI/badge.svg" alt="CI status"/></a>
-  <a href="https://doi.org/10.5281/zenodo.genesis-os"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.genesis-os.svg" alt="DOI"/></a>
+  <a href="https://doi.org/10.5281/zenodo.19140088"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19140088.svg" alt="DOI"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"/></a>
 </p>
 
