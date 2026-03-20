@@ -1,47 +1,15 @@
 {
-  "title": "genesis-os: Self-reflecting OS framework for phase transitions and resonance coupling",
-  "description": "genesis-os is a unified Python framework implementing the GenesisAeon architecture: a self-reflecting, entropy-governed, phase-transitioning system described by the Unified Lagrangian formalism. It integrates CREP (Coherence-Resonance-Emergence-Poetics) evaluation, a UTAC-Logistic entropy ODE, real-time Mandala visualisation, and sonification.",
+  "title": "GenesisAeon/genesis-os: v0.1.0 – Self-reflective resonance operating framework with phase-transition loop & full-stack integration",
   "version": "0.1.0",
-  "upload_type": "software",
-  "access_right": "open",
-  "license": "MIT",
+  "doi": "10.5281/zenodo.19140088",
   "creators": [
     {
-      "name": "GenesisAeon",
-      "affiliation": "GenesisAeon Research"
+      "name": "GenesisAeon Project"
     }
   ],
-  "keywords": [
-    "genesis",
-    "phase-transition",
-    "self-reflection",
-    "resonance-coupling",
-    "cosmic-web",
-    "CREP",
-    "entropy",
-    "lagrangian",
-    "aeon",
-    "orchestration",
-    "mandala",
-    "sonification"
-  ],
-  "related_identifiers": [
-    {
-      "identifier": "https://github.com/GenesisAeon/genesis-os",
-      "relation": "isSupplementTo",
-      "scheme": "url"
-    },
-    {
-      "identifier": "https://pypi.org/project/genesis-os/",
-      "relation": "isIdenticalTo",
-      "scheme": "url"
-    }
-  ],
-  "language": "eng",
-  "notes": "This software implements the Unified Lagrangian formalism for GenesisAeon, combining CREP evaluation, UTAC-Logistic entropy dynamics, and self-reflection updates. All full-stack optional dependencies (aeon-ai, cosmic-web, etc.) are listed in pyproject.toml under [full-stack].",
-  "communities": [
-    {
-      "identifier": "zenodo"
-    }
-  ]
+  "description": "Complete self-reflective operating framework: GenesisOS Orchestrator with real-time PhaseMatrix, Unified Lagrangian L = T - V + Φ(H) + Γ(C,R,E,P), 13 auto-discovered adapters and live MandalaDashboard + Sonification for the GenesisAeon stack.",
+  "keywords": ["GenesisOS", "phase-transition-loop", "Unified-Lagrangian", "CREP", "self-reflection", "MandalaDashboard", "full-stack", "GenesisAeon"],
+  "license": "MIT",
+  "upload_type": "software",
+  "access_right": "open"
 }

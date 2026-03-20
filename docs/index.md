@@ -1,5 +1,8 @@
 # genesis-os Documentation
 
+**DOI**: [10.5281/zenodo.19140088](https://doi.org/10.5281/zenodo.19140088)
+**Zenodo**: [https://zenodo.org/records/19140088](https://zenodo.org/records/19140088)
+
 Welcome to the **genesis-os** documentation — a self-reflecting OS framework
 for GenesisAeon implementing real-time phase transitions, resonance coupling,
 and cosmic-web simulation.
