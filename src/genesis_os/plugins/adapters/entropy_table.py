@@ -22,7 +22,7 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     if not _AVAILABLE:
         return {"entropy_table_available": False}
     try:
-        entry = _TABLE.lookup(state.entropy, state.phase.value)  # type: ignore[union-attr]
+        entry = _TABLE.lookup(state.entropy, state.phase.value)
         return {"entropy_table_available": True, "entropy_table_entry": entry}
     except Exception:
         return {"entropy_table_available": True, "entropy_table_entry": None}

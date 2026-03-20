@@ -35,8 +35,8 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     try:
         crep_vec = state.crep.to_vector() if state.crep else None
         if crep_vec is not None:
-            result["aeon_phase"] = _DETECTOR.detect(crep_vec)  # type: ignore[union-attr]
-            result["aeon_reflection"] = _REFLECTOR.reflect(state.phi, crep_vec)  # type: ignore[union-attr]
+            result["aeon_phase"] = _DETECTOR.detect(crep_vec)
+            result["aeon_reflection"] = _REFLECTOR.reflect(state.phi, crep_vec)
     except Exception:
         pass
     return result

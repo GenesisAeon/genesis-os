@@ -22,7 +22,7 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     if not _AVAILABLE:
         return {"sigillin_available": False}
     try:
-        token = _SIGIL.generate(state.phase.value, state.cycle)  # type: ignore[union-attr]
+        token = _SIGIL.generate(state.phase.value, state.cycle)
         return {"sigillin_available": True, "sigil_token": str(token)}
     except Exception:
         return {"sigillin_available": True, "sigil_token": None}

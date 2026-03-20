@@ -22,7 +22,7 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     if not _AVAILABLE:
         return {"entropy_governance_available": False}
     try:
-        adjusted = _POLICY.apply(state.entropy, state.cycle)  # type: ignore[union-attr]
+        adjusted = _POLICY.apply(state.entropy, state.cycle)
         return {"entropy_governance_available": True, "governed_entropy": float(adjusted)}
     except Exception:
         return {"entropy_governance_available": True, "governed_entropy": None}

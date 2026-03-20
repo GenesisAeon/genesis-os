@@ -22,7 +22,7 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     if not _AVAILABLE or state.crep is None:
         return {"utac_core_available": _AVAILABLE}
     try:
-        result = _ENGINE.step(state.entropy, state.crep.gamma)  # type: ignore[union-attr]
+        result = _ENGINE.step(state.entropy, state.crep.gamma)
         return {"utac_core_available": True, "utac_entropy": float(result)}
     except Exception:
         return {"utac_core_available": True, "utac_entropy": None}

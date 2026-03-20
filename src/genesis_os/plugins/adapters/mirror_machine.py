@@ -22,7 +22,7 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     if not _AVAILABLE or state.crep is None:
         return {"mirror_available": _AVAILABLE}
     try:
-        factor = _MIRROR.reflect(state.crep.resonance, state.phi)  # type: ignore[union-attr]
+        factor = _MIRROR.reflect(state.crep.resonance, state.phi)
         return {"mirror_available": True, "mirror_resonance": float(factor)}
     except Exception:
         return {"mirror_available": True, "mirror_resonance": None}

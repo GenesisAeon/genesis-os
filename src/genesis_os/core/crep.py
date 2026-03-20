@@ -164,7 +164,7 @@ class CREPEvaluator:
             return None
         prev = self._history[-2].to_vector()
         curr = self._history[-1].to_vector()
-        return curr - prev
+        return np.asarray(curr - prev)
 
     def threshold_exceeded(self, score: CREPScore, threshold: float = 0.6) -> bool:
         """Return True if the gamma coupling term exceeds the given threshold.

@@ -22,7 +22,7 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     if not _AVAILABLE:
         return {"implosive_genesis_available": False}
     try:
-        strength = _FIELD.compute(state.phi, state.entropy)  # type: ignore[union-attr]
+        strength = _FIELD.compute(state.phi, state.entropy)
         return {"implosive_genesis_available": True, "implosive_strength": float(strength)}
     except Exception:
         return {"implosive_genesis_available": True, "implosive_strength": None}

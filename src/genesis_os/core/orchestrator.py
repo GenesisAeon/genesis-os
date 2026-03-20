@@ -106,8 +106,9 @@ class GenesisOS:
         )
         self._rng = np.random.default_rng(self.config.seed)
         # Lazy import to avoid circular dependency
-        self._engine = engine
-        if self._engine is None:
+        if engine is not None:
+            self._engine: Any = engine
+        else:
             from genesis_os.runtime.engine import RuntimeEngine
 
             self._engine = RuntimeEngine(config=self.config)

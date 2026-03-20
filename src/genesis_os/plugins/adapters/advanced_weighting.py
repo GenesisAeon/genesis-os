@@ -22,7 +22,7 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     if not _AVAILABLE or state.crep is None:
         return {"weighting_available": _AVAILABLE}
     try:
-        weights = _ENGINE.compute(state.crep.to_vector())  # type: ignore[union-attr]
+        weights = _ENGINE.compute(state.crep.to_vector())
         return {"weighting_available": True, "crep_weights": weights.tolist()}
     except Exception:
         return {"weighting_available": True, "crep_weights": None}

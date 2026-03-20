@@ -22,7 +22,7 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     if not _AVAILABLE:
         return {"fieldtheory_available": False}
     try:
-        potential = _POTENTIAL.compute(state.entropy, state.phi)  # type: ignore[union-attr]
+        potential = _POTENTIAL.compute(state.entropy, state.phi)
         return {"fieldtheory_available": True, "field_potential": float(potential)}
     except Exception:
         return {"fieldtheory_available": True, "field_potential": None}

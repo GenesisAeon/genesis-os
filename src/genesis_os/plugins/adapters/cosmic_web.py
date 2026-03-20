@@ -22,7 +22,7 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     if not _AVAILABLE or state.crep is None:
         return {"cosmic_web_available": _AVAILABLE}
     try:
-        node_density = _SIM.step(state.crep.to_vector(), state.entropy)  # type: ignore[union-attr]
+        node_density = _SIM.step(state.crep.to_vector(), state.entropy)
         return {"cosmic_web_available": True, "node_density": float(node_density)}
     except Exception:
         return {"cosmic_web_available": True, "node_density": None}

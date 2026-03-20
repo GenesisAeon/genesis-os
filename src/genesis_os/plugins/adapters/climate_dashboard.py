@@ -22,7 +22,7 @@ def plugin_fn(state: GenesisState) -> dict[str, Any]:
     if not _AVAILABLE:
         return {"climate_dashboard_available": False}
     try:
-        climate_h = _CLIMATE.entropy(state.cycle)  # type: ignore[union-attr]
+        climate_h = _CLIMATE.entropy(state.cycle)
         return {"climate_dashboard_available": True, "climate_entropy": float(climate_h)}
     except Exception:
         return {"climate_dashboard_available": True, "climate_entropy": None}
