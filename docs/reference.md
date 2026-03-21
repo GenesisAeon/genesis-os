@@ -1,4 +1,4 @@
-# API Reference
+# API Reference — v0.2.0
 
 ## Mathematical Foundations
 
@@ -47,6 +47,28 @@ CREP gradient vector $\Delta \mathbf{CREP} = \mathbf{CREP}_{n} - \mathbf{CREP}_{
 
 ---
 
+### Cosmic-Web Emergence Rate (v0.2.0)
+
+The emergence rate $\lambda_e$ integrates the Lagrangian magnitude with CREP coupling:
+
+$$\lambda_e = f(\mathcal{L}, \Gamma) = \frac{|\mathcal{L}|}{1 + |\mathcal{L}|} \cdot \tanh(\sigma_e \cdot \Gamma)$$
+
+where $\sigma_e$ is the emergence sensitivity constant (default 2.5).
+
+**Node density update** over the $N$-node cosmic-web field:
+
+$$\rho_{t+1}^{(i)} = \rho_t^{(i)} + \lambda_e \cdot w^{(i)}(\mathbf{CREP}) \cdot \Delta t,
+\quad \rho^{(i)} \in [0, 1]$$
+
+The CREP-weighted influence vector $\mathbf{w}$ uses sinusoidal basis functions:
+
+$$w^{(i)} = \frac{1}{4}\Bigl[C\cos\!\tfrac{2\pi i}{N} + R\sin\!\tfrac{4\pi i}{N}
++ E\cos\!\tfrac{6\pi i}{N} + P\sin\!\tfrac{8\pi i}{N}\Bigr]_{\text{norm}\in[0,1]}$$
+
+An **EmergenceEvent** is emitted when $\lambda_e \geq \theta_e$ (threshold, default 0.3).
+
+---
+
 ## Module Reference
 
 ### `genesis_os.core.crep`
@@ -84,6 +106,13 @@ CREP gradient vector $\Delta \mathbf{CREP} = \mathbf{CREP}_{n} - \mathbf{CREP}_{
       show_root_heading: true
       heading_level: 4
 
+### `genesis_os.runtime.emergence`
+
+::: genesis_os.runtime.emergence
+    options:
+      show_root_heading: true
+      heading_level: 4
+
 ### `genesis_os.dashboard.mandala`
 
 ::: genesis_os.dashboard.mandala
@@ -94,6 +123,13 @@ CREP gradient vector $\Delta \mathbf{CREP} = \mathbf{CREP}_{n} - \mathbf{CREP}_{
 ### `genesis_os.dashboard.sonification`
 
 ::: genesis_os.dashboard.sonification
+    options:
+      show_root_heading: true
+      heading_level: 4
+
+### `genesis_os.dashboard.web_gui`
+
+::: genesis_os.dashboard.web_gui
     options:
       show_root_heading: true
       heading_level: 4
@@ -174,4 +210,6 @@ where $v \in [0,1]$ is the CREP axis value.
 4. Friston, K. (2010). The free-energy principle: a unified brain theory?
    *Nature Reviews Neuroscience*, 11(2), 127–138.
 5. GenesisAeon (2024). *genesis-os v0.1.0*. Zenodo.
-   https://doi.org/10.5281/zenodo.genesis-os
+   https://doi.org/10.5281/zenodo.19140088
+6. GenesisAeon (2025). *genesis-os v0.2.0 – Live cosmic-web emergence simulation + Dash GUI*. Zenodo.
+   https://doi.org/10.5281/zenodo.19140088

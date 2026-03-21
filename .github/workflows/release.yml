@@ -42,10 +42,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install from wheel
+      - name: Install from wheel (core)
         run: pip install dist/*.whl pytest typer rich numpy pydantic scipy
-      - name: Smoke test CLI
+      - name: Smoke test CLI – info
         run: genesis-os info
+      - name: Smoke test CLI – cycle (simulate)
+        run: genesis-os cycle --simulate --max-cycles 5 --seed 42
+      - name: Install GUI extra and smoke test
+        run: |
+          pip install "dist/$(ls dist/*.whl | head -1)[gui]" || true
+          python -c "from genesis_os.dashboard.web_gui import GenesisWebGUI; print('GUI import OK')"
 
   publish-pypi:
     name: Publish to PyPI
@@ -79,6 +85,22 @@ jobs:
           generate_release_notes: true
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
+          body: |
+            ## genesis-os v0.2.0 – Live cosmic-web emergence simulation + Dash GUI
+
+            ### New in v0.2.0
+            - **CosmicWebSimulator** (`runtime/emergence.py`): live node emergence driven by the Unified Lagrangian + UTAC-Logistic
+            - **Dash Web GUI** (`dashboard/web_gui.py`): real-time CREP radar, H(t)/L(t) charts, emergence events – `pip install genesis-os[gui]`
+            - **Extended CLI**: `genesis-os cycle --gui [--gui-port PORT] [--gui-host HOST]`
+            - **EmergenceEvent** records in `GenesisState.emergence_events`
+            - >500 pytest tests, 99%+ coverage
+
+            ### Install
+            ```bash
+            pip install genesis-os==0.2.0          # core
+            pip install "genesis-os[gui]==0.2.0"   # + Dash GUI
+            pip install "genesis-os[full-stack]==0.2.0"  # + all adapters
+            ```
 
   publish-zenodo:
     name: Publish to Zenodo
@@ -89,9 +111,9 @@ jobs:
       - name: Upload to Zenodo
         run: |
           echo "Zenodo upload triggered for tag ${{ github.ref_name }}"
-          echo "Configure ZENODO_TOKEN secret and zenodo-upload action for automatic upload."
+          echo "Configure ZENODO_TOKEN secret and zenodraft/action for automatic upload."
         # Replace with actual zenodo-upload action when token is configured:
         # uses: zenodraft/action@main
         # with:
-        #   concept-doi: 10.5281/zenodo.genesis-os
+        #   concept-doi: 10.5281/zenodo.19140088
         #   token: ${{ secrets.ZENODO_TOKEN }}

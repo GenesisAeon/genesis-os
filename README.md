@@ -4,7 +4,7 @@
 
 <h1 align="center">genesis-os</h1>
 <p align="center">
-  <b>Self-reflecting OS framework with real-time phase transitions, resonance coupling,<br>and cosmic-web simulation for GenesisAeon.</b>
+  <b>Self-reflecting OS framework with live cosmic-web emergence simulation, Dash GUI,<br>real-time phase transitions, and resonance coupling for GenesisAeon.</b>
 </p>
 
 <p align="center">
@@ -19,11 +19,12 @@
 
 ## Overview
 
-**genesis-os** is a unified Python framework implementing the GenesisAeon
+**genesis-os** v0.2.0 is a unified Python framework implementing the GenesisAeon
 architecture: a self-reflecting, entropy-governed, phase-transitioning system
 described by the **Unified Lagrangian** formalism. It integrates CREP
-(Coherence-Resonance-Emergence-Poetics) evaluation, a UTAC-Logistic entropy
-ODE, real-time Mandala visualisation, and sonification.
+(Coherence-Resonance-Emergence-Poetics) evaluation, a UTAC-Logistic entropy ODE,
+live **cosmic-web emergence simulation** via `CosmicWebSimulator`, a real-time
+**Dash web GUI**, Mandala visualisation, and sonification.
 
 ### The Unified Lagrangian
 
@@ -61,14 +62,29 @@ approximated from the L2 norm of the CREP gradient vector.
 # Core package
 pip install genesis-os
 
-# Full stack with all optional packages
-pip install "genesis-os[full-stack]"
+# Core + live Dash web GUI
+pip install "genesis-os[gui]"
+
+# Full stack with all optional packages + GUI
+pip install "genesis-os[full-stack,gui]"
 
 # Development mode
 pip install "genesis-os[dev]"
 ```
 
-### Full-Stack Extra Packages
+### Extra Packages
+
+#### `[gui]` — Live Dash Web Dashboard
+
+`pip install "genesis-os[gui]"` installs:
+
+| Package | Version | Purpose |
+|---------|---------|---------|
+| `dash` | >=2.14.0 | Reactive web framework |
+| `dash-bootstrap-components` | >=1.5.0 | Bootstrap theming |
+| `plotly` | >=5.15.0 | Interactive charts (CREP radar, H/L/emergence) |
+
+#### `[full-stack]` — All Optional Adapters
 
 `pip install "genesis-os[full-stack]"` installs:
 
@@ -78,7 +94,7 @@ pip install "genesis-os[dev]"
 | `advanced-weighting-systems` | >=0.1.0 | CREP vector weighting |
 | `fieldtheory` | >=0.1.0 | Field-theoretic potentials |
 | `mirror-machine` | >=0.1.0 | Recursive resonance mirroring |
-| `cosmic-web` | >=0.1.0 | Large-scale structure simulation |
+| `cosmic-web` | >=0.2.0 | Large-scale structure simulation |
 | `sigillin` | >=0.1.0 | Symbolic trigger generation |
 | `entropy-governance` | >=0.1.0 | Policy-based entropy control |
 | `utac-core` | >=0.1.0 | External UTAC implementation |
@@ -114,6 +130,71 @@ print(f"Entropy: {final_state.entropy:.4f}")
 print(f"Phi(H): {final_state.phi:.4f}")
 print(f"Lagrangian: {final_state.lagrangian:.4f}")
 print(f"Transitions: {len(final_state.transitions)}")
+print(f"Emergence Events: {len(final_state.emergence_events)}")
+```
+
+### Live Cosmic-Web Emergence Simulation (v0.2.0)
+
+```python
+from genesis_os import CosmicWebSimulator, GenesisOS
+from genesis_os.core.orchestrator import GenesisConfig
+
+config = GenesisConfig(entropy=0.4, max_cycles=50, seed=42)
+genesis = GenesisOS(config=config, emergence_threshold=0.3)
+
+for state in genesis.phase_transition_loop():
+    summary = state.metadata.get("emergence_summary", {})
+    if state.emergence_events:
+        last = state.emergence_events[-1]
+        print(
+            f"Cycle {state.cycle}: EmergenceEvent "
+            f"nodes={last.node_count} rate={last.emergence_rate:.4f} "
+            f"density={summary.get('mean_density', 0.0):.3f}"
+        )
+```
+
+### Real-Time Dash Web GUI (v0.2.0)
+
+```bash
+# Install GUI extra
+pip install "genesis-os[gui]"
+
+# Launch live dashboard at http://127.0.0.1:8050
+genesis-os cycle --entropy 0.4 --max-cycles 200 --gui
+
+# Custom port
+genesis-os cycle --gui --gui-port 8080 --max-cycles 500
+```
+
+```python
+# Programmatic GUI usage
+from genesis_os import GenesisOS
+from genesis_os.core.orchestrator import GenesisConfig
+from genesis_os.dashboard.web_gui import GenesisWebGUI, GUISnapshot
+import threading
+
+config = GenesisConfig(entropy=0.4, max_cycles=200, seed=7)
+genesis = GenesisOS(config=config)
+gui = GenesisWebGUI(interval_ms=500)
+gui.build_app()
+
+# Run GUI in background
+t = threading.Thread(target=lambda: gui.run(host="127.0.0.1", port=8050), daemon=True)
+t.start()
+
+for state in genesis.phase_transition_loop():
+    esummary = state.metadata.get("emergence_summary", {})
+    gui.push_snapshot(GUISnapshot(
+        cycle=state.cycle,
+        phase=state.phase.value,
+        entropy=state.entropy,
+        phi=state.phi,
+        lagrangian=state.lagrangian,
+        gamma=state.crep.gamma if state.crep else 0.0,
+        mean_density=float(esummary.get("mean_density", 0.0)),
+        active_nodes=int(esummary.get("active_nodes", 0)),
+        emergence_events=len(state.emergence_events),
+    ))
 ```
 
 ### Real-Time Loop with Mandala
@@ -154,11 +235,17 @@ for state in genesis.phase_transition_loop():
 ## CLI
 
 ```bash
-# Run a cycle with real-time output
+# Run a cycle with real-time output + emergence events
 genesis-os cycle --entropy 0.4 --max-cycles 50 --phases
 
-# Headless simulation, JSON output
+# Headless simulation, JSON output (includes emergence_events + emergence_summary)
 genesis-os cycle --simulate --entropy 0.3 --max-cycles 100 --seed 42
+
+# Launch live Dash GUI at http://127.0.0.1:8050
+genesis-os cycle --gui --entropy 0.4 --max-cycles 200
+
+# GUI on custom port
+genesis-os cycle --gui --gui-port 8080 --max-cycles 500
 
 # With visualisation and sonification (requires [full-stack])
 genesis-os cycle --visualize --sonify --max-cycles 20
@@ -178,10 +265,13 @@ genesis-os info
 | `--max-cycles INT` | 20 | Number of orchestration cycles |
 | `--alpha FLOAT` | 0.1 | Self-reflection learning rate alpha |
 | `--seed INT` | None | Random seed for reproducibility |
-| `--phases` | False | Print phase transitions |
+| `--phases` | False | Print phase transitions + emergence events |
 | `--simulate` | False | Headless mode, JSON output |
 | `--visualize` | False | Render Mandala dashboard |
 | `--sonify` | False | Generate sonification output |
+| `--gui` | False | Launch live Dash web GUI (requires `[gui]`) |
+| `--gui-port INT` | 8050 | Dash server port |
+| `--gui-host STR` | 127.0.0.1 | Dash server host |
 
 ---
 
@@ -193,15 +283,17 @@ genesis-os/
 │   ├── core/
 │   │   ├── crep.py          # CREPEvaluator, CREPScore
 │   │   ├── phase.py         # Phase, PhaseMatrix, PhaseTransition
-│   │   └── orchestrator.py  # GenesisOS (main entry point)
+│   │   └── orchestrator.py  # GenesisOS (main entry point) + EmergenceEvent
 │   ├── runtime/
 │   │   ├── engine.py        # RuntimeEngine (Unified Lagrangian)
-│   │   └── utac.py          # UTACLogistic ODE
+│   │   ├── utac.py          # UTACLogistic ODE
+│   │   └── emergence.py     # CosmicWebSimulator, EmergenceEvent (v0.2.0)
 │   ├── cli/
 │   │   └── main.py          # Typer CLI
 │   ├── dashboard/
 │   │   ├── mandala.py       # MandalaDashboard
-│   │   └── sonification.py  # Sonifier
+│   │   ├── sonification.py  # Sonifier
+│   │   └── web_gui.py       # GenesisWebGUI – Dash live dashboard (v0.2.0)
 │   └── plugins/
 │       ├── registry.py      # PluginRegistry
 │       └── adapters/        # One adapter per optional package
@@ -236,13 +328,13 @@ mkdocs serve
 If you use **genesis-os** in academic work, please cite:
 
 ```bibtex
-@software{genesis_os_2024,
+@software{genesis_os_2025,
   author    = {GenesisAeon},
-  title     = {genesis-os: Self-reflecting OS framework for phase transitions
-               and resonance coupling},
-  year      = {2024},
-  version   = {0.1.0},
-  doi       = {10.5281/zenodo.genesis-os},
+  title     = {genesis-os: Live cosmic-web emergence simulation and Dash GUI
+               for self-reflecting phase-transition systems},
+  year      = {2025},
+  version   = {0.2.0},
+  doi       = {10.5281/zenodo.19140088},
   url       = {https://github.com/GenesisAeon/genesis-os},
 }
 ```
