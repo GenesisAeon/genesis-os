@@ -331,6 +331,17 @@ class TestGUISnapshotIntegration:
 
 
 class TestCLIGUIFlag:
+    @pytest.fixture(autouse=True)
+    def _mock_start_gui(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        """Prevent real Dash daemon threads from polluting CliRunner stdout.
+
+        Returns a MagicMock so the web_gui branch (line 150) stays covered.
+        """
+        from unittest.mock import MagicMock
+
+        mock_gui = MagicMock()
+        monkeypatch.setattr("genesis_os.cli.main._start_gui", lambda *_a, **_kw: mock_gui)
+
     def test_cycle_gui_flag_accepted(self) -> None:
         """--gui flag must be accepted without crashing (Dash may not start)."""
         result = runner.invoke(

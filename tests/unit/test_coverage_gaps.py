@@ -17,7 +17,7 @@ from unittest.mock import MagicMock, patch
 import pytest
 from typer.testing import CliRunner
 
-from genesis_os.cli.main import _push_gui_snapshot, _run_sonify, _run_visualize, app
+from genesis_os.cli.main import _push_gui_snapshot, _run_sonify, _run_visualize, _start_gui, app
 from genesis_os.core.crep import CREPEvaluator, CREPScore
 from genesis_os.core.orchestrator import GenesisState
 from genesis_os.core.phase import Phase
@@ -378,3 +378,18 @@ class TestPluginRegistryAutoDiscover:
 
         assert result is False
         assert "missing_pkg" in registry.failed
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# _start_gui — cover daemon-thread launch path (no real server)
+# ──────────────────────────────────────────────────────────────────────────────
+
+
+class TestStartGUICoverage:
+    def test_start_gui_launches_with_mocked_gui(self) -> None:
+        """Cover _start_gui main path: GenesisWebGUI created, app built, thread started."""
+        mock_gui = MagicMock()
+        with patch("genesis_os.dashboard.web_gui.GenesisWebGUI", return_value=mock_gui):
+            result = _start_gui("127.0.0.1", 19998)
+        assert result is mock_gui
+        mock_gui.build_app.assert_called_once()
