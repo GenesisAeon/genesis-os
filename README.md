@@ -11,7 +11,8 @@
   <a href="https://pypi.org/project/genesis-os/"><img src="https://img.shields.io/pypi/v/genesis-os.svg" alt="PyPI version"/></a>
   <a href="https://pypi.org/project/genesis-os/"><img src="https://img.shields.io/pypi/pyversions/genesis-os.svg" alt="Python versions"/></a>
   <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://github.com/GenesisAeon/genesis-os/workflows/CI/badge.svg" alt="CI status"/></a>
-  <a href="https://doi.org/10.5281/zenodo.19140088"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19140088.svg" alt="DOI"/></a>
+  <a href="https://doi.org/10.5281/zenodo.19150765"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19150765.svg" alt="DOI"/></a>
+  <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://img.shields.io/badge/tests-99.10%25-green" alt="Tests"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"/></a>
 </p>
 
@@ -334,7 +335,7 @@ If you use **genesis-os** in academic work, please cite:
                for self-reflecting phase-transition systems},
   year      = {2025},
   version   = {0.2.0},
-  doi       = {10.5281/zenodo.19140088},
+  doi       = {10.5281/zenodo.19150765},
   url       = {https://github.com/GenesisAeon/genesis-os},
 }
 ```
