@@ -170,7 +170,13 @@ def _start_gui(host: str, port: int) -> Any | None:
         web_gui.build_app()
 
         def _serve() -> None:
-            web_gui.run(host=host, port=port, debug=False)
+            import contextlib
+            import logging
+
+            logging.getLogger("werkzeug").setLevel(logging.ERROR)
+            logging.getLogger("dash").setLevel(logging.ERROR)
+            with contextlib.suppress(Exception, SystemExit):  # pragma: no cover
+                web_gui.run(host=host, port=port, debug=False)
 
         t = threading.Thread(target=_serve, daemon=True)
         t.start()
