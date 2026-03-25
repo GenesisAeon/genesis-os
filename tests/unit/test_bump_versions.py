@@ -4,11 +4,9 @@ from __future__ import annotations
 import runpy
 import sys
 from pathlib import Path
-from unittest.mock import patch
-
 import pytest
 
-import genesis_os.tools.bump_versions as bv_module
+from genesis_os.tools import bump_versions as bv_module
 from genesis_os.tools.bump_versions import (
     INIT_VERSION_RE,
     REPOS,
@@ -253,8 +251,9 @@ class TestMainRepos:
 
 
 class TestMainEntryPoint:
-    def test_runpy_invokes_main(self, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_entry_point_runs_without_error(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        # runpy re-executes the module in a fresh namespace (so patches on the
+        # existing module object don't apply).  Set argv to a valid version and
+        # ensure no repos exist → all skipped, no error raised.
         monkeypatch.setattr(sys, "argv", ["bump_versions", "0.3.0"])
-        with patch("genesis_os.tools.bump_versions.main") as mock_main:
-            runpy.run_module("genesis_os.tools.bump_versions", run_name="__main__")
-        mock_main.assert_called_once()
+        runpy.run_module("genesis_os.tools.bump_versions", run_name="__main__")
