@@ -7,7 +7,6 @@ from pathlib import Path
 
 import pytest
 
-from genesis_os.tools import bump_versions as bv_module
 from genesis_os.tools.bump_versions import (
     INIT_VERSION_RE,
     REPOS,
@@ -15,6 +14,10 @@ from genesis_os.tools.bump_versions import (
     bump_repo,
     main,
 )
+
+# Module reference for monkeypatching – plain assignment, not an import,
+# so ruff's isort (I001) never touches this line.
+bv_module = sys.modules["genesis_os.tools.bump_versions"]
 
 
 # ---------------------------------------------------------------------------
