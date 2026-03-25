@@ -46,7 +46,7 @@ full-stack = [
     "advanced-weighting-systems>=0.1.0",
     "fieldtheory>=0.1.0",
     "mirror-machine>=0.1.0",
-    "cosmic-web>=0.2.0",
+    "cosmic-web>=0.1.0",
     "sigillin>=0.1.0",
     "entropy-governance>=0.1.0",
     "utac-core>=0.1.0",
@@ -57,6 +57,12 @@ full-stack = [
     "entropy-table>=0.1.0",
     "matplotlib>=3.7.0",
     "plotly>=5.15.0",
+]
+notebook = [
+    "jupyter>=1.0.0",
+    "jupyterlab>=4.0.0",
+    "matplotlib>=3.7.0",
+    "numpy>=1.24.0",
 ]
 gui = [
     "dash>=2.14.0",
