@@ -96,7 +96,8 @@ def main() -> None:
     print(f"\nUpdated : {len(updated)} repos")
     if skipped:
         print(f"Skipped : {len(skipped)} (not found or already at target version)")
-    print("\nNext: commit each repo, push, and trigger releases via `git tag vX.Y.Z && git push --tags`")
+    print("\nNext: commit each repo, push, and trigger releases via")
+    print("  git tag vX.Y.Z && git push --tags")
 
 
 if __name__ == "__main__":
