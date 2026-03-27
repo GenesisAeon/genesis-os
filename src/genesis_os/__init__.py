@@ -18,10 +18,12 @@ __all__ = [
     "PhaseMatrix",
     "RuntimeEngine",
     "__version__",
+    "utac_core",
 ]
 
 from genesis_os.core.crep import CREPEvaluator
 from genesis_os.core.orchestrator import GenesisOS
 from genesis_os.core.phase import PhaseMatrix
+from genesis_os.plugins.adapters import utac_core
 from genesis_os.runtime.emergence import CosmicWebSimulator
 from genesis_os.runtime.engine import RuntimeEngine
