@@ -9,6 +9,7 @@ and cosmic-web simulation.
 
 ## Navigation
 
+- [Whitepaper](whitepaper.md) — GenesisAeon: Ein selbst-reflektierendes thermodynamisches OS (arXiv / Zenodo)
 - [API Reference](reference.md) — Full module and class documentation
 - [GitHub Repository](https://github.com/GenesisAeon/genesis-os)
 - [PyPI Package](https://pypi.org/project/genesis-os/)
