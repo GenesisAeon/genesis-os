@@ -401,3 +401,30 @@ class TestUtacCore:
              patch.object(utac_core, "_ENGINE", mock_engine):
             result = utac_core.plugin_fn(state_with_crep)
         assert result["utac_entropy"] is None
+
+    def test_compute_tension_metric_returns_float(self) -> None:
+        result = utac_core.compute_tension_metric(1.2, 15.0)
+        assert isinstance(result, float)
+        assert result >= 0.0
+
+    def test_compute_tension_metric_zero_anomaly(self) -> None:
+        # Zero anomaly → gamma=1 → minimum tension (close to 0)
+        result = utac_core.compute_tension_metric(0.0, 30.0)
+        assert result == pytest.approx(0.0, abs=1e-9)
+
+    def test_compute_tension_metric_high_anomaly(self) -> None:
+        # High anomaly produces higher tension than zero anomaly at same ice
+        low = utac_core.compute_tension_metric(0.0, 20.0)
+        high = utac_core.compute_tension_metric(3.0, 20.0)
+        assert high > low
+
+    def test_compute_tension_metric_ice_stress(self) -> None:
+        # Lower ice volume → higher tension (more ice stress)
+        plenty_ice = utac_core.compute_tension_metric(1.0, 30.0)
+        low_ice = utac_core.compute_tension_metric(1.0, 5.0)
+        assert low_ice > plenty_ice
+
+    def test_compute_tension_metric_top_level_import(self) -> None:
+        from genesis_os import utac_core as uc
+        result = uc.compute_tension_metric(1.38, 12.8)
+        assert isinstance(result, float)
