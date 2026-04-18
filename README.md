@@ -12,6 +12,7 @@
   <a href="https://pypi.org/project/genesis-os/"><img src="https://img.shields.io/pypi/pyversions/genesis-os.svg" alt="Python versions"/></a>
   <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://github.com/GenesisAeon/genesis-os/workflows/CI/badge.svg" alt="CI status"/></a>
   <a href="https://doi.org/10.5281/zenodo.19150765"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19150765.svg" alt="DOI"/></a>
+  <a href="docs/whitepaper.md"><img src="https://img.shields.io/badge/whitepaper-v0.3.1-blue" alt="Whitepaper"/></a>
   <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://img.shields.io/badge/tests-99.10%25-green" alt="Tests"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"/></a>
 </p>
@@ -329,14 +330,16 @@ mkdocs serve
 If you use **genesis-os** in academic work, please cite:
 
 ```bibtex
-@software{genesis_os_2025,
-  author    = {GenesisAeon},
-  title     = {genesis-os: Live cosmic-web emergence simulation and Dash GUI
-               for self-reflecting phase-transition systems},
-  year      = {2025},
-  version   = {0.2.0},
+@software{roemer2026genesisaeon,
+  author    = {Römer, Johann},
+  title     = {GenesisAeon v0.3.1: A Self-Reflective Thermodynamic Operating
+               System for Emergent Realities},
+  year      = {2026},
+  month     = {3},
+  publisher = {Zenodo},
   doi       = {10.5281/zenodo.19150765},
-  url       = {https://github.com/GenesisAeon/genesis-os},
+  url       = {https://doi.org/10.5281/zenodo.19150765},
+  version   = {0.3.1}
 }
 ```
 
