@@ -5,7 +5,7 @@
 **Johann Römer**
 Independent Researcher, GenesisAeon Project
 **Date:** March 30, 2026
-**Software DOI:** [10.5281/zenodo.19150765](https://doi.org/10.5281/zenodo.19150765)
+**Software DOI:** [10.5281/zenodo.19645351](https://doi.org/10.5281/zenodo.19645351)
 **Repository:** https://github.com/GenesisAeon/genesis-os
 **Keywords:** self-organized criticality, coherence resonance, unified Lagrangian, entropy dynamics, UTAC, CREP metrics, AFET, phase transitions, Arctic sea ice, ERA5, variational thermodynamics, information geometry
 
@@ -249,7 +249,7 @@ The IllustrisTNG suite [Pillepich2018] provides the observational anchor: baryon
 
 ## 5. Reproducibility and Code Availability
 
-All code is released under the **MIT Licence** at https://github.com/GenesisAeon/genesis-os (tag `v0.3.1`), DOI [10.5281/zenodo.19150765](https://doi.org/10.5281/zenodo.19150765).
+All code is released under the **MIT Licence** at https://github.com/GenesisAeon/genesis-os (tag `v0.3.1`), DOI [10.5281/zenodo.19645351](https://doi.org/10.5281/zenodo.19645351).
 
 ```bash
 # Install
@@ -374,8 +374,8 @@ We have presented GenesisAeon v0.3.1 — a self-reflective thermodynamic operati
   year      = {2026},
   month     = {3},
   publisher = {Zenodo},
-  doi       = {10.5281/zenodo.19150765},
-  url       = {https://doi.org/10.5281/zenodo.19150765},
+  doi       = {10.5281/zenodo.19645351},
+  url       = {https://doi.org/10.5281/zenodo.19645351},
   version   = {0.3.1}
 }
 ```
