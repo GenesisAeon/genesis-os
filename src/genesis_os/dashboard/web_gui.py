@@ -65,6 +65,10 @@ class GUISnapshot:
         active_nodes: Number of active emergence nodes.
         emergence_events: Cumulative emergence event count.
         phase_transition: Whether a transition just occurred.
+        tension: Live Tension Metric τ(t) from ERA5 stream (Milestone 3.3).
+        alarm_level: Current phase-alarm severity level string.
+        variance_ratio: Sliding-window variance ratio for EWS display.
+        ar1: Lag-1 autocorrelation for EWS display.
     """
 
     cycle: int = 0
@@ -81,6 +85,10 @@ class GUISnapshot:
     active_nodes: int = 0
     emergence_events: int = 0
     phase_transition: bool = False
+    tension: float = 0.0
+    alarm_level: str = "NOMINAL"
+    variance_ratio: float = 0.0
+    ar1: float = 0.0
 
 
 @dataclass
@@ -254,10 +262,92 @@ class GenesisWebGUI:
         )
         return fig
 
+    @staticmethod
+    def _alarm_color(level: str) -> str:
+        """Return hex colour for the given alarm level string."""
+        colors = {
+            "NOMINAL": "#2ecc71",
+            "ELEVATED": "#f39c12",
+            "WARNING": "#e67e22",
+            "CRITICAL": "#e74c3c",
+        }
+        return colors.get(level, "#aaa")
+
+    def _tension_figure(self, history: list[GUISnapshot]) -> Any:
+        """Build the live Tension Metric τ(t) chart with alarm zones."""
+        if go is None:  # pragma: no cover
+            return {}
+        cycles = [s.cycle for s in history]
+        tensions = [s.tension for s in history]
+        var_ratios = [s.variance_ratio for s in history]
+        ar1s = [s.ar1 for s in history]
+
+        fig = go.Figure()
+        fig.add_trace(
+            go.Scatter(
+                x=cycles,
+                y=tensions,
+                name="Tension τ",
+                line={"color": "#e74c3c", "width": 2},
+                fill="tozeroy",
+                fillcolor="rgba(231,76,60,0.12)",
+            )
+        )
+        fig.add_trace(
+            go.Scatter(
+                x=cycles,
+                y=var_ratios,
+                name="Var. Ratio",
+                line={"color": "#f39c12", "dash": "dot"},
+                yaxis="y2",
+            )
+        )
+        fig.add_trace(
+            go.Scatter(
+                x=cycles,
+                y=ar1s,
+                name="AR(1)",
+                line={"color": "#9b59b6", "dash": "dash"},
+                yaxis="y2",
+            )
+        )
+        # Alarm threshold bands
+        for threshold, label, color in [
+            (0.8, "Elevated", "rgba(243,156,18,0.08)"),
+            (1.2, "Warning", "rgba(230,126,34,0.08)"),
+            (1.8, "Critical", "rgba(231,76,60,0.08)"),
+        ]:
+            fig.add_hline(
+                y=threshold,
+                line_dash="dot",
+                line_color=color.replace("0.08", "0.6"),
+                annotation_text=label,
+                annotation_position="right",
+            )
+        fig.update_layout(
+            xaxis={"title": "Cycle"},
+            yaxis={"title": "τ", "color": "#e74c3c"},
+            yaxis2={
+                "title": "EWS",
+                "overlaying": "y",
+                "side": "right",
+                "color": "#f39c12",
+                "range": [-1, 2],
+            },
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(18,18,18,0.8)",
+            font={"color": "#ecf0f1"},
+            legend={"orientation": "h", "y": 1.05},
+            margin={"l": 40, "r": 60, "t": 10, "b": 40},
+            title={"text": "Live Tension Metric τ(t) — EWS Feed", "x": 0.5, "font": {"size": 13}},
+        )
+        return fig
+
     def _status_cards(self, snap: GUISnapshot) -> list[Any]:
         """Build a row of status metric cards."""
         if dbc is None or html is None:  # pragma: no cover
             return []
+        alarm_color = self._alarm_color(snap.alarm_level)
         metrics = [
             ("Phase", snap.phase, "#9b59b6"),
             ("Cycle", str(snap.cycle), "#3498db"),
@@ -265,6 +355,8 @@ class GenesisWebGUI:
             ("Φ(H)", f"{snap.phi:.4f}", "#f39c12"),
             ("Active Nodes", str(snap.active_nodes), "#2ecc71"),
             ("Emergence ∑", str(snap.emergence_events), "#1abc9c"),
+            ("Tension τ", f"{snap.tension:.3f}", "#e74c3c"),
+            (f"Alarm: {snap.alarm_level}", f"AR(1)={snap.ar1:.2f}", alarm_color),
         ]
         cards = []
         for label, value, color in metrics:
@@ -353,6 +445,18 @@ class GenesisWebGUI:
                                 ),
                                 width=12,
                             ),
+                            className="mb-3",
+                        ),
+                        # Tension Metric live feed (Milestone 3.3)
+                        dbc.Row(
+                            dbc.Col(
+                                dcc.Graph(
+                                    id="tension-chart",
+                                    style={"height": "280px"},
+                                    config={"displayModeBar": False},
+                                ),
+                                width=12,
+                            ),
                         ),
                     ],
                     fluid=True,
@@ -376,10 +480,11 @@ class GenesisWebGUI:
                 Output("crep-radar", "figure"),
                 Output("entropy-chart", "figure"),
                 Output("emergence-chart", "figure"),
+                Output("tension-chart", "figure"),
             ],
             Input("interval", "n_intervals"),
         )
-        def update_all(_n: int) -> tuple[list[Any], Any, Any, Any]:  # pragma: no cover
+        def update_all(_n: int) -> tuple[list[Any], Any, Any, Any, Any]:  # pragma: no cover
             self._drain_queue()
             with self._lock:
                 history = list(self._history)
@@ -389,7 +494,8 @@ class GenesisWebGUI:
             radar = self._crep_radar_figure(snap)
             entropy_chart = self._entropy_lagrangian_figure(history)
             emergence_chart = self._emergence_figure(history)
-            return cards, radar, entropy_chart, emergence_chart
+            tension_chart = self._tension_figure(history)
+            return cards, radar, entropy_chart, emergence_chart, tension_chart
 
     def run(
         self,

@@ -63,6 +63,10 @@ gui = [
     "dash-bootstrap-components>=1.5.0",
     "plotly>=5.15.0",
 ]
+jax = [
+    "jax>=0.4.20",
+    "jaxlib>=0.4.20",
+]
 dev = [
     "pytest>=7.4.0",
     "pytest-cov>=4.1.0",
@@ -142,6 +146,8 @@ ignore = [
 "src/genesis_os/cli/main.py" = ["E501"]
 "src/genesis_os/plugins/adapters/*.py" = ["F401", "ARG001"]
 "src/genesis_os/dashboard/web_gui.py" = ["E501"]
+"src/genesis_os/jax/*.py" = ["F401", "ANN"]
+"src/genesis_os/live_data/*.py" = ["ANN401"]
 
 [tool.mypy]
 python_version = "3.10"
@@ -163,6 +169,22 @@ ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = ["genesis_os.dashboard.web_gui"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+    "jax",
+    "jax.*",
+    "jaxlib",
+    "jaxlib.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+    "genesis_os.jax.integrator",
+    "genesis_os.jax.cosmic_web_jax",
+]
 ignore_errors = true
 
 [tool.pytest.ini_options]
