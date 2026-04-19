@@ -73,7 +73,7 @@ class TensionMetric:
         self._history.clear()
         self._monitor.reset()
 
-        assert self.stream is not None  # noqa: S101  (set in __post_init__)
+        assert self.stream is not None  # set in __post_init__
         for reading in self.stream.stream(gamma=effective_gamma):
             self._history.append(reading)
             if len(self._history) > self.history_len:
@@ -94,7 +94,7 @@ class TensionMetric:
             gamma: New CREP coupling value.
         """
         self.gamma = gamma
-        assert self.stream is not None  # noqa: S101
+        assert self.stream is not None  # set in __post_init__
         self.stream.gamma = gamma
         self.load(gamma=gamma)
 

@@ -28,9 +28,10 @@ A CREP-coupled variant is also provided:
 from __future__ import annotations
 
 import csv
+from collections.abc import Iterator
 from dataclasses import dataclass, field
+from importlib.resources import files as _pkg_files
 from pathlib import Path
-from typing import Iterator
 
 import numpy as np
 
@@ -85,10 +86,24 @@ class ERA5Stream:
 
     def __post_init__(self) -> None:
         if self.data_path is None:
-            self.data_path = (
-                Path(__file__).parent.parent.parent.parent / "data" / "era5_kipppunkte.csv"
-            )
+            self.data_path = self._default_data_path()
         self._load(self.data_path)
+
+    @staticmethod
+    def _default_data_path() -> Path:
+        """Resolve the bundled CSV regardless of install vs development layout.
+
+        Prefers the package-bundled copy (available in installed wheels) and
+        falls back to the repository ``data/`` directory for editable installs.
+        """
+        try:
+            ref = _pkg_files("genesis_os.live_data").joinpath("era5_kipppunkte.csv")
+            candidate = Path(str(ref))
+            if candidate.exists():
+                return candidate
+        except (TypeError, ModuleNotFoundError):
+            pass
+        return Path(__file__).parent.parent.parent.parent / "data" / "era5_kipppunkte.csv"
 
     def _load(self, path: Path) -> None:
         """Parse the CSV and compute the baseline variance."""
@@ -128,22 +143,23 @@ class ERA5Stream:
             return 0.0
         return float(np.mean((x - x.mean()) * (y - y.mean())) / (std_x * std_y))
 
-    def _tension(self, window_ice: np.ndarray, gamma: float) -> tuple[float, float, float]:
-        """Compute τ, variance_ratio, and AR(1) for a window slice.
+    def _tension(self, window_ice: np.ndarray, gamma: float) -> tuple[float, float, float, float]:
+        """Compute raw τ, CREP-coupled τ_Γ, variance_ratio, and AR(1).
 
         Args:
             window_ice: Ice-volume values over the current sliding window.
             gamma: CREP coupling Γ.
 
         Returns:
-            Tuple ``(tension, variance_ratio, ar1)``.
+            Tuple ``(tau, tau_crep, variance_ratio, ar1)`` where ``tau`` is the
+            uncoupled baseline metric and ``tau_crep = tau · (1 + Γ)``.
         """
         var_w = float(np.var(window_ice, ddof=1)) if len(window_ice) > 1 else 0.0
         var_ratio = var_w / self._baseline_var
         ar1 = self._ar1(window_ice)
         tau = 0.5 * (var_ratio + abs(ar1))
         tau_crep = tau * (1.0 + gamma)
-        return tau_crep, var_ratio, ar1
+        return tau, tau_crep, var_ratio, ar1
 
     # ------------------------------------------------------------------
     # Public streaming API
@@ -167,13 +183,13 @@ class ERA5Stream:
         for i, (year, temp, ice) in enumerate(self._records):
             start = max(0, i + 1 - self.window)
             window_slice = ice_all[start : i + 1]
-            tau, var_ratio, ar1 = self._tension(window_slice, effective_gamma)
+            tau, tau_crep, var_ratio, ar1 = self._tension(window_slice, effective_gamma)
             yield TensionReading(
                 year=year,
                 temp_anomaly=temp,
                 ice_volume=ice,
                 tension=tau,
-                tension_crep=tau,
+                tension_crep=tau_crep,
                 variance_ratio=var_ratio,
                 ar1=ar1,
             )

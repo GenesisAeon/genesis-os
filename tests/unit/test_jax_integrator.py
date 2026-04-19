@@ -7,8 +7,8 @@ import pytest
 
 from genesis_os.core.crep import CREPScore
 from genesis_os.jax import JaxCosmicWebSimulator, LeapfrogIntegrator
-from genesis_os.jax.integrator import _mean_field_accel
 from genesis_os.jax.cosmic_web_jax import _density_step
+from genesis_os.jax.integrator import _mean_field_accel
 
 
 # ---------------------------------------------------------------------------
@@ -144,7 +144,9 @@ class TestLeapfrogIntegrator:
         assert integrator.kinetic_energy > 0.0
 
     def test_custom_acceleration_fn(self, integrator: LeapfrogIntegrator) -> None:
-        zero_accel = lambda pos: np.zeros_like(pos)
+        def zero_accel(pos: np.ndarray) -> np.ndarray:
+            return np.zeros_like(pos)
+
         p0 = integrator.positions.copy()
         v0 = integrator.velocities.copy()
         integrator.step(zero_accel)
@@ -308,6 +310,6 @@ class TestJaxCosmicWebSimulator:
         assert not np.allclose(jax_sim_small.density, 0.0)
 
     def test_jax_init_module(self) -> None:
-        from genesis_os.jax import JaxCosmicWebSimulator as JCS, LeapfrogIntegrator as LI
-        assert JCS is JaxCosmicWebSimulator
-        assert LI is LeapfrogIntegrator
+        import genesis_os.jax as jax_module
+        assert jax_module.JaxCosmicWebSimulator is JaxCosmicWebSimulator
+        assert jax_module.LeapfrogIntegrator is LeapfrogIntegrator

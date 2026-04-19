@@ -177,7 +177,9 @@ class PhaseAlarmMonitor:
         prefix = {
             AlarmLevel.ELEVATED: "Elevated tension detected",
             AlarmLevel.WARNING: "WARNING: High tension — phase transition risk",
-            AlarmLevel.CRITICAL: "CRITICAL: Imminent phase transition — τ exceeds critical threshold",
+            AlarmLevel.CRITICAL: (
+                "CRITICAL: Imminent phase transition — τ exceeds critical threshold"
+            ),
         }
         return f"[{level.value}] {prefix[level]} at year {year} (τ={tension:.3f})"
 

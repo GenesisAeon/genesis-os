@@ -23,14 +23,26 @@ from genesis_os.core.crep import CREPScore
 from genesis_os.runtime.emergence import EmergenceEvent
 
 try:  # pragma: no cover
+    import jax
     import jax.numpy as jnp
     from jax import jit as jax_jit
+
+    @jax_jit
+    def _jax_density_step_kernel(
+        density: "jax.Array",
+        rate: "jax.Array",
+        weight: "jax.Array",
+        dt: "jax.Array",
+    ) -> "jax.Array":
+        """JIT-compiled JAX density update kernel (runs on GPU/TPU when available)."""
+        return jnp.clip(density + rate * weight * dt, 0.0, 1.0)
 
     _JAX_AVAILABLE = True
 except ImportError:
     _JAX_AVAILABLE = False
     jnp = None  # type: ignore[assignment]
     jax_jit = None  # type: ignore[assignment]
+    _jax_density_step_kernel = None  # type: ignore[assignment]
 
 
 def _density_step(
@@ -40,6 +52,9 @@ def _density_step(
     dt: float,
 ) -> np.ndarray:
     """Apply one density evolution step to a chunk of nodes.
+
+    Dispatches to the JIT-compiled JAX kernel when JAX is available,
+    otherwise uses NumPy (CPU-only).
 
     .. math::
 
@@ -54,6 +69,14 @@ def _density_step(
     Returns:
         Updated density chunk, same shape and dtype.
     """
+    if _JAX_AVAILABLE:  # pragma: no cover
+        result = _jax_density_step_kernel(
+            jnp.asarray(density_chunk),
+            jnp.asarray(rate, dtype=jnp.float32),
+            jnp.asarray(weight_chunk),
+            jnp.asarray(dt, dtype=jnp.float32),
+        )
+        return np.asarray(result, dtype=np.float32)
     return np.clip(density_chunk + rate * weight_chunk * dt, 0.0, 1.0).astype(np.float32)
 
 

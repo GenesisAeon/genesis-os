@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from genesis_os.dashboard.tension_metric import TensionMetric
-from genesis_os.dashboard.web_gui import GUISnapshot, GenesisWebGUI
+from genesis_os.dashboard.web_gui import GenesisWebGUI, GUISnapshot
 from genesis_os.live_data.era5_stream import ERA5Stream
 from genesis_os.live_data.phase_alarm import AlarmLevel
 

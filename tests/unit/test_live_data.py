@@ -6,10 +6,15 @@ from pathlib import Path
 
 import pytest
 
+from genesis_os.live_data import (
+    AlarmLevel as ALImport,
+    ERA5Stream as ERA5StreamImport,
+    PhaseAlarm as PAImport,
+    PhaseAlarmMonitor as PAMImport,
+    TensionReading as TRImport,
+)
 from genesis_os.live_data.era5_stream import ERA5Stream, TensionReading
 from genesis_os.live_data.phase_alarm import AlarmLevel, PhaseAlarm, PhaseAlarmMonitor
-from genesis_os.live_data import ERA5Stream as ERA5StreamImport, TensionReading as TRImport
-from genesis_os.live_data import AlarmLevel as ALImport, PhaseAlarm as PAImport, PhaseAlarmMonitor as PAMImport
 
 
 # ---------------------------------------------------------------------------
@@ -85,9 +90,16 @@ class TestERA5Stream:
     def test_gamma_coupling_scales_tension(self, stream: ERA5Stream) -> None:
         r0 = stream.readings(gamma=0.0)
         r1 = stream.readings(gamma=1.0)
-        t0 = [r.tension for r in r0]
-        t1 = [r.tension for r in r1]
+        # raw tension is gamma-independent; tension_crep scales with gamma
+        t0 = [r.tension_crep for r in r0]
+        t1 = [r.tension_crep for r in r1]
         assert any(t1[i] > t0[i] for i in range(len(t0)) if t0[i] > 0)
+
+    def test_raw_tension_independent_of_gamma(self, stream: ERA5Stream) -> None:
+        r0 = stream.readings(gamma=0.0)
+        r1 = stream.readings(gamma=2.0)
+        for a, b in zip(r0, r1):
+            assert a.tension == pytest.approx(b.tension)
 
     def test_tension_non_negative(self, stream: ERA5Stream) -> None:
         for r in stream.stream():
