@@ -10,7 +10,6 @@ from genesis_os.jax import JaxCosmicWebSimulator, LeapfrogIntegrator
 from genesis_os.jax.cosmic_web_jax import _density_step
 from genesis_os.jax.integrator import _mean_field_accel
 
-
 # ---------------------------------------------------------------------------
 # Fixtures
 # ---------------------------------------------------------------------------
