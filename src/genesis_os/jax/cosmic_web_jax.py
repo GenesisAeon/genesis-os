@@ -23,17 +23,11 @@ from genesis_os.core.crep import CREPScore
 from genesis_os.runtime.emergence import EmergenceEvent
 
 try:  # pragma: no cover
-    import jax
     import jax.numpy as jnp
     from jax import jit as jax_jit
 
     @jax_jit
-    def _jax_density_step_kernel(
-        density: "jax.Array",
-        rate: "jax.Array",
-        weight: "jax.Array",
-        dt: "jax.Array",
-    ) -> "jax.Array":
+    def _jax_density_step_kernel(density, rate, weight, dt):  # type: ignore[misc]
         """JIT-compiled JAX density update kernel (runs on GPU/TPU when available)."""
         return jnp.clip(density + rate * weight * dt, 0.0, 1.0)
 

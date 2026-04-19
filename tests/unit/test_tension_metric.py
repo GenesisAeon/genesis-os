@@ -11,7 +11,6 @@ from genesis_os.dashboard.web_gui import GenesisWebGUI, GUISnapshot
 from genesis_os.live_data.era5_stream import ERA5Stream
 from genesis_os.live_data.phase_alarm import AlarmLevel
 
-
 # ---------------------------------------------------------------------------
 # Helpers / Fixtures
 # ---------------------------------------------------------------------------

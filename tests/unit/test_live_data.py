@@ -6,16 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from genesis_os.live_data import (
-    AlarmLevel as ALImport,
-    ERA5Stream as ERA5StreamImport,
-    PhaseAlarm as PAImport,
-    PhaseAlarmMonitor as PAMImport,
-    TensionReading as TRImport,
-)
 from genesis_os.live_data.era5_stream import ERA5Stream, TensionReading
 from genesis_os.live_data.phase_alarm import AlarmLevel, PhaseAlarm, PhaseAlarmMonitor
-
 
 # ---------------------------------------------------------------------------
 # ERA5Stream
@@ -98,7 +90,7 @@ class TestERA5Stream:
     def test_raw_tension_independent_of_gamma(self, stream: ERA5Stream) -> None:
         r0 = stream.readings(gamma=0.0)
         r1 = stream.readings(gamma=2.0)
-        for a, b in zip(r0, r1):
+        for a, b in zip(r0, r1, strict=True):
             assert a.tension == pytest.approx(b.tension)
 
     def test_tension_non_negative(self, stream: ERA5Stream) -> None:
@@ -293,8 +285,9 @@ class TestPhaseAlarmMonitor:
         assert result is not None
 
     def test_live_data_module_imports(self) -> None:
-        assert ERA5StreamImport is ERA5Stream
-        assert TRImport is TensionReading
-        assert ALImport is AlarmLevel
-        assert PAImport is PhaseAlarm
-        assert PAMImport is PhaseAlarmMonitor
+        import genesis_os.live_data as m
+        assert m.ERA5Stream is ERA5Stream
+        assert m.TensionReading is TensionReading
+        assert m.AlarmLevel is AlarmLevel
+        assert m.PhaseAlarm is PhaseAlarm
+        assert m.PhaseAlarmMonitor is PhaseAlarmMonitor
