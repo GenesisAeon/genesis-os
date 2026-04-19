@@ -11,10 +11,12 @@
   <a href="https://pypi.org/project/genesis-os/"><img src="https://img.shields.io/pypi/v/genesis-os.svg" alt="PyPI version"/></a>
   <a href="https://pypi.org/project/genesis-os/"><img src="https://img.shields.io/pypi/pyversions/genesis-os.svg" alt="Python versions"/></a>
   <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://github.com/GenesisAeon/genesis-os/workflows/CI/badge.svg" alt="CI status"/></a>
-  <a href="https://doi.org/10.5281/zenodo.19150765"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19150765.svg" alt="DOI"/></a>
+  <a href="https://doi.org/10.5281/zenodo.19645351"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19645351.svg" alt="DOI"/></a>
   <a href="docs/whitepaper.md"><img src="https://img.shields.io/badge/whitepaper-v0.3.1-blue" alt="Whitepaper"/></a>
-  <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://img.shields.io/badge/tests-99.10%25-green" alt="Tests"/></a>
+  <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://img.shields.io/badge/coverage-99.1%25-brightgreen" alt="99.1% test coverage"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"/></a>
+  <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/docs-CC%20BY%204.0-lightblue.svg" alt="CC BY 4.0"/></a>
+  <a href="https://explore.openaire.eu/search/software?pid=10.5281%2Fzenodo.19645351"><img src="https://img.shields.io/badge/OpenAIRE-indexed-blue?logo=openaire" alt="OpenAIRE"/></a>
 </p>
 
 ---
@@ -329,19 +331,43 @@ mkdocs serve
 
 If you use **genesis-os** in academic work, please cite:
 
+**Paper (V2 — peer-review expanded):**
+
 ```bibtex
-@software{roemer2026genesisaeon,
-  author    = {Römer, Johann},
-  title     = {GenesisAeon v0.3.1: A Self-Reflective Thermodynamic Operating
-               System for Emergent Realities},
-  year      = {2026},
-  month     = {3},
-  publisher = {Zenodo},
-  doi       = {10.5281/zenodo.19150765},
-  url       = {https://doi.org/10.5281/zenodo.19150765},
-  version   = {0.3.1}
+@article{roemer2026genesisaeon_v2,
+  author       = {Römer, Johann},
+  title        = {{GenesisAeon v0.3.1}: A Unified Variational Framework
+                  for Emergent Criticality Across Physical Domains},
+  journal      = {Zenodo},
+  year         = {2026},
+  month        = apr,
+  version      = {v2},
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.19645351},
+  url          = {https://doi.org/10.5281/zenodo.19645351}
 }
 ```
+
+**Software:**
+
+```bibtex
+@software{roemer2026genesisaeon_software,
+  author       = {Römer, Johann},
+  title        = {{genesis-os}: GenesisAeon Unified Framework — Python Implementation},
+  year         = {2026},
+  publisher    = {GitHub},
+  version      = {v0.3.1},
+  url          = {https://github.com/GenesisAeon/genesis-os}
+}
+```
+
+Full bibliography (25 BibTeX entries including Bak, Pikovsky, GENERIC, ERA5,
+GADGET-4, IllustrisTNG, IPCC AR6):
+→ [`docs/genesisaeon_citations.bib`](docs/genesisaeon_citations.bib)
+
+Paper PDF: [`docs/genesisaeon_v0.3.1_paper.pdf`](docs/genesisaeon_v0.3.1_paper.pdf)
+
+APA: Römer, J. (2026, April). *GenesisAeon v0.3.1: A unified variational framework for emergent criticality across physical domains* (v2). Zenodo. https://doi.org/10.5281/zenodo.19645351
 
 ---
 
