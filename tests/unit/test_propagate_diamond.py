@@ -1,4 +1,5 @@
 """Tests for genesis_os.tools.propagate_diamond."""
+
 from __future__ import annotations
 
 import subprocess
@@ -64,16 +65,12 @@ class TestRun:
     def test_calls_subprocess_with_cwd(self, tmp_path):
         with patch("subprocess.run") as mock_run:
             _run(["git", "status"], cwd=tmp_path)
-        mock_run.assert_called_once_with(
-            ["git", "status"], cwd=tmp_path, check=True, text=True
-        )
+        mock_run.assert_called_once_with(["git", "status"], cwd=tmp_path, check=True, text=True)
 
     def test_calls_subprocess_without_cwd(self):
         with patch("subprocess.run") as mock_run:
             _run(["git", "status"])
-        mock_run.assert_called_once_with(
-            ["git", "status"], cwd=None, check=True, text=True
-        )
+        mock_run.assert_called_once_with(["git", "status"], cwd=None, check=True, text=True)
 
     def test_propagates_called_process_error(self, tmp_path):
         with (
@@ -214,9 +211,7 @@ class TestPropagate:
             patch("genesis_os.tools.propagate_diamond._merge_pyproject"),
         ):
             propagate("new-repo", tmp_path)
-        all_args_flat = " ".join(
-            str(a) for c in mock_run.call_args_list for a in c.args[0]
-        )
+        all_args_flat = " ".join(str(a) for c in mock_run.call_args_list for a in c.args[0])
         assert ORG in all_args_flat
 
     def test_calls_copy_templates(self, tmp_path):

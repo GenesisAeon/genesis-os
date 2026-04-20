@@ -240,7 +240,9 @@ class TestCREPEvaluator:
         assert ev.weighted_average() == pytest.approx(0.0)
 
     def test_weighted_average_uniform(self, crep_evaluator: CREPEvaluator) -> None:
-        crep_evaluator.evaluate({"coherence": 0.5, "resonance": 0.5, "emergence": 0.5, "poetics": 0.5})
+        crep_evaluator.evaluate(
+            {"coherence": 0.5, "resonance": 0.5, "emergence": 0.5, "poetics": 0.5}
+        )
         result = crep_evaluator.weighted_average()
         assert result == pytest.approx(0.5)
 

@@ -66,7 +66,9 @@ class TestRuntimeEngine:
         assert "entropy" in result
 
     def test_compute_entropy_evolves(self, engine: RuntimeEngine) -> None:
-        r1 = engine.compute({"entropy": 0.3, "coherence": 0.9, "resonance": 0.9, "emergence": 0.9, "poetics": 0.9})
+        r1 = engine.compute(
+            {"entropy": 0.3, "coherence": 0.9, "resonance": 0.9, "emergence": 0.9, "poetics": 0.9}
+        )
         # entropy should change due to UTAC step
         assert isinstance(r1["entropy"], float)
 
@@ -84,7 +86,17 @@ class TestRuntimeEngine:
 
     def test_lagrangian_equals_T_minus_V_plus_phi_plus_gamma(self) -> None:
         e = RuntimeEngine(kappa=1.0, eta=1.0, phi0=1.0)
-        r = e.compute({"entropy": 0.5, "resonance": 0.5, "phi": 1.0, "coherence": 0.5, "resonance": 0.5, "emergence": 0.5, "poetics": 0.5})
+        r = e.compute(
+            {
+                "entropy": 0.5,
+                "resonance": 0.5,
+                "phi": 1.0,
+                "coherence": 0.5,
+                "resonance": 0.5,
+                "emergence": 0.5,
+                "poetics": 0.5,
+            }
+        )
         expected = r["kinetic"] - r["potential"] + r["phi"] + r["gamma"]
         assert r["lagrangian"] == pytest.approx(expected, abs=1e-6)
 
@@ -107,7 +119,15 @@ class TestRuntimeEngine:
     def test_entropy_stays_in_bounds(self) -> None:
         e = RuntimeEngine()
         for _ in range(20):
-            r = e.compute({"entropy": 0.5, "coherence": 1.0, "resonance": 1.0, "emergence": 1.0, "poetics": 1.0})
+            r = e.compute(
+                {
+                    "entropy": 0.5,
+                    "coherence": 1.0,
+                    "resonance": 1.0,
+                    "emergence": 1.0,
+                    "poetics": 1.0,
+                }
+            )
             assert 0.0 <= r["entropy"] <= 1.0
 
     def test_lagrangian_is_finite(self, engine: RuntimeEngine) -> None:

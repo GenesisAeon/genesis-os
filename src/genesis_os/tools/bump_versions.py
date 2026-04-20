@@ -9,6 +9,7 @@ Usage::
     uv run python -m genesis_os.tools.bump_versions 0.3.0
     uv run python -m genesis_os.tools.bump_versions          # defaults to 0.2.0
 """
+
 from __future__ import annotations
 
 import re

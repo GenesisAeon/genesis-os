@@ -265,7 +265,9 @@ class TestGenesisWebGUIBuildApp:
 
 
 class TestGenesisWebGUIRun:
-    def test_run_raises_without_dash(self, gui: GenesisWebGUI, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_run_raises_without_dash(
+        self, gui: GenesisWebGUI, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
         """If Dash is not available, run() raises RuntimeError."""
         import genesis_os.dashboard.web_gui as wg
 

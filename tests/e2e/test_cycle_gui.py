@@ -302,14 +302,16 @@ class TestGUISnapshotIntegration:
         gui = GenesisWebGUI(history_len=20)
 
         for state in g.phase_transition_loop():
-            gui.push_snapshot(GUISnapshot(
-                cycle=state.cycle,
-                coherence=state.crep.coherence if state.crep else 0.5,
-                resonance=state.crep.resonance if state.crep else 0.5,
-                emergence=state.crep.emergence if state.crep else 0.5,
-                poetics=state.crep.poetics if state.crep else 0.5,
-                gamma=state.crep.gamma if state.crep else 0.0,
-            ))
+            gui.push_snapshot(
+                GUISnapshot(
+                    cycle=state.cycle,
+                    coherence=state.crep.coherence if state.crep else 0.5,
+                    resonance=state.crep.resonance if state.crep else 0.5,
+                    emergence=state.crep.emergence if state.crep else 0.5,
+                    poetics=state.crep.poetics if state.crep else 0.5,
+                    gamma=state.crep.gamma if state.crep else 0.0,
+                )
+            )
 
         gui._drain_queue()
         last = gui._history[-1]

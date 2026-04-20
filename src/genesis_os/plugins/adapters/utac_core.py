@@ -38,7 +38,7 @@ def compute_tension_metric(temp_anomaly: float, ice_volume: float) -> float:
         Tension metric T ≥ 0.
     """
     sigma = 1.5
-    coherence = math.exp(-(temp_anomaly / sigma) ** 2 / 2.0)
+    coherence = math.exp(-((temp_anomaly / sigma) ** 2) / 2.0)
     gamma = coherence * math.exp(-((1.0 - coherence) ** 2) / (2.0 * sigma**2))
     # Tension = lost coupling (1 - gamma) amplified by ice-volume stress.
     # As temp_anomaly rises, gamma falls and tension grows; lower ice → higher stress.

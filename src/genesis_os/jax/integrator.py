@@ -32,7 +32,7 @@ try:  # pragma: no cover
     from jax import jit as jax_jit
 
     _JAX_AVAILABLE = True
-except ImportError:
+except ImportError:  # pragma: no cover
     _JAX_AVAILABLE = False
     jax = None  # type: ignore[assignment]
     jnp = None  # type: ignore[assignment]

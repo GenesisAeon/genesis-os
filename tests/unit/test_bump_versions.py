@@ -1,4 +1,5 @@
 """Tests for genesis_os.tools.bump_versions."""
+
 from __future__ import annotations
 
 import runpy
@@ -52,7 +53,7 @@ class TestConstants:
         assert m is not None
 
     def test_version_re_captures_groups(self) -> None:
-        result = VERSION_RE.sub(r'\g<1>0.3.0\g<2>', 'version = "0.1.0"', count=1)
+        result = VERSION_RE.sub(r"\g<1>0.3.0\g<2>", 'version = "0.1.0"', count=1)
         assert result == 'version = "0.3.0"'
 
     def test_init_version_re_matches(self) -> None:
@@ -60,7 +61,7 @@ class TestConstants:
         assert m is not None
 
     def test_init_version_re_replaces(self) -> None:
-        result = INIT_VERSION_RE.sub(r'\g<1>0.3.0\g<2>', '__version__ = "0.1.0"')
+        result = INIT_VERSION_RE.sub(r"\g<1>0.3.0\g<2>", '__version__ = "0.1.0"')
         assert result == '__version__ = "0.3.0"'
 
 

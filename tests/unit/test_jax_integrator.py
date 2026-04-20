@@ -42,7 +42,9 @@ def jax_sim_small() -> JaxCosmicWebSimulator:
 
 @pytest.fixture
 def jax_sim_large() -> JaxCosmicWebSimulator:
-    return JaxCosmicWebSimulator(n_nodes=100_000, emergence_threshold=0.3, chunk_size=10_000, seed=7)
+    return JaxCosmicWebSimulator(
+        n_nodes=100_000, emergence_threshold=0.3, chunk_size=10_000, seed=7
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -228,7 +230,9 @@ class TestJaxCosmicWebSimulator:
         assert event is not None
         assert event.node_count >= 1
 
-    def test_step_increments_cycle(self, jax_sim_small: JaxCosmicWebSimulator, crep_mid: CREPScore) -> None:
+    def test_step_increments_cycle(
+        self, jax_sim_small: JaxCosmicWebSimulator, crep_mid: CREPScore
+    ) -> None:
         jax_sim_small.step(crep_mid, lagrangian=1.0)
         assert jax_sim_small.summary()["cycle"] == 1
 
@@ -259,7 +263,9 @@ class TestJaxCosmicWebSimulator:
         assert isinstance(jax_sim_small.active_nodes, int)
         assert jax_sim_small.active_nodes >= 0
 
-    def test_events_list_is_copy(self, jax_sim_small: JaxCosmicWebSimulator, crep_high: CREPScore) -> None:
+    def test_events_list_is_copy(
+        self, jax_sim_small: JaxCosmicWebSimulator, crep_high: CREPScore
+    ) -> None:
         jax_sim_small.step(crep_high, lagrangian=5.0)
         ev1 = jax_sim_small.events
         ev1.clear()
@@ -270,22 +276,35 @@ class TestJaxCosmicWebSimulator:
 
     def test_summary_keys(self, jax_sim_small: JaxCosmicWebSimulator) -> None:
         s = jax_sim_small.summary()
-        for key in ("n_nodes", "mean_density", "active_nodes", "event_count", "cycle", "jax_available"):
+        for key in (
+            "n_nodes",
+            "mean_density",
+            "active_nodes",
+            "event_count",
+            "cycle",
+            "jax_available",
+        ):
             assert key in s
 
-    def test_reset_clears_state(self, jax_sim_small: JaxCosmicWebSimulator, crep_high: CREPScore) -> None:
+    def test_reset_clears_state(
+        self, jax_sim_small: JaxCosmicWebSimulator, crep_high: CREPScore
+    ) -> None:
         jax_sim_small.step(crep_high, lagrangian=5.0)
         jax_sim_small.reset()
         assert jax_sim_small.summary()["event_count"] == 0
         assert jax_sim_small.summary()["cycle"] == 0
 
-    def test_reset_restores_density(self, jax_sim_small: JaxCosmicWebSimulator, crep_high: CREPScore) -> None:
+    def test_reset_restores_density(
+        self, jax_sim_small: JaxCosmicWebSimulator, crep_high: CREPScore
+    ) -> None:
         d0 = jax_sim_small.density.copy()
         jax_sim_small.step(crep_high, lagrangian=5.0)
         jax_sim_small.reset()
         np.testing.assert_array_equal(jax_sim_small.density, d0)
 
-    def test_large_scale_step(self, jax_sim_large: JaxCosmicWebSimulator, crep_high: CREPScore) -> None:
+    def test_large_scale_step(
+        self, jax_sim_large: JaxCosmicWebSimulator, crep_high: CREPScore
+    ) -> None:
         event = jax_sim_large.step(crep_high, lagrangian=5.0)
         assert event is not None
         assert jax_sim_large.summary()["n_nodes"] == 100_000
@@ -298,7 +317,9 @@ class TestJaxCosmicWebSimulator:
         sim_b.step(crep, lagrangian=3.0)
         np.testing.assert_array_almost_equal(sim_a.density, sim_b.density, decimal=5)
 
-    def test_weight_chunk_values_in_range(self, jax_sim_small: JaxCosmicWebSimulator, crep_mid: CREPScore) -> None:
+    def test_weight_chunk_values_in_range(
+        self, jax_sim_small: JaxCosmicWebSimulator, crep_mid: CREPScore
+    ) -> None:
         w = jax_sim_small._weight_chunk(crep_mid, 0, 100)
         assert np.all(w >= 0.0)
         assert np.all(w <= 1.0)
@@ -310,5 +331,6 @@ class TestJaxCosmicWebSimulator:
 
     def test_jax_init_module(self) -> None:
         import genesis_os.jax as jax_module
+
         assert jax_module.JaxCosmicWebSimulator is JaxCosmicWebSimulator
         assert jax_module.LeapfrogIntegrator is LeapfrogIntegrator

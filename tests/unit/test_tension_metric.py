@@ -21,7 +21,9 @@ def _make_stream(tmp_path: Path) -> ERA5Stream:
     csv = tmp_path / "era5_tension_test.csv"
     csv.write_text(
         "year,temp_anomaly,ice_volume\n"
-        + "\n".join(f"{y},-{(y-1990)*0.1:.2f},{30.0-(y-1990)*0.5:.2f}" for y in range(1990, 2020))
+        + "\n".join(
+            f"{y},-{(y - 1990) * 0.1:.2f},{30.0 - (y - 1990) * 0.5:.2f}" for y in range(1990, 2020)
+        )
         + "\n"
     )
     return ERA5Stream(data_path=csv, window=10)
@@ -100,7 +102,14 @@ class TestTensionMetric:
 
     def test_summary_keys(self, tension_loaded: TensionMetric) -> None:
         s = tension_loaded.summary()
-        for key in ("n_records", "latest_tension", "peak_tension", "mean_tension", "alarm_level", "total_alarms"):
+        for key in (
+            "n_records",
+            "latest_tension",
+            "peak_tension",
+            "mean_tension",
+            "alarm_level",
+            "total_alarms",
+        ):
             assert key in s
 
     def test_update_gamma_changes_tension(self, tension_loaded: TensionMetric) -> None:
@@ -220,7 +229,9 @@ class TestTensionFigure:
     def test_tension_figure_multiple_snapshots(self) -> None:
         gui = GenesisWebGUI()
         history = [
-            GUISnapshot(cycle=i, tension=0.3 + i * 0.1, variance_ratio=0.5 + i * 0.05, ar1=0.4 + i * 0.02)
+            GUISnapshot(
+                cycle=i, tension=0.3 + i * 0.1, variance_ratio=0.5 + i * 0.05, ar1=0.4 + i * 0.02
+            )
             for i in range(10)
         ]
         result = gui._tension_figure(history)
@@ -228,6 +239,8 @@ class TestTensionFigure:
 
     def test_tension_figure_with_high_tension(self) -> None:
         gui = GenesisWebGUI()
-        history = [GUISnapshot(cycle=i, tension=2.0 + i * 0.1, alarm_level="CRITICAL") for i in range(5)]
+        history = [
+            GUISnapshot(cycle=i, tension=2.0 + i * 0.1, alarm_level="CRITICAL") for i in range(5)
+        ]
         result = gui._tension_figure(history)
         assert result is not None

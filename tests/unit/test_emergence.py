@@ -76,8 +76,16 @@ class TestEmergenceEvent:
         )
         d = event.to_dict()
         expected_keys = {
-            "cycle", "node_count", "emergence_rate", "lagrangian",
-            "gamma", "density_delta", "coherence", "resonance", "emergence", "poetics",
+            "cycle",
+            "node_count",
+            "emergence_rate",
+            "lagrangian",
+            "gamma",
+            "density_delta",
+            "coherence",
+            "resonance",
+            "emergence",
+            "poetics",
         }
         assert expected_keys == set(d.keys())
 
@@ -115,15 +123,25 @@ class TestEmergenceEvent:
 
     def test_node_count_positive(self, crep_mid: CREPScore) -> None:
         event = EmergenceEvent(
-            cycle=1, node_count=4, emergence_rate=0.5,
-            lagrangian=1.0, gamma=0.6, density_delta=0.01, crep=crep_mid,
+            cycle=1,
+            node_count=4,
+            emergence_rate=0.5,
+            lagrangian=1.0,
+            gamma=0.6,
+            density_delta=0.01,
+            crep=crep_mid,
         )
         assert event.node_count > 0
 
     def test_emergence_rate_finite(self, crep_mid: CREPScore) -> None:
         event = EmergenceEvent(
-            cycle=1, node_count=1, emergence_rate=0.35,
-            lagrangian=1.0, gamma=0.5, density_delta=0.01, crep=crep_mid,
+            cycle=1,
+            node_count=1,
+            emergence_rate=0.35,
+            lagrangian=1.0,
+            gamma=0.5,
+            density_delta=0.01,
+            crep=crep_mid,
         )
         assert math.isfinite(event.emergence_rate)
 
@@ -200,6 +218,7 @@ class TestEmergenceRate:
 
     def test_large_lagrangian_approaches_tanh(self, sim: CosmicWebSimulator) -> None:
         import math as _math
+
         rate = sim.emergence_rate(lagrangian=1000.0, gamma=0.5)
         expected_max = _math.tanh(sim.sigma_e * 0.5)
         assert abs(rate - expected_max) < 0.001
@@ -285,17 +304,13 @@ class TestCosmicWebSimulatorStep:
         assert event is not None
         assert event.node_count >= 1
 
-    def test_step_auto_cycle_increments(
-        self, sim: CosmicWebSimulator, crep_mid: CREPScore
-    ) -> None:
+    def test_step_auto_cycle_increments(self, sim: CosmicWebSimulator, crep_mid: CREPScore) -> None:
         # Use internal cycle counter
         sim.step(crep_mid, lagrangian=1.0)
         sim.step(crep_mid, lagrangian=1.0)
         assert sim._cycle == 2
 
-    def test_step_with_mid_crep(
-        self, sim: CosmicWebSimulator, crep_mid: CREPScore
-    ) -> None:
+    def test_step_with_mid_crep(self, sim: CosmicWebSimulator, crep_mid: CREPScore) -> None:
         result = sim.step(crep_mid, lagrangian=1.0)
         # May or may not emit event; just check no exception
         assert result is None or isinstance(result, EmergenceEvent)
@@ -360,7 +375,14 @@ class TestCosmicWebSimulatorProperties:
 class TestCosmicWebSimulatorSummary:
     def test_summary_keys(self, sim: CosmicWebSimulator) -> None:
         s = sim.summary()
-        expected = {"mean_density", "active_nodes", "event_count", "n_nodes", "emergence_threshold", "cycle"}
+        expected = {
+            "mean_density",
+            "active_nodes",
+            "event_count",
+            "n_nodes",
+            "emergence_threshold",
+            "cycle",
+        }
         assert expected == set(s.keys())
 
     def test_summary_n_nodes_correct(self, sim: CosmicWebSimulator) -> None:
@@ -369,9 +391,7 @@ class TestCosmicWebSimulatorSummary:
     def test_summary_cycle_zero_initially(self, sim: CosmicWebSimulator) -> None:
         assert sim.summary()["cycle"] == 0
 
-    def test_summary_cycle_after_steps(
-        self, sim: CosmicWebSimulator, crep_mid: CREPScore
-    ) -> None:
+    def test_summary_cycle_after_steps(self, sim: CosmicWebSimulator, crep_mid: CREPScore) -> None:
         for _ in range(3):
             sim.step(crep_mid, lagrangian=1.0)
         assert sim.summary()["cycle"] == 3

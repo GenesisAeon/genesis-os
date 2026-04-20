@@ -26,7 +26,9 @@ class TestPluginRegistry:
         empty_registry.register("test", lambda s: {"x": 1})
         assert "test" in empty_registry.active
 
-    def test_registered_plugin_callable(self, empty_registry: PluginRegistry, state: GenesisState) -> None:
+    def test_registered_plugin_callable(
+        self, empty_registry: PluginRegistry, state: GenesisState
+    ) -> None:
         empty_registry.register("test", lambda s: {"x": 42})
         result = empty_registry.plugins["test"](state)
         assert result["x"] == 42

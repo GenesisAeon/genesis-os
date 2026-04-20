@@ -35,7 +35,7 @@ try:  # pragma: no cover
     from dash import Input, Output, dcc, html  # type: ignore[import-not-found]
 
     _DASH_AVAILABLE = True
-except ImportError:
+except ImportError:  # pragma: no cover
     _DASH_AVAILABLE = False
     dash = None  # type: ignore[assignment]
     dbc = None  # type: ignore[assignment]
@@ -111,9 +111,7 @@ class GenesisWebGUI:
     theme: str = "DARKLY"
 
     _app: Any = field(default=None, init=False, repr=False)
-    _queue: queue.Queue[GUISnapshot] = field(
-        default_factory=queue.Queue, init=False, repr=False
-    )
+    _queue: queue.Queue[GUISnapshot] = field(default_factory=queue.Queue, init=False, repr=False)
     _history: list[GUISnapshot] = field(default_factory=list, init=False, repr=False)
     _lock: threading.Lock = field(default_factory=threading.Lock, init=False, repr=False)
     _running: bool = field(default=False, init=False, repr=False)
@@ -388,9 +386,7 @@ class GenesisWebGUI:
             installed.
         """
         if not _DASH_AVAILABLE or dash is None:  # pragma: no cover
-            logger.warning(
-                "Dash not installed. Install genesis-os[gui] to use the web GUI."
-            )
+            logger.warning("Dash not installed. Install genesis-os[gui] to use the web GUI.")
             return None
 
         theme_url = getattr(dbc.themes, self.theme, dbc.themes.DARKLY)

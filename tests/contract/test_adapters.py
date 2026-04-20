@@ -75,14 +75,18 @@ class TestAdapterContract:
         except Exception as exc:
             pytest.fail(f"{module_path}.plugin_fn raised: {exc!r}")
 
-    def test_plugin_fn_has_available_key(self, module_path: str, sample_state: GenesisState) -> None:
+    def test_plugin_fn_has_available_key(
+        self, module_path: str, sample_state: GenesisState
+    ) -> None:
         """plugin_fn result must contain an *_available key."""
         mod = importlib.import_module(module_path)
         result = mod.plugin_fn(sample_state)
         has_avail = any(k.endswith("_available") for k in result)
         assert has_avail, f"{module_path} result missing *_available key: {result}"
 
-    def test_plugin_fn_available_key_is_bool(self, module_path: str, sample_state: GenesisState) -> None:
+    def test_plugin_fn_available_key_is_bool(
+        self, module_path: str, sample_state: GenesisState
+    ) -> None:
         """The *_available value must be a boolean."""
         mod = importlib.import_module(module_path)
         result = mod.plugin_fn(sample_state)

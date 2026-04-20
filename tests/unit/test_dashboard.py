@@ -23,7 +23,9 @@ class TestMandalaDashboard:
     def crep(self) -> CREPScore:
         return CREPScore(coherence=0.7, resonance=0.6, emergence=0.5, poetics=0.8)
 
-    def test_render_ascii_returns_string(self, dashboard: MandalaDashboard, crep: CREPScore) -> None:
+    def test_render_ascii_returns_string(
+        self, dashboard: MandalaDashboard, crep: CREPScore
+    ) -> None:
         result = dashboard.render_ascii(crep)
         assert isinstance(result, str)
 
@@ -31,15 +33,21 @@ class TestMandalaDashboard:
         result = dashboard.render_ascii(crep)
         assert len(result) > 0
 
-    def test_render_ascii_contains_phase(self, dashboard: MandalaDashboard, crep: CREPScore) -> None:
+    def test_render_ascii_contains_phase(
+        self, dashboard: MandalaDashboard, crep: CREPScore
+    ) -> None:
         result = dashboard.render_ascii(crep, phase=Phase.ACTIVATION)
         assert "Activation" in result
 
-    def test_render_ascii_contains_cycle(self, dashboard: MandalaDashboard, crep: CREPScore) -> None:
+    def test_render_ascii_contains_cycle(
+        self, dashboard: MandalaDashboard, crep: CREPScore
+    ) -> None:
         result = dashboard.render_ascii(crep, cycle=7)
         assert "7" in result
 
-    def test_render_ascii_contains_all_axes(self, dashboard: MandalaDashboard, crep: CREPScore) -> None:
+    def test_render_ascii_contains_all_axes(
+        self, dashboard: MandalaDashboard, crep: CREPScore
+    ) -> None:
         result = dashboard.render_ascii(crep)
         for axis in ["C", "R", "E", "P"]:
             assert axis in result
@@ -68,7 +76,9 @@ class TestMandalaDashboard:
         result = dashboard.render_polar(crep)
         assert isinstance(result, list)
 
-    def test_render_polar_has_four_entries(self, dashboard: MandalaDashboard, crep: CREPScore) -> None:
+    def test_render_polar_has_four_entries(
+        self, dashboard: MandalaDashboard, crep: CREPScore
+    ) -> None:
         result = dashboard.render_polar(crep)
         assert len(result) == 4
 
@@ -86,7 +96,9 @@ class TestMandalaDashboard:
         result = dashboard.plugin_render(crep)
         assert isinstance(result, str)
 
-    def test_multiple_renders_accumulate_frames(self, dashboard: MandalaDashboard, crep: CREPScore) -> None:
+    def test_multiple_renders_accumulate_frames(
+        self, dashboard: MandalaDashboard, crep: CREPScore
+    ) -> None:
         dashboard.render_ascii(crep)
         dashboard.render_ascii(crep)
         assert len(dashboard.frames) == 2

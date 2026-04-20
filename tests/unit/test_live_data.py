@@ -117,23 +117,21 @@ class TestERA5Stream:
 
     def test_stream_with_short_window(self, tmp_path: Path) -> None:
         csv = tmp_path / "short.csv"
-        csv.write_text(
-            "year,temp_anomaly,ice_volume\n"
-            "2000,-0.1,10.0\n"
-            "2001,-0.2,10.0\n"
-        )
+        csv.write_text("year,temp_anomaly,ice_volume\n2000,-0.1,10.0\n2001,-0.2,10.0\n")
         s = ERA5Stream(data_path=csv, window=5)
         readings = s.readings()
         assert len(readings) == 2
 
     def test_ar1_static_zero_variance(self) -> None:
         import numpy as np
+
         series = np.array([1.0, 1.0, 1.0])
         result = ERA5Stream._ar1(series)
         assert result == 0.0
 
     def test_ar1_static_short(self) -> None:
         import numpy as np
+
         assert ERA5Stream._ar1(np.array([1.0])) == 0.0
 
 
@@ -172,7 +170,14 @@ class TestPhaseAlarm:
             alarm.year = 2021  # type: ignore[misc]
 
     def test_to_dict_keys(self) -> None:
-        alarm = PhaseAlarm(year=2020, tension=1.5, level=AlarmLevel.WARNING, message="test", variance_ratio=1.2, ar1=0.8)
+        alarm = PhaseAlarm(
+            year=2020,
+            tension=1.5,
+            level=AlarmLevel.WARNING,
+            message="test",
+            variance_ratio=1.2,
+            ar1=0.8,
+        )
         d = alarm.to_dict()
         for key in ("year", "tension", "level", "message", "variance_ratio", "ar1"):
             assert key in d
@@ -286,6 +291,7 @@ class TestPhaseAlarmMonitor:
 
     def test_live_data_module_imports(self) -> None:
         import genesis_os.live_data as m
+
         assert m.ERA5Stream is ERA5Stream
         assert m.TensionReading is TensionReading
         assert m.AlarmLevel is AlarmLevel
