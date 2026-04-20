@@ -79,9 +79,7 @@ class ERA5Stream:
     window: int = 15
     gamma: float = 0.0
 
-    _records: list[tuple[int, float, float]] = field(
-        default_factory=list, init=False, repr=False
-    )
+    _records: list[tuple[int, float, float]] = field(default_factory=list, init=False, repr=False)
     _baseline_var: float = field(default=1.0, init=False)
 
     def __post_init__(self) -> None:
@@ -100,9 +98,9 @@ class ERA5Stream:
             ref = _pkg_files("genesis_os.live_data").joinpath("era5_kipppunkte.csv")
             candidate = Path(str(ref))
             if candidate.exists():
-                return candidate
-        except (TypeError, ModuleNotFoundError):
-            pass
+                return candidate  # pragma: no cover
+        except (TypeError, ModuleNotFoundError):  # pragma: no cover
+            pass  # pragma: no cover
         return Path(__file__).parent.parent.parent.parent / "data" / "era5_kipppunkte.csv"
 
     def _load(self, path: Path) -> None:

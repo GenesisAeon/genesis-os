@@ -64,12 +64,20 @@ def _state_table(state: GenesisState) -> Table:
 
 @app.command()
 def cycle(
-    entropy: Annotated[float, typer.Option("--entropy", "-e", help="Initial entropy H ∈ [0,1].")] = 0.5,
+    entropy: Annotated[
+        float, typer.Option("--entropy", "-e", help="Initial entropy H ∈ [0,1].")
+    ] = 0.5,
     phases: Annotated[bool, typer.Option("--phases", help="Print phase transitions.")] = False,
-    simulate: Annotated[bool, typer.Option("--simulate", help="Headless mode; print JSON summary.")] = False,
-    visualize: Annotated[bool, typer.Option("--visualize", help="Render Mandala dashboard.")] = False,
+    simulate: Annotated[
+        bool, typer.Option("--simulate", help="Headless mode; print JSON summary.")
+    ] = False,
+    visualize: Annotated[
+        bool, typer.Option("--visualize", help="Render Mandala dashboard.")
+    ] = False,
     sonify: Annotated[bool, typer.Option("--sonify", help="Generate sonification output.")] = False,
-    gui: Annotated[bool, typer.Option("--gui", help="Launch live Dash web GUI (requires genesis-os[gui]).")] = False,
+    gui: Annotated[
+        bool, typer.Option("--gui", help="Launch live Dash web GUI (requires genesis-os[gui]).")
+    ] = False,
     gui_port: Annotated[int, typer.Option("--gui-port", help="Dash server port.")] = 8050,
     gui_host: Annotated[str, typer.Option("--gui-host", help="Dash server host.")] = "127.0.0.1",
     max_cycles: Annotated[int, typer.Option("--max-cycles", "-n", help="Number of cycles.")] = 20,
@@ -129,7 +137,12 @@ def cycle(
 
     last_state: GenesisState | None = None
 
-    with Progress(SpinnerColumn(), "[progress.description]{task.description}", TimeElapsedColumn(), console=console) as progress:
+    with Progress(
+        SpinnerColumn(),
+        "[progress.description]{task.description}",
+        TimeElapsedColumn(),
+        console=console,
+    ) as progress:
         task = progress.add_task("[cyan]Running phase-transition loop...", total=max_cycles)
         for state in genesis.phase_transition_loop():
             last_state = state
@@ -184,8 +197,7 @@ def _start_gui(host: str, port: int) -> Any | None:
         return web_gui
     except ImportError:  # pragma: no cover
         console.print(
-            "[yellow]Warning:[/yellow] Dash not installed. "
-            "Run: pip install genesis-os[gui]"
+            "[yellow]Warning:[/yellow] Dash not installed. Run: pip install genesis-os[gui]"
         )
         return None
     except Exception as exc:  # pragma: no cover
@@ -213,9 +225,7 @@ def _push_gui_snapshot(web_gui: Any, state: GenesisState) -> None:
             mean_density=float(esummary.get("mean_density", 0.0)),
             active_nodes=int(esummary.get("active_nodes", 0)),
             emergence_events=len(state.emergence_events),
-            phase_transition=bool(
-                state.transitions and state.transitions[-1].cycle == state.cycle
-            ),
+            phase_transition=bool(state.transitions and state.transitions[-1].cycle == state.cycle),
         )
         web_gui.push_snapshot(snap)
     except Exception:  # pragma: no cover

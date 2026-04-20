@@ -85,8 +85,10 @@ class TestAdvancedWeighting:
         mock_weights = MagicMock()
         mock_weights.tolist.return_value = [0.1, 0.2, 0.3, 0.4]
         mock_engine.compute.return_value = mock_weights
-        with patch.object(advanced_weighting, "_AVAILABLE", True), \
-             patch.object(advanced_weighting, "_ENGINE", mock_engine):
+        with (
+            patch.object(advanced_weighting, "_AVAILABLE", True),
+            patch.object(advanced_weighting, "_ENGINE", mock_engine),
+        ):
             result = advanced_weighting.plugin_fn(state_with_crep)
         assert result["weighting_available"] is True
         assert result["crep_weights"] == [0.1, 0.2, 0.3, 0.4]
@@ -94,8 +96,10 @@ class TestAdvancedWeighting:
     def test_exception(self, state_with_crep: GenesisState) -> None:
         mock_engine = MagicMock()
         mock_engine.compute.side_effect = RuntimeError("fail")
-        with patch.object(advanced_weighting, "_AVAILABLE", True), \
-             patch.object(advanced_weighting, "_ENGINE", mock_engine):
+        with (
+            patch.object(advanced_weighting, "_AVAILABLE", True),
+            patch.object(advanced_weighting, "_ENGINE", mock_engine),
+        ):
             result = advanced_weighting.plugin_fn(state_with_crep)
         assert result["weighting_available"] is True
         assert result["crep_weights"] is None
@@ -115,9 +119,11 @@ class TestAeonAi:
         mock_detector.detect.return_value = "RESONANCE"
         mock_reflector = MagicMock()
         mock_reflector.reflect.return_value = 0.88
-        with patch.object(aeon_ai, "_AVAILABLE", True), \
-             patch.object(aeon_ai, "_DETECTOR", mock_detector), \
-             patch.object(aeon_ai, "_REFLECTOR", mock_reflector):
+        with (
+            patch.object(aeon_ai, "_AVAILABLE", True),
+            patch.object(aeon_ai, "_DETECTOR", mock_detector),
+            patch.object(aeon_ai, "_REFLECTOR", mock_reflector),
+        ):
             result = aeon_ai.plugin_fn(state_with_crep)
         assert result["aeon_available"] is True
         assert result["aeon_phase"] == "RESONANCE"
@@ -126,9 +132,11 @@ class TestAeonAi:
     def test_no_crep(self, state_no_crep: GenesisState) -> None:
         mock_detector = MagicMock()
         mock_reflector = MagicMock()
-        with patch.object(aeon_ai, "_AVAILABLE", True), \
-             patch.object(aeon_ai, "_DETECTOR", mock_detector), \
-             patch.object(aeon_ai, "_REFLECTOR", mock_reflector):
+        with (
+            patch.object(aeon_ai, "_AVAILABLE", True),
+            patch.object(aeon_ai, "_DETECTOR", mock_detector),
+            patch.object(aeon_ai, "_REFLECTOR", mock_reflector),
+        ):
             result = aeon_ai.plugin_fn(state_no_crep)
         assert result["aeon_available"] is True
         mock_detector.detect.assert_not_called()
@@ -137,9 +145,11 @@ class TestAeonAi:
         mock_detector = MagicMock()
         mock_detector.detect.side_effect = RuntimeError("boom")
         mock_reflector = MagicMock()
-        with patch.object(aeon_ai, "_AVAILABLE", True), \
-             patch.object(aeon_ai, "_DETECTOR", mock_detector), \
-             patch.object(aeon_ai, "_REFLECTOR", mock_reflector):
+        with (
+            patch.object(aeon_ai, "_AVAILABLE", True),
+            patch.object(aeon_ai, "_DETECTOR", mock_detector),
+            patch.object(aeon_ai, "_REFLECTOR", mock_reflector),
+        ):
             result = aeon_ai.plugin_fn(state_with_crep)
         assert result["aeon_available"] is True
         assert "aeon_phase" not in result
@@ -157,8 +167,10 @@ class TestClimateDashboard:
     def test_success(self, state_with_crep: GenesisState) -> None:
         mock_climate = MagicMock()
         mock_climate.entropy.return_value = 0.55
-        with patch.object(climate_dashboard, "_AVAILABLE", True), \
-             patch.object(climate_dashboard, "_CLIMATE", mock_climate):
+        with (
+            patch.object(climate_dashboard, "_AVAILABLE", True),
+            patch.object(climate_dashboard, "_CLIMATE", mock_climate),
+        ):
             result = climate_dashboard.plugin_fn(state_with_crep)
         assert result["climate_dashboard_available"] is True
         assert result["climate_entropy"] == pytest.approx(0.55)
@@ -166,8 +178,10 @@ class TestClimateDashboard:
     def test_exception(self, state_with_crep: GenesisState) -> None:
         mock_climate = MagicMock()
         mock_climate.entropy.side_effect = RuntimeError("err")
-        with patch.object(climate_dashboard, "_AVAILABLE", True), \
-             patch.object(climate_dashboard, "_CLIMATE", mock_climate):
+        with (
+            patch.object(climate_dashboard, "_AVAILABLE", True),
+            patch.object(climate_dashboard, "_CLIMATE", mock_climate),
+        ):
             result = climate_dashboard.plugin_fn(state_with_crep)
         assert result["climate_entropy"] is None
 
@@ -189,8 +203,10 @@ class TestCosmicWeb:
     def test_success(self, state_with_crep: GenesisState) -> None:
         mock_sim = MagicMock()
         mock_sim.step.return_value = 3.14
-        with patch.object(cosmic_web, "_AVAILABLE", True), \
-             patch.object(cosmic_web, "_SIM", mock_sim):
+        with (
+            patch.object(cosmic_web, "_AVAILABLE", True),
+            patch.object(cosmic_web, "_SIM", mock_sim),
+        ):
             result = cosmic_web.plugin_fn(state_with_crep)
         assert result["cosmic_web_available"] is True
         assert result["node_density"] == pytest.approx(3.14)
@@ -198,8 +214,10 @@ class TestCosmicWeb:
     def test_exception(self, state_with_crep: GenesisState) -> None:
         mock_sim = MagicMock()
         mock_sim.step.side_effect = RuntimeError("sim fail")
-        with patch.object(cosmic_web, "_AVAILABLE", True), \
-             patch.object(cosmic_web, "_SIM", mock_sim):
+        with (
+            patch.object(cosmic_web, "_AVAILABLE", True),
+            patch.object(cosmic_web, "_SIM", mock_sim),
+        ):
             result = cosmic_web.plugin_fn(state_with_crep)
         assert result["node_density"] is None
 
@@ -216,8 +234,10 @@ class TestEntropyGovernance:
     def test_success(self, state_with_crep: GenesisState) -> None:
         mock_policy = MagicMock()
         mock_policy.apply.return_value = 0.38
-        with patch.object(entropy_governance, "_AVAILABLE", True), \
-             patch.object(entropy_governance, "_POLICY", mock_policy):
+        with (
+            patch.object(entropy_governance, "_AVAILABLE", True),
+            patch.object(entropy_governance, "_POLICY", mock_policy),
+        ):
             result = entropy_governance.plugin_fn(state_with_crep)
         assert result["entropy_governance_available"] is True
         assert result["governed_entropy"] == pytest.approx(0.38)
@@ -225,8 +245,10 @@ class TestEntropyGovernance:
     def test_exception(self, state_with_crep: GenesisState) -> None:
         mock_policy = MagicMock()
         mock_policy.apply.side_effect = RuntimeError("policy err")
-        with patch.object(entropy_governance, "_AVAILABLE", True), \
-             patch.object(entropy_governance, "_POLICY", mock_policy):
+        with (
+            patch.object(entropy_governance, "_AVAILABLE", True),
+            patch.object(entropy_governance, "_POLICY", mock_policy),
+        ):
             result = entropy_governance.plugin_fn(state_with_crep)
         assert result["governed_entropy"] is None
 
@@ -243,8 +265,10 @@ class TestEntropyTable:
     def test_success(self, state_with_crep: GenesisState) -> None:
         mock_table = MagicMock()
         mock_table.lookup.return_value = {"row": 5}
-        with patch.object(entropy_table, "_AVAILABLE", True), \
-             patch.object(entropy_table, "_TABLE", mock_table):
+        with (
+            patch.object(entropy_table, "_AVAILABLE", True),
+            patch.object(entropy_table, "_TABLE", mock_table),
+        ):
             result = entropy_table.plugin_fn(state_with_crep)
         assert result["entropy_table_available"] is True
         assert result["entropy_table_entry"] == {"row": 5}
@@ -252,8 +276,10 @@ class TestEntropyTable:
     def test_exception(self, state_with_crep: GenesisState) -> None:
         mock_table = MagicMock()
         mock_table.lookup.side_effect = KeyError("missing")
-        with patch.object(entropy_table, "_AVAILABLE", True), \
-             patch.object(entropy_table, "_TABLE", mock_table):
+        with (
+            patch.object(entropy_table, "_AVAILABLE", True),
+            patch.object(entropy_table, "_TABLE", mock_table),
+        ):
             result = entropy_table.plugin_fn(state_with_crep)
         assert result["entropy_table_entry"] is None
 
@@ -270,8 +296,10 @@ class TestFieldTheory:
     def test_success(self, state_with_crep: GenesisState) -> None:
         mock_potential = MagicMock()
         mock_potential.compute.return_value = 2.71
-        with patch.object(fieldtheory, "_AVAILABLE", True), \
-             patch.object(fieldtheory, "_POTENTIAL", mock_potential):
+        with (
+            patch.object(fieldtheory, "_AVAILABLE", True),
+            patch.object(fieldtheory, "_POTENTIAL", mock_potential),
+        ):
             result = fieldtheory.plugin_fn(state_with_crep)
         assert result["fieldtheory_available"] is True
         assert result["field_potential"] == pytest.approx(2.71)
@@ -279,8 +307,10 @@ class TestFieldTheory:
     def test_exception(self, state_with_crep: GenesisState) -> None:
         mock_potential = MagicMock()
         mock_potential.compute.side_effect = ValueError("oops")
-        with patch.object(fieldtheory, "_AVAILABLE", True), \
-             patch.object(fieldtheory, "_POTENTIAL", mock_potential):
+        with (
+            patch.object(fieldtheory, "_AVAILABLE", True),
+            patch.object(fieldtheory, "_POTENTIAL", mock_potential),
+        ):
             result = fieldtheory.plugin_fn(state_with_crep)
         assert result["field_potential"] is None
 
@@ -297,8 +327,10 @@ class TestImplosiveGenesis:
     def test_success(self, state_with_crep: GenesisState) -> None:
         mock_field = MagicMock()
         mock_field.compute.return_value = 1.618
-        with patch.object(implosive_genesis, "_AVAILABLE", True), \
-             patch.object(implosive_genesis, "_FIELD", mock_field):
+        with (
+            patch.object(implosive_genesis, "_AVAILABLE", True),
+            patch.object(implosive_genesis, "_FIELD", mock_field),
+        ):
             result = implosive_genesis.plugin_fn(state_with_crep)
         assert result["implosive_genesis_available"] is True
         assert result["implosive_strength"] == pytest.approx(1.618)
@@ -306,8 +338,10 @@ class TestImplosiveGenesis:
     def test_exception(self, state_with_crep: GenesisState) -> None:
         mock_field = MagicMock()
         mock_field.compute.side_effect = OverflowError("overflow")
-        with patch.object(implosive_genesis, "_AVAILABLE", True), \
-             patch.object(implosive_genesis, "_FIELD", mock_field):
+        with (
+            patch.object(implosive_genesis, "_AVAILABLE", True),
+            patch.object(implosive_genesis, "_FIELD", mock_field),
+        ):
             result = implosive_genesis.plugin_fn(state_with_crep)
         assert result["implosive_strength"] is None
 
@@ -329,8 +363,10 @@ class TestMirrorMachine:
     def test_success(self, state_with_crep: GenesisState) -> None:
         mock_mirror = MagicMock()
         mock_mirror.reflect.return_value = 0.99
-        with patch.object(mirror_machine, "_AVAILABLE", True), \
-             patch.object(mirror_machine, "_MIRROR", mock_mirror):
+        with (
+            patch.object(mirror_machine, "_AVAILABLE", True),
+            patch.object(mirror_machine, "_MIRROR", mock_mirror),
+        ):
             result = mirror_machine.plugin_fn(state_with_crep)
         assert result["mirror_available"] is True
         assert result["mirror_resonance"] == pytest.approx(0.99)
@@ -338,8 +374,10 @@ class TestMirrorMachine:
     def test_exception(self, state_with_crep: GenesisState) -> None:
         mock_mirror = MagicMock()
         mock_mirror.reflect.side_effect = RuntimeError("mirror broke")
-        with patch.object(mirror_machine, "_AVAILABLE", True), \
-             patch.object(mirror_machine, "_MIRROR", mock_mirror):
+        with (
+            patch.object(mirror_machine, "_AVAILABLE", True),
+            patch.object(mirror_machine, "_MIRROR", mock_mirror),
+        ):
             result = mirror_machine.plugin_fn(state_with_crep)
         assert result["mirror_resonance"] is None
 
@@ -356,8 +394,10 @@ class TestSigillin:
     def test_success(self, state_with_crep: GenesisState) -> None:
         mock_sigil = MagicMock()
         mock_sigil.generate.return_value = "⊕RESONANCE⊕"
-        with patch.object(sigillin, "_AVAILABLE", True), \
-             patch.object(sigillin, "_SIGIL", mock_sigil):
+        with (
+            patch.object(sigillin, "_AVAILABLE", True),
+            patch.object(sigillin, "_SIGIL", mock_sigil),
+        ):
             result = sigillin.plugin_fn(state_with_crep)
         assert result["sigillin_available"] is True
         assert result["sigil_token"] == "⊕RESONANCE⊕"
@@ -365,8 +405,10 @@ class TestSigillin:
     def test_exception(self, state_with_crep: GenesisState) -> None:
         mock_sigil = MagicMock()
         mock_sigil.generate.side_effect = RuntimeError("sigil err")
-        with patch.object(sigillin, "_AVAILABLE", True), \
-             patch.object(sigillin, "_SIGIL", mock_sigil):
+        with (
+            patch.object(sigillin, "_AVAILABLE", True),
+            patch.object(sigillin, "_SIGIL", mock_sigil),
+        ):
             result = sigillin.plugin_fn(state_with_crep)
         assert result["sigil_token"] is None
 
@@ -388,8 +430,10 @@ class TestUtacCore:
     def test_success(self, state_with_crep: GenesisState) -> None:
         mock_engine = MagicMock()
         mock_engine.step.return_value = 0.37
-        with patch.object(utac_core, "_AVAILABLE", True), \
-             patch.object(utac_core, "_ENGINE", mock_engine):
+        with (
+            patch.object(utac_core, "_AVAILABLE", True),
+            patch.object(utac_core, "_ENGINE", mock_engine),
+        ):
             result = utac_core.plugin_fn(state_with_crep)
         assert result["utac_core_available"] is True
         assert result["utac_entropy"] == pytest.approx(0.37)
@@ -397,8 +441,10 @@ class TestUtacCore:
     def test_exception(self, state_with_crep: GenesisState) -> None:
         mock_engine = MagicMock()
         mock_engine.step.side_effect = RuntimeError("utac fail")
-        with patch.object(utac_core, "_AVAILABLE", True), \
-             patch.object(utac_core, "_ENGINE", mock_engine):
+        with (
+            patch.object(utac_core, "_AVAILABLE", True),
+            patch.object(utac_core, "_ENGINE", mock_engine),
+        ):
             result = utac_core.plugin_fn(state_with_crep)
         assert result["utac_entropy"] is None
 
@@ -426,5 +472,6 @@ class TestUtacCore:
 
     def test_compute_tension_metric_top_level_import(self) -> None:
         from genesis_os import utac_core as uc
+
         result = uc.compute_tension_metric(1.38, 12.8)
         assert isinstance(result, float)

@@ -32,7 +32,7 @@ try:  # pragma: no cover
         return jnp.clip(density + rate * weight * dt, 0.0, 1.0)
 
     _JAX_AVAILABLE = True
-except ImportError:
+except ImportError:  # pragma: no cover
     _JAX_AVAILABLE = False
     jnp = None  # type: ignore[assignment]
     jax_jit = None  # type: ignore[assignment]
@@ -71,7 +71,8 @@ def _density_step(
             jnp.asarray(dt, dtype=jnp.float32),
         )
         return np.asarray(result, dtype=np.float32)
-    return np.clip(density_chunk + rate * weight_chunk * dt, 0.0, 1.0).astype(np.float32)
+    clipped = np.clip(density_chunk + rate * weight_chunk * dt, 0.0, 1.0)  # pragma: no cover
+    return clipped.astype(np.float32)  # pragma: no cover
 
 
 @dataclass
@@ -199,9 +200,7 @@ class JaxCosmicWebSimulator:
         for start in range(0, self.n_nodes, self.chunk_size):
             end = min(start + self.chunk_size, self.n_nodes)
             w = self._weight_chunk(crep, start, end)
-            self._density[start:end] = _density_step(
-                self._density[start:end], rate, w, self.dt
-            )
+            self._density[start:end] = _density_step(self._density[start:end], rate, w, self.dt)
 
         density_delta = float(np.mean(self._density)) - prev_mean
         self._cycle += 1

@@ -158,13 +158,17 @@ class TestCycleCLIIntegration:
         assert data["cycles"] == 10
 
     def test_cli_cycle_simulate_low_entropy(self) -> None:
-        result = runner.invoke(app, ["cycle", "--simulate", "--entropy", "0.1", "--max-cycles", "5"])
+        result = runner.invoke(
+            app, ["cycle", "--simulate", "--entropy", "0.1", "--max-cycles", "5"]
+        )
         assert result.exit_code == 0
         data = json.loads(result.output)
         assert 0.0 <= data["entropy"] <= 1.0
 
     def test_cli_cycle_simulate_high_entropy(self) -> None:
-        result = runner.invoke(app, ["cycle", "--simulate", "--entropy", "0.9", "--max-cycles", "5"])
+        result = runner.invoke(
+            app, ["cycle", "--simulate", "--entropy", "0.9", "--max-cycles", "5"]
+        )
         assert result.exit_code == 0
         data = json.loads(result.output)
         assert 0.0 <= data["entropy"] <= 1.0
