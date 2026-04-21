@@ -23,6 +23,7 @@ from typing import Any
 import numpy as np
 from pydantic import BaseModel, Field
 
+from genesis_os.api.cycle import CYCLE_PHASES
 from genesis_os.core.crep import CREPEvaluator, CREPScore
 from genesis_os.core.phase import Phase, PhaseMatrix, PhaseTransition
 from genesis_os.runtime.emergence import CosmicWebSimulator, EmergenceEvent
@@ -296,6 +297,11 @@ class GenesisOS:
     def simulator(self) -> CosmicWebSimulator:
         """Read-only access to the internal :class:`CosmicWebSimulator`."""
         return self._simulator
+
+    @property
+    def cycle_phases(self) -> list[str]:
+        """Ordered list of genesis-os cycle phase names (post-Feldtheorie integration)."""
+        return list(CYCLE_PHASES)
 
     def reset(self) -> None:
         """Reset the orchestrator to its initial configuration."""
