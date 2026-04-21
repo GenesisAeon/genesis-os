@@ -25,7 +25,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
-from typing import Final
+from typing import Any, Final
 
 import numpy as np
 
@@ -35,7 +35,7 @@ import numpy as np
 
 PHI: Final[float] = (1.0 + math.sqrt(5.0)) / 2.0  # golden ratio ≈ 1.6180
 
-DOMAIN_BETA: Final[dict[str, dict]] = {
+DOMAIN_BETA: Final[dict[str, dict[str, Any]]] = {
     "informational": {
         "beta_mean": 4.5,
         "beta_std": 0.9,
@@ -111,7 +111,7 @@ class DomainBetaRegistry:
     def __init__(self) -> None:
         self._data = DOMAIN_BETA
 
-    def get(self, domain: str) -> dict:
+    def get(self, domain: str) -> dict[str, Any]:
         """Return the full parameter dict for a named domain."""
         if domain not in self._data:
             raise KeyError(f"Unknown domain '{domain}'. Available: {list(self._data)}")
@@ -148,7 +148,8 @@ class DomainBetaRegistry:
 
     def phi_attractor(self, domain: str) -> float | None:
         """Return the golden-ratio φ attractor for a domain (or None)."""
-        return self._data[domain]["phi_attractor"]
+        val = self._data[domain]["phi_attractor"]
+        return float(val) if val is not None else None
 
     @property
     def all_domains(self) -> list[str]:

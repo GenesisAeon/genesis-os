@@ -215,7 +215,7 @@ class BetaPipeline:
 
         # p-value via scipy if available, else approximate
         try:
-            from scipy import stats as sp_stats
+            from scipy import stats as sp_stats  # type: ignore[import-untyped]
             p_val = float(sp_stats.f.sf(f_stat, df_between, df_within))
         except ImportError:
             p_val = 1.0 / (1.0 + f_stat)  # rough approximation

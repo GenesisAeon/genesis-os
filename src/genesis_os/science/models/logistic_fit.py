@@ -71,7 +71,7 @@ def _linear(R: np.ndarray, a: float, b: float) -> np.ndarray:
 
 def _power_law(R: np.ndarray, a: float, b: float) -> np.ndarray:
     R_safe = np.where(np.abs(R) < 1e-12, 1e-12, np.abs(R))
-    return a * R_safe ** np.clip(b, -10.0, 10.0)
+    return np.asarray(a * R_safe ** np.clip(b, -10.0, 10.0), dtype=float)
 
 
 def _exponential(R: np.ndarray, a: float, b: float) -> np.ndarray:

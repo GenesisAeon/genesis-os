@@ -75,19 +75,19 @@ class AeonShell:
         """
         arr = np.asarray(signal, dtype=float)
         if len(arr) < 2:
-            return arr.copy()
+            return np.array(arr, dtype=float)
 
         grad = np.diff(arr)
         max_grad = float(np.max(np.abs(grad)))
         if max_grad < 1e-12:
-            return arr.copy()
+            return np.array(arr, dtype=float)
 
         scale = min(1.0, self.zeta / max_grad)
         normalized = arr[0:1].copy()
         for g in grad * scale:
             normalized = np.append(normalized, normalized[-1] + g)
         # Preserve mean
-        return normalized - np.mean(normalized) + np.mean(arr)
+        return np.asarray(normalized - np.mean(normalized) + np.mean(arr), dtype=float)
 
     def extract_interference(self, signal: np.ndarray) -> np.ndarray:
         """Extract destructive interference via FFT spectral masking.

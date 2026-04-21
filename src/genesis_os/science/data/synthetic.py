@@ -7,6 +7,8 @@ data directory.
 
 from __future__ import annotations
 
+from typing import Any
+
 import numpy as np
 
 from genesis_os.core.utac_bridge import DOMAIN_BETA
@@ -17,7 +19,7 @@ def generate_synthetic_datasets(
     n_points: int = 30,
     noise_std: float = 0.05,
     seed: int = 42,
-) -> list[dict]:
+) -> list[dict[str, Any]]:
     """Generate synthetic UTAC logistic datasets for each domain.
 
     Each dataset has known β drawn from the domain's empirical distribution,

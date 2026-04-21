@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 try:
-    import yaml
+    import yaml  # type: ignore[import-untyped]
 
     _YAML_AVAILABLE = True
 except ImportError:
