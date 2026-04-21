@@ -14,7 +14,7 @@ Primary modules:
     reproduce_beta         — CLI reproduction script
 """
 
-from genesis_os.science.models.logistic_fit import fit_utac_logistic, UTACLogisticResult
 from genesis_os.science.analysis.beta_pipeline import BetaPipeline
+from genesis_os.science.models.logistic_fit import UTACLogisticResult, fit_utac_logistic
 
-__all__ = ["fit_utac_logistic", "UTACLogisticResult", "BetaPipeline"]
+__all__ = ["BetaPipeline", "UTACLogisticResult", "fit_utac_logistic"]

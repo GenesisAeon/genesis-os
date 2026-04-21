@@ -17,4 +17,4 @@ from genesis_os.aeon.lantern_net import LanternNet
 from genesis_os.aeon.nullkern import Nullkern
 from genesis_os.aeon.shell import AeonShell
 
-__all__ = ["Nullkern", "AeonShell", "SemanticAgent", "LanternNet"]
+__all__ = ["AeonShell", "LanternNet", "Nullkern", "SemanticAgent"]

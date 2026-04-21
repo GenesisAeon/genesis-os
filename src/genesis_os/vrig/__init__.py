@@ -12,7 +12,7 @@ Primary application: detection of the ~1998 Arctic sea ice regime shift
 via rolling-window UTAC parameter velocity spikes.
 """
 
-from genesis_os.vrig.velocity import VRIGVelocity
 from genesis_os.vrig.regime_detector import RegimeDetector
+from genesis_os.vrig.velocity import VRIGVelocity
 
-__all__ = ["VRIGVelocity", "RegimeDetector"]
+__all__ = ["RegimeDetector", "VRIGVelocity"]

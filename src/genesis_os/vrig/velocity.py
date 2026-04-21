@@ -16,8 +16,9 @@ This is NOT a verified physical constant.
 from __future__ import annotations
 
 import math
+from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Callable, Final
+from typing import Final
 
 import numpy as np
 

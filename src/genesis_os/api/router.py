@@ -18,11 +18,7 @@ import numpy as np
 
 from genesis_os.core.crep_engine import (
     EmpiricalCREPEvaluator,
-    compute_coherence,
-    compute_emergence,
     compute_gamma,
-    compute_poetics,
-    compute_resonance,
     governance_level,
 )
 from genesis_os.core.utac_bridge import DomainBetaRegistry, UTACBridge
