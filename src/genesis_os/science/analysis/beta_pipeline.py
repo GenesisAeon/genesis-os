@@ -237,5 +237,7 @@ class BetaPipeline:
             "n_systems": len(self._results),
             "domains": list({r.domain for r in self._results}),
             "mean_beta": float(np.mean([r.beta for r in self._results])) if self._results else 0.0,
-            "mean_r_squared": float(np.mean([r.r_squared for r in self._results])) if self._results else 0.0,
+            "mean_r_squared": (
+                float(np.mean([r.r_squared for r in self._results])) if self._results else 0.0
+            ),
         }

@@ -10,7 +10,6 @@ Implements:
 
 from __future__ import annotations
 
-import math
 from dataclasses import dataclass, field
 from typing import Final
 
@@ -88,8 +87,7 @@ class AeonShell:
         for g in grad * scale:
             normalized = np.append(normalized, normalized[-1] + g)
         # Preserve mean
-        normalized = normalized - np.mean(normalized) + np.mean(arr)
-        return normalized
+        return normalized - np.mean(normalized) + np.mean(arr)
 
     def extract_interference(self, signal: np.ndarray) -> np.ndarray:
         """Extract destructive interference via FFT spectral masking.

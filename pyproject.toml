@@ -146,12 +146,21 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["ANN", "S", "PLR2004", "ARG", "B017", "PT011", "PT012", "N802", "F841", "F601", "E501", "B007"]
+"tests/**" = ["ANN", "S", "PLR2004", "ARG", "B017", "PT011", "PT012", "N802", "N803", "N806", "F841", "F601", "F401", "E501", "B007", "SIM300", "SIM108", "RET504", "RUF059", "I001"]
 "src/genesis_os/cli/main.py" = ["E501"]
 "src/genesis_os/plugins/adapters/*.py" = ["F401", "ARG001"]
 "src/genesis_os/dashboard/web_gui.py" = ["E501"]
 "src/genesis_os/jax/*.py" = ["F401", "ANN"]
 "src/genesis_os/live_data/*.py" = ["ANN401"]
+# Feldtheorie-ported modules use domain-standard mathematical identifiers
+# (R, H, K, C, E, P, T) that are part of the public API and scientific notation.
+"src/genesis_os/aeon/agents.py" = ["N803", "N806"]
+"src/genesis_os/aeon/nullkern.py" = ["N803", "N806"]
+"src/genesis_os/api/router.py" = ["N803", "N806"]
+"src/genesis_os/core/crep_engine.py" = ["N803", "N806"]
+"src/genesis_os/core/utac_bridge.py" = ["N803", "N806"]
+"src/genesis_os/science/**/*.py" = ["N803", "N806", "S112"]
+"src/genesis_os/vrig/*.py" = ["N806"]
 
 [tool.mypy]
 python_version = "3.10"

@@ -27,7 +27,6 @@ from typing import Literal
 
 import numpy as np
 
-
 # ---------------------------------------------------------------------------
 # Constants (from Feldtheorie empirical analysis)
 # ---------------------------------------------------------------------------
@@ -136,7 +135,7 @@ class AFETField:
 
     def compute_entropy_flux(
         self,
-        state: np.ndarray,
+        _state: np.ndarray,
         gradient: np.ndarray,
     ) -> np.ndarray:
         """Compute the entropy flux vector J_s = -λ · ∇s.
@@ -182,7 +181,8 @@ class AFETField:
         Local dissipation reduces the effective steepness:
 
         .. math::
-            \\beta_{\\text{eff}} = \\frac{\\beta_{\\text{global}}}{1 + \\sigma_{\\text{local}} / \\sigma_{\\text{critical}}}
+            \\beta_{\\text{eff}} = \\frac{\\beta_{\\text{global}}}{
+                1 + \\sigma_{\\text{local}} / \\sigma_{\\text{critical}}}
 
         Args:
             beta_global: Global (domain-level) β steepness.

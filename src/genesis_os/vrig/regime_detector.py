@@ -129,10 +129,9 @@ class RegimeDetector:
 
         residuals_arr = np.array(residuals)
         sigma_noise = max(float(np.std(residuals_arr)), 1e-6)
-        ll = float(-0.5 * np.sum((residuals_arr / sigma_noise) ** 2)) - len(residuals) * math.log(
+        return float(-0.5 * np.sum((residuals_arr / sigma_noise) ** 2)) - len(residuals) * math.log(
             sigma_noise + 1e-12
         )
-        return ll
 
     def fit(self, time_series: np.ndarray) -> list[np.ndarray]:
         """Fit UTAC parameters over all rolling windows.

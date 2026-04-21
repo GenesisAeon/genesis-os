@@ -154,7 +154,6 @@ class LanternNet:
         """
         crep = crep_inputs or {}
         names = self._lantern_names
-        n = len(names)
 
         # Kuramoto-like phase coupling
         mean_sin = float(np.mean(np.sin(self._phases)))

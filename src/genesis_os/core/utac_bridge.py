@@ -292,7 +292,8 @@ class UTACBridge:
         minimum update rate must satisfy:
 
         .. math::
-            \\sigma_{\\Phi,\\min} = \\frac{r}{2}(1 - \\tanh(\\sigma \\Gamma_{\\max})) \\approx \\frac{1}{16}
+            \\sigma_{\\Phi,\\min} = \\frac{r}{2}(1 - \\tanh(\\sigma \\Gamma_{\\max}))
+                \\approx \\frac{1}{16}
 
         Args:
             r: Growth rate (defaults to self.r).

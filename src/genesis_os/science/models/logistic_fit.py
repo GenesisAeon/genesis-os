@@ -197,17 +197,11 @@ def fit_utac_logistic(
 
     # Normalize response to [0, 1] if needed
     y_min, y_max = float(y_arr.min()), float(y_arr.max())
-    if y_max - y_min > 1e-12:
-        y_norm = (y_arr - y_min) / (y_max - y_min)
-    else:
-        y_norm = y_arr.copy()
+    y_norm = (y_arr - y_min) / (y_max - y_min) if y_max - y_min > 1e-12 else y_arr.copy()
 
     # Normalize R to [0, 1]
     r_min, r_max = float(R_arr.min()), float(R_arr.max())
-    if r_max - r_min > 1e-12:
-        R_norm = (R_arr - r_min) / (r_max - r_min)
-    else:
-        R_norm = R_arr.copy()
+    R_norm = (R_arr - r_min) / (r_max - r_min) if r_max - r_min > 1e-12 else R_arr.copy()
 
     # Fit logistic
     beta, theta, aic_logistic = _fit_logistic_grid(R_norm, y_norm)

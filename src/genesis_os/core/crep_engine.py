@@ -54,7 +54,7 @@ GovernanceLevel = str
 # ---------------------------------------------------------------------------
 
 
-def compute_coherence(time_series: np.ndarray, window: int = 50) -> float:
+def compute_coherence(time_series: np.ndarray, _window: int = 50) -> float:
     """Compute coherence C from an inter-event interval time series.
 
     C = 1 - CV_T  where  CV_T = σ_T / μ_T
@@ -163,9 +163,9 @@ def compute_emergence(
     out = np.asarray(system_output, dtype=float)
 
     # Standardise shape to (n_components, T)
-    if comps.shape[0] > comps.shape[1] and comps.shape[1] == len(out):
-        comps = comps.T
-    elif comps.shape[1] != len(out) and comps.shape[0] == len(out):
+    if (comps.shape[0] > comps.shape[1] and comps.shape[1] == len(out)) or (
+        comps.shape[1] != len(out) and comps.shape[0] == len(out)
+    ):
         comps = comps.T
 
     n_comps = comps.shape[0]
@@ -199,10 +199,7 @@ def compute_emergence(
         corr = float(abs(np.corrcoef(out_norm, comp_norm)[0, 1]))
         i_sum += corr
 
-    if n_comps > 0:
-        i_sum_norm = i_sum / n_comps
-    else:
-        i_sum_norm = 0.0
+    i_sum_norm = i_sum / n_comps if n_comps > 0 else 0.0
 
     synergy = max(0.0, i_total - i_sum_norm)
     return float(np.clip(synergy, 0.0, 1.0))
@@ -342,14 +339,11 @@ class EmpiricalCREPEvaluator:
         """
         sig = np.asarray(signal, dtype=float)
 
-        C = compute_coherence(sig, window=self.coherence_window)
+        C = compute_coherence(sig, self.coherence_window)
         R = compute_resonance(sig, f_res=self.f_res)
         P = compute_poetics(sig, order=self.permutation_order)
 
-        if components is not None:
-            E = compute_emergence(components, sig)
-        else:
-            E = 0.5
+        E = compute_emergence(components, sig) if components is not None else 0.5
 
         return CREPScore(
             coherence=C,
