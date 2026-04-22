@@ -6,18 +6,25 @@ The CREP framework evaluates system states across four orthogonal axes:
 - **E** (Emergence): complexity arising from low-level interactions
 - **P** (Poetics): symbolic density and meaning-richness of state configurations
 
-The CREP score drives phase transitions via:
+Two gamma formulas are supported:
+
+Legacy (default, backward-compatible):
 
 .. math::
-    \\Gamma(C, R, E, P) = \\frac{C \\cdot R + E \\cdot P}{2} \\cdot
+    \\Gamma = \\frac{C \\cdot R + E \\cdot P}{2} \\cdot
     \\exp\\left(-\\frac{(1 - C)^2}{2\\sigma_C^2}\\right)
+
+Canonical (geometric mean, Römer 2026 whitepaper):
+
+.. math::
+    \\Gamma_{\\text{canon}} = (C \\cdot R \\cdot E \\cdot P)^{1/4}
 """
 
 from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Literal
 
 import numpy as np
 from pydantic import BaseModel, Field, field_validator
@@ -48,16 +55,29 @@ class CREPScore(BaseModel):
 
     @property
     def gamma(self) -> float:
-        """CREP coupling term Γ(C,R,E,P).
+        """CREP coupling term Γ(C,R,E,P) — legacy formula (backward-compatible).
 
         .. math::
             \\Gamma = \\frac{C \\cdot R + E \\cdot P}{2} \\cdot
             \\exp\\left(-\\frac{(1-C)^2}{2\\sigma_C^2}\\right)
+
+        Use :meth:`gamma_canonical` for the whitepaper geometric-mean formula.
         """
         sigma_c = 0.3
         base = (self.coherence * self.resonance + self.emergence * self.poetics) / 2.0
         coherence_weight = math.exp(-((1.0 - self.coherence) ** 2) / (2.0 * sigma_c**2))
         return base * coherence_weight
+
+    @property
+    def gamma_canonical(self) -> float:
+        """Canonical CREP coupling Γ — geometric mean (Römer 2026 whitepaper).
+
+        .. math::
+            \\Gamma_{\\text{canon}} = (C \\cdot R \\cdot E \\cdot P)^{1/4}
+        """
+        return float(
+            (self.coherence * self.resonance * self.emergence * self.poetics) ** 0.25
+        )
 
     @property
     def mean(self) -> float:
@@ -118,7 +138,11 @@ class CREPEvaluator:
     history_length: int = 100
     _history: list[CREPScore] = field(default_factory=list, init=False, repr=False)
 
-    def evaluate(self, state: dict[str, Any]) -> CREPScore:
+    def evaluate(
+        self,
+        state: dict[str, Any],
+        mode: Literal["canonical", "legacy"] = "legacy",
+    ) -> CREPScore:
         """Compute a CREPScore from a raw state dictionary.
 
         Expected keys (all optional, default 0.5):
@@ -128,6 +152,11 @@ class CREPEvaluator:
 
         Args:
             state: Dictionary containing state variables.
+            mode: ``"canonical"`` uses the geometric-mean formula (Römer 2026);
+                  ``"legacy"`` uses the original weighted-exponential formula.
+                  The mode is stored as metadata but does not change the
+                  CREPScore fields — use :attr:`CREPScore.gamma_canonical`
+                  or :attr:`CREPScore.gamma` to access the respective value.
 
         Returns:
             CREPScore snapshot for the given state.
@@ -151,7 +180,13 @@ class CREPEvaluator:
         self._history.append(score)
         if len(self._history) > self.history_length:
             self._history.pop(0)
+        self._last_mode = mode
         return score
+
+    @property
+    def last_mode(self) -> str:
+        """Return the evaluation mode used in the most recent :meth:`evaluate` call."""
+        return getattr(self, "_last_mode", "legacy")
 
     def gradient(self) -> np.ndarray | None:
         """Return the finite-difference gradient of the CREP vector over time.

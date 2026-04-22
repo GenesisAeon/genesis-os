@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CREPScore",
+  "description": "Canonical CREP tensor score — GenesisAeon unified schema (genesis-os × unified-mandala)",
+  "type": "object",
+  "required": ["C", "R", "E", "P", "gamma", "formula"],
+  "properties": {
+    "C": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Coherence — structural integrity and self-consistency"
+    },
+    "R": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Resonance — coupling strength between subsystems"
+    },
+    "E": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Emergence — complexity arising from low-level interactions"
+    },
+    "P": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Poetics — symbolic density and meaning-richness"
+    },
+    "gamma": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "CREP coupling term Γ"
+    },
+    "formula": {
+      "type": "string",
+      "enum": ["geometric_mean", "legacy"],
+      "description": "Formula used to compute gamma: geometric_mean = (C·R·E·P)^(1/4), legacy = weighted exponential"
+    },
+    "trikaya_phase": {
+      "type": "string",
+      "description": "unified-mandala Trikāya phase classification (optional)",
+      "enum": ["dharmakaya", "sambhogakaya", "nirmanakaya"]
+    },
+    "source": {
+      "type": "string",
+      "description": "Origin of this score: 'genesis_os', 'unified_mandala', 'local_fallback'"
+    },
+    "timestamp": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Cycle index when this score was computed"
+    }
+  },
+  "additionalProperties": true
+}

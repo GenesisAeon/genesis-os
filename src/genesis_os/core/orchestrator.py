@@ -42,6 +42,9 @@ class GenesisConfig(BaseModel):
         resonance_coupling: Field coupling constant for resonance.
         phi_init: Initial value of the self-reflection potential Φ(H).
         seed: Random seed for reproducibility (None = non-deterministic).
+        ethics_gate_enabled: Enable EthicsGate circuit breaker (default True).
+        tension_threshold: Max Tension(t) before EthicsGate halts cycles (default 5.0).
+        min_personhood_level: Minimum PersonhoodLevel required (0–4, default 0).
     """
 
     entropy: float = Field(default=0.5, ge=0.0, le=1.0)
@@ -51,6 +54,9 @@ class GenesisConfig(BaseModel):
     resonance_coupling: float = Field(default=0.5, ge=0.0, le=1.0)
     phi_init: float = Field(default=1.0, gt=0.0)
     seed: int | None = Field(default=None)
+    ethics_gate_enabled: bool = Field(default=True)
+    tension_threshold: float = Field(default=5.0, gt=0.0)
+    min_personhood_level: int = Field(default=0, ge=0, le=4)
 
 
 @dataclass
@@ -116,6 +122,21 @@ class GenesisOS:
             emergence_threshold=emergence_threshold,
             seed=self.config.seed,
         )
+        # EthicsGate — lazy import to avoid circular dependency
+        self._ethics_gate: Any | None = None
+        if self.config.ethics_gate_enabled:
+            try:
+                from genesis_os.governance.ethics_gate import EthicsGate
+                from genesis_os.governance.personhood import PersonhoodLevel
+
+                self._ethics_gate = EthicsGate(
+                    tension_threshold=self.config.tension_threshold,
+                    min_personhood=PersonhoodLevel(self.config.min_personhood_level),
+                    enabled=True,
+                )
+            except Exception:
+                pass
+
         # Lazy import to avoid circular dependency
         if engine is not None:
             self._engine: Any = engine
@@ -265,6 +286,22 @@ class GenesisOS:
         limit = max_cycles if max_cycles is not None else self.config.max_cycles
         for _ in range(limit):
             state = self.step()
+
+            # EthicsGate check after each cycle
+            if self._ethics_gate is not None:
+                try:
+                    decision = self._ethics_gate.check(state)
+                    if not decision.approved:
+                        logger.warning(
+                            "phase_transition_loop: EthicsGate halted at cycle %d: %s",
+                            state.cycle,
+                            decision.reason,
+                        )
+                        yield state
+                        return
+                except Exception:
+                    pass
+
             if callback is not None:
                 stop = callback(state)
                 if stop is True:

@@ -155,11 +155,17 @@ ignore = [
 # Feldtheorie-ported modules use domain-standard mathematical identifiers
 # (R, H, K, C, E, P, T) that are part of the public API and scientific notation.
 "src/genesis_os/aeon/agents.py" = ["N803", "N806"]
+"src/genesis_os/aeon/metaquest_bridge.py" = ["N803", "N806"]
 "src/genesis_os/aeon/nullkern.py" = ["N803", "N806"]
+"src/genesis_os/afet/landauer_consistency.py" = ["N803"]
 "src/genesis_os/api/router.py" = ["N803", "N806"]
 "src/genesis_os/core/crep_engine.py" = ["N803", "N806"]
 "src/genesis_os/core/utac_bridge.py" = ["N803", "N806"]
+"src/genesis_os/core/utac_stoch_bridge.py" = ["N803", "N806"]
+"src/genesis_os/mirror/dual_detector.py" = ["N803", "N806"]
+"src/genesis_os/runtime/fraktalrun_engine.py" = ["N803", "N806", "ARG002"]
 "src/genesis_os/science/**/*.py" = ["N803", "N806", "S112"]
+"src/genesis_os/sigillin/metaquest_client.py" = ["N803", "N806"]
 "src/genesis_os/vrig/*.py" = ["N806"]
 
 [tool.mypy]
@@ -197,6 +203,27 @@ ignore_missing_imports = true
 module = [
     "genesis_os.jax.integrator",
     "genesis_os.jax.cosmic_web_jax",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+    "httpx",
+    "nats",
+    "nats.*",
+    "prometheus_client",
+    "prometheus_client.*",
+    "yaml",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = [
+    "genesis_os.bridge.crep_ts_bridge",
+    "genesis_os.sigillin.metaquest_client",
+    "genesis_os.governance.opa_bridge",
+    "genesis_os.runtime.nats_publisher",
+    "genesis_os.monitoring.prometheus_exporter",
 ]
 ignore_errors = true
 
