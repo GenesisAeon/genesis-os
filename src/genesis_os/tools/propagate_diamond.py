@@ -34,7 +34,6 @@ REPOS: list[str] = [
     "entropy-table",
     "entropy-governance",
     "implosive-genesis",
-    "advanced-weighting-systems",
     "diamond-setup",
     "unified-mandala-Demo",
 ]
@@ -58,12 +57,22 @@ def _run(cmd: list[str], cwd: Path | None = None) -> None:
     subprocess.run(cmd, cwd=cwd, check=True, text=True)  # noqa: S603
 
 
+def _has_staged_changes(repo_path: Path) -> bool:
+    """Return True if there are staged changes ready to commit."""
+    result = subprocess.run(  # noqa: S603
+        ["git", "diff", "--cached", "--quiet"],
+        cwd=repo_path,
+        text=True,
+    )
+    return result.returncode != 0
+
+
 def _copy_templates(repo_path: Path) -> None:
     """Copy all template files into *repo_path*, creating parent dirs as needed."""
     for target, source in TEMPLATE_FILES.items():
         dst = repo_path / target
         dst.parent.mkdir(parents=True, exist_ok=True)
-        dst.write_text((TEMPLATES_DIR / source).read_text())
+        dst.write_text((TEMPLATES_DIR / source).read_text(encoding="utf-8"), encoding="utf-8")
 
 
 def _merge_pyproject(repo_path: Path, repo: str) -> None:
@@ -71,7 +80,7 @@ def _merge_pyproject(repo_path: Path, repo: str) -> None:
     pyproject = repo_path / "pyproject.toml"
     if not pyproject.exists():
         return
-    content = pyproject.read_text()
+    content = pyproject.read_text(encoding="utf-8")
     if "project.urls" in content:
         return
     addition = (
@@ -81,7 +90,7 @@ def _merge_pyproject(repo_path: Path, repo: str) -> None:
         f'Documentation = "https://genesisaeon.github.io/{repo}"\n'
         'Zenodo = "https://doi.org/10.5281/zenodo.XXXXXXXX"  # <- enter your DOI\n'
     )
-    pyproject.write_text(content + addition)
+    pyproject.write_text(content + addition, encoding="utf-8")
 
 
 def propagate(repo: str, base_dir: Path) -> None:
@@ -98,14 +107,21 @@ def propagate(repo: str, base_dir: Path) -> None:
     _merge_pyproject(repo_path, repo)
 
     _run(["git", "add", "."], cwd=repo_path)
-    _run(["git", "commit", "-m", COMMIT_MSG], cwd=repo_path)
+
+    if _has_staged_changes(repo_path):
+        _run(["git", "commit", "-m", COMMIT_MSG], cwd=repo_path)
+    else:
+        print(f"  ↳ {repo}: templates already current, skipping commit.")
+
+    # Always push – handles both new commits and previously committed-but-not-pushed state.
     _run(["git", "push", "origin", f"HEAD:{BRANCH}"], cwd=repo_path)
     print(f"PR ready: https://github.com/{ORG}/{repo}/pull/new/{BRANCH}")
 
 
 def main() -> None:
-    """Propagate diamond templates to all 23 GenesisAeon repositories."""
+    """Propagate diamond templates to all GenesisAeon repositories."""
     base_dir = Path(__file__).parents[4]
+    skipped: list[str] = []
     errors: list[str] = []
 
     for repo in REPOS:
@@ -116,8 +132,8 @@ def main() -> None:
             errors.append(repo)
 
     total = len(REPOS)
-    ok = total - len(errors)
-    print(f"\nDiamond propagation complete – {ok}/{total} repos updated!")
+    updated = total - len(errors) - len(skipped)
+    print(f"\nDiamond propagation complete – {updated}/{total} repos updated!")
     if errors:
         print(f"Failed: {errors}")
 
