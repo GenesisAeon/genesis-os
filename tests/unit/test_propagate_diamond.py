@@ -29,7 +29,7 @@ from genesis_os.tools.propagate_diamond import (
 
 class TestConstants:
     def test_repos_count(self):
-        assert len(REPOS) == 23
+        assert len(REPOS) == 22
 
     def test_template_files_keys(self):
         assert ".github/workflows/ci.yml" in TEMPLATE_FILES
@@ -65,12 +65,16 @@ class TestRun:
     def test_calls_subprocess_with_cwd(self, tmp_path):
         with patch("subprocess.run") as mock_run:
             _run(["git", "status"], cwd=tmp_path)
-        mock_run.assert_called_once_with(["git", "status"], cwd=tmp_path, check=True, text=True)
+        mock_run.assert_called_once_with(
+            ["git", "status"], cwd=tmp_path, check=True, text=True, encoding="utf-8"
+        )
 
     def test_calls_subprocess_without_cwd(self):
         with patch("subprocess.run") as mock_run:
             _run(["git", "status"])
-        mock_run.assert_called_once_with(["git", "status"], cwd=None, check=True, text=True)
+        mock_run.assert_called_once_with(
+            ["git", "status"], cwd=None, check=True, text=True, encoding="utf-8"
+        )
 
     def test_propagates_called_process_error(self, tmp_path):
         with (
@@ -165,6 +169,7 @@ class TestPropagate:
             patch("genesis_os.tools.propagate_diamond._run") as mock_run,
             patch("genesis_os.tools.propagate_diamond._copy_templates"),
             patch("genesis_os.tools.propagate_diamond._merge_pyproject"),
+            patch("genesis_os.tools.propagate_diamond._has_staged_changes", return_value=True),
         ):
             propagate("new-repo", tmp_path)
         cmd_lists = [c.args[0] for c in mock_run.call_args_list]
@@ -187,6 +192,7 @@ class TestPropagate:
             patch("genesis_os.tools.propagate_diamond._run") as mock_run,
             patch("genesis_os.tools.propagate_diamond._copy_templates"),
             patch("genesis_os.tools.propagate_diamond._merge_pyproject"),
+            patch("genesis_os.tools.propagate_diamond._has_staged_changes", return_value=True),
         ):
             propagate("new-repo", tmp_path)
         cmd_lists = [c.args[0] for c in mock_run.call_args_list]
@@ -197,6 +203,7 @@ class TestPropagate:
             patch("genesis_os.tools.propagate_diamond._run") as mock_run,
             patch("genesis_os.tools.propagate_diamond._copy_templates"),
             patch("genesis_os.tools.propagate_diamond._merge_pyproject"),
+            patch("genesis_os.tools.propagate_diamond._has_staged_changes", return_value=True),
         ):
             propagate("new-repo", tmp_path)
         cmd_lists = [c.args[0] for c in mock_run.call_args_list]
@@ -209,6 +216,7 @@ class TestPropagate:
             patch("genesis_os.tools.propagate_diamond._run") as mock_run,
             patch("genesis_os.tools.propagate_diamond._copy_templates"),
             patch("genesis_os.tools.propagate_diamond._merge_pyproject"),
+            patch("genesis_os.tools.propagate_diamond._has_staged_changes", return_value=True),
         ):
             propagate("new-repo", tmp_path)
         all_args_flat = " ".join(str(a) for c in mock_run.call_args_list for a in c.args[0])
@@ -219,6 +227,7 @@ class TestPropagate:
             patch("genesis_os.tools.propagate_diamond._run"),
             patch("genesis_os.tools.propagate_diamond._copy_templates") as mock_copy,
             patch("genesis_os.tools.propagate_diamond._merge_pyproject"),
+            patch("genesis_os.tools.propagate_diamond._has_staged_changes", return_value=True),
         ):
             propagate("new-repo", tmp_path)
         mock_copy.assert_called_once_with(tmp_path / "new-repo")
@@ -228,6 +237,7 @@ class TestPropagate:
             patch("genesis_os.tools.propagate_diamond._run"),
             patch("genesis_os.tools.propagate_diamond._copy_templates"),
             patch("genesis_os.tools.propagate_diamond._merge_pyproject") as mock_merge,
+            patch("genesis_os.tools.propagate_diamond._has_staged_changes", return_value=True),
         ):
             propagate("new-repo", tmp_path)
         mock_merge.assert_called_once_with(tmp_path / "new-repo", "new-repo")

@@ -59,9 +59,10 @@ def _run(cmd: list[str], cwd: Path | None = None) -> None:
 
 def _has_staged_changes(cwd: Path) -> bool:
     """Return True if there are staged changes ready to commit."""
-    result = subprocess.run(  # noqa: S603
-        ["git", "diff", "--cached", "--quiet"],
+    result = subprocess.run(
+        ["git", "diff", "--cached", "--quiet"],  # noqa: S607
         cwd=cwd,
+        check=False,
         text=True,
         encoding="utf-8",
     )
