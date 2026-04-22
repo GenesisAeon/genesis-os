@@ -180,7 +180,6 @@ module = [
     "dash",
     "dash.*",
     "dash_bootstrap_components",
-    "dash_bootstrap_components.*",
     "plotly",
     "plotly.*",
 ]
@@ -194,8 +193,6 @@ ignore_errors = true
 module = [
     "jax",
     "jax.*",
-    "jaxlib",
-    "jaxlib.*",
 ]
 ignore_missing_imports = true
 
@@ -210,9 +207,7 @@ ignore_errors = true
 module = [
     "httpx",
     "nats",
-    "nats.*",
     "prometheus_client",
-    "prometheus_client.*",
     "yaml",
 ]
 ignore_missing_imports = true
