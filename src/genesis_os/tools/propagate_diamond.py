@@ -49,7 +49,7 @@ TEMPLATES_DIR: Path = Path(__file__).parent / "templates"
 ORG: str = "GenesisAeon"
 BRANCH: str = "feat/diamond-propagation"
 COMMIT_MSG: str = (
-    "chore(diamond): propagate CI/Release/Quickstart templates from diamond-setup v0.3.0"
+    "chore(diamond): propagate CI/Release/Quickstart templates from diamond-setup v0.4.0"
 )
 
 
