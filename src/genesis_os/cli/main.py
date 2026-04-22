@@ -83,6 +83,18 @@ def cycle(
     max_cycles: Annotated[int, typer.Option("--max-cycles", "-n", help="Number of cycles.")] = 20,
     alpha: Annotated[float, typer.Option("--alpha", help="Self-reflection learning rate.")] = 0.1,
     seed: Annotated[int | None, typer.Option("--seed", help="Random seed.")] = None,
+    regenerative: Annotated[
+        bool,
+        typer.Option("--regenerative", help="Enable 87.2x neuromorphic noise damping (DualDetector).")
+    ] = False,
+    nats_url: Annotated[
+        str | None,
+        typer.Option("--nats-url", help="NATS server URL for live state publishing (e.g. nats://localhost:4222).")
+    ] = None,
+    metrics_port: Annotated[
+        int | None,
+        typer.Option("--metrics-port", help="Prometheus metrics port (e.g. 9100).")
+    ] = None,
 ) -> None:
     """[bold]Run the GenesisOS phase-transition loop.[/bold]
 
@@ -101,6 +113,41 @@ def cycle(
         seed=seed,
     )
     genesis = GenesisOS(config=config)
+
+    # Optional: DualDetector mit regenerativem Modus
+    dual_detector = None
+    if regenerative or phases:
+        try:
+            from genesis_os.mirror.dual_detector import DualDetector
+
+            dual_detector = DualDetector(regenerative=regenerative, seed=seed)
+        except Exception:
+            pass
+
+    # Optional: NATS Publisher
+    nats_publisher = None
+    if nats_url:
+        try:
+            import asyncio
+
+            from genesis_os.runtime.nats_publisher import NATSPublisher
+
+            nats_publisher = NATSPublisher(url=nats_url)
+            asyncio.get_event_loop().run_until_complete(nats_publisher.connect())
+        except Exception:
+            console.print("[yellow]Warning:[/yellow] NATS not available.")
+
+    # Optional: Prometheus Exporter
+    prometheus_exporter = None
+    if metrics_port:
+        try:
+            from genesis_os.monitoring.prometheus_exporter import GenesisPrometheusExporter
+
+            prometheus_exporter = GenesisPrometheusExporter(port=metrics_port)
+            prometheus_exporter.start()
+            console.print(f"[green]Metrics:[/green] http://localhost:{metrics_port}/metrics")
+        except Exception:
+            console.print("[yellow]Warning:[/yellow] Prometheus not available.")
 
     if simulate:
         # Headless JSON output
@@ -161,6 +208,34 @@ def cycle(
                 )
             if web_gui is not None:
                 _push_gui_snapshot(web_gui, state)
+
+            if dual_detector is not None and phases and state.crep:
+                try:
+                    det_result = dual_detector.detect(state.entropy, state.crep)
+                    if det_result.recommendation != "continue":
+                        console.log(
+                            f"[bold red]DualDetector:[/bold red] "
+                            f"risk={det_result.stochastic_collapse_risk:.2f} "
+                            f"→ {det_result.recommendation}"
+                        )
+                except Exception:
+                    pass
+
+            if nats_publisher is not None:
+                try:
+                    import asyncio
+
+                    asyncio.get_event_loop().run_until_complete(
+                        nats_publisher.publish_cycle_state(state)
+                    )
+                except Exception:
+                    pass
+
+            if prometheus_exporter is not None:
+                import contextlib
+
+                with contextlib.suppress(Exception):
+                    prometheus_exporter.update(state)
 
     if last_state is not None:
         console.print(_state_table(last_state))
@@ -292,6 +367,72 @@ def list_phases() -> None:
     table.add_column("Description", style="white")
     for phase in Phase:
         table.add_row(phase.value, phase.crep_focus, phase.description)
+    console.print(table)
+
+
+@app.command()
+def fraktalrun(
+    depth: Annotated[
+        int, typer.Option("--depth", help="Max Rekursionstiefe (≤16, Frame Principle).")
+    ] = 8,
+    sigma_phi: Annotated[
+        float, typer.Option("--sigma-phi", help="Frame Principle Schwelle (≈1/16 = 0.0625).")
+    ] = 0.0625,
+    entropy: Annotated[
+        float, typer.Option("--entropy", "-e", help="Initiale Entropie H ∈ [0,1].")
+    ] = 0.4,
+    seed: Annotated[int | None, typer.Option("--seed", help="Random seed.")] = 42,
+) -> None:
+    """[bold]FraktalRun:[/bold] Rekursive Genesis-Zyklen bis max Tiefe.
+
+    Führt einen Haupt-Zyklus aus und erzeugt bei ausreichend hohem CREP-Γ
+    rekursive Sub-Zyklen gemäß dem Frame Principle (σ_Φ = 1/16).
+    """
+    from genesis_os.core.orchestrator import GenesisConfig, GenesisOS
+    from genesis_os.runtime.fraktalrun_engine import FraktalRunEngine
+
+    if not 0.0 <= entropy <= 1.0:
+        console.print("[red]Error:[/red] entropy must be in [0.0, 1.0]")
+        raise typer.Exit(code=1)
+
+    config = GenesisConfig(entropy=entropy, seed=seed, max_cycles=5)
+    genesis = GenesisOS(config=config)
+    initial_state = genesis.run()
+
+    engine = FraktalRunEngine(
+        max_depth=depth,
+        sigma_phi=sigma_phi,
+    )
+    root = engine.run(genesis, initial_state)
+
+    console.print(
+        Panel.fit(
+            f"[bold cyan]FraktalRun[/bold cyan]\n"
+            f"max_depth={depth}  σ_Φ={sigma_phi}  entropy={entropy}\n"
+            f"tree_depth={engine.tree_depth}  root_gamma={root.gamma:.4f}  "
+            f"root_activation={root.activation:.4f}",
+            title="FraktalRun Result",
+            border_style="cyan",
+        )
+    )
+
+    table = Table(title="FraktalRun Nodes", show_header=True, header_style="bold cyan")
+    table.add_column("Depth", style="cyan")
+    table.add_column("Gamma", style="green")
+    table.add_column("Activation", style="yellow")
+    table.add_column("Children", style="magenta")
+
+    def _walk(node: Any) -> None:
+        table.add_row(
+            str(node.depth),
+            f"{node.gamma:.4f}",
+            f"{node.activation:.4f}",
+            str(len(node.children)),
+        )
+        for child in node.children:
+            _walk(child)
+
+    _walk(root)
     console.print(table)
 
 
