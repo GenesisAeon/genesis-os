@@ -146,8 +146,8 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["ANN", "S", "PLR2004", "ARG", "B017", "PT011", "PT012", "N802", "N803", "N806", "F841", "F601", "F401", "E501", "B007", "SIM300", "SIM108", "RET504", "RUF059", "I001"]
-"src/genesis_os/cli/main.py" = ["E501"]
+"tests/**" = ["ANN", "S", "PLR2004", "ARG", "B017", "PT011", "PT012", "N802", "N803", "N806", "F841", "F601", "F401", "E501", "B007", "SIM300", "SIM108", "RET504", "RUF059", "I001", "RUF012", "C408"]
+"src/genesis_os/cli/main.py" = ["E501", "PLR0912", "PLR0915"]
 "src/genesis_os/plugins/adapters/*.py" = ["F401", "ARG001"]
 "src/genesis_os/dashboard/web_gui.py" = ["E501"]
 "src/genesis_os/jax/*.py" = ["F401", "ANN"]

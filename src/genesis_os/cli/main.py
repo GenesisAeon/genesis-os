@@ -128,8 +128,9 @@ def cycle(
     nats_publisher = None
     if nats_url:
         try:
-            from genesis_os.runtime.nats_publisher import NATSPublisher
             import asyncio
+
+            from genesis_os.runtime.nats_publisher import NATSPublisher
 
             nats_publisher = NATSPublisher(url=nats_url)
             asyncio.get_event_loop().run_until_complete(nats_publisher.connect())
@@ -231,10 +232,10 @@ def cycle(
                     pass
 
             if prometheus_exporter is not None:
-                try:
+                import contextlib
+
+                with contextlib.suppress(Exception):
                     prometheus_exporter.update(state)
-                except Exception:
-                    pass
 
     if last_state is not None:
         console.print(_state_table(last_state))
