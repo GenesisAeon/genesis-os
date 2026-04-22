@@ -290,7 +290,8 @@ class GenesisOS:
             # EthicsGate check after each cycle
             if self._ethics_gate is not None:
                 try:
-                    decision = self._ethics_gate.check(state)
+                    tension = float(state.metadata.get("tension", 0.0))
+                    decision = self._ethics_gate.check(state, tension=tension)
                     if not decision.approved:
                         logger.warning(
                             "phase_transition_loop: EthicsGate halted at cycle %d: %s",

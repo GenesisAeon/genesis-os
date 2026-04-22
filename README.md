@@ -13,8 +13,8 @@
   <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://github.com/GenesisAeon/genesis-os/workflows/CI/badge.svg" alt="CI status"/></a>
   <a href="https://doi.org/10.5281/zenodo.19645351"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19645351.svg" alt="DOI"/></a>
   <a href="docs/whitepaper.md"><img src="https://img.shields.io/badge/whitepaper-v0.3.1-blue" alt="Whitepaper"/></a>
-  <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://img.shields.io/badge/coverage-99.1%25-brightgreen" alt="99.1% test coverage"/></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"/></a>
+  <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://img.shields.io/badge/coverage-92%25-brightgreen" alt="92% test coverage"/></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="GPLv3 License"/></a>
   <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/docs-CC%20BY%204.0-lightblue.svg" alt="CC BY 4.0"/></a>
   <a href="https://explore.openaire.eu/search/software?pid=10.5281%2Fzenodo.19645351"><img src="https://img.shields.io/badge/OpenAIRE-indexed-blue?logo=openaire" alt="OpenAIRE"/></a>
 </p>
@@ -23,12 +23,30 @@
 
 ## Overview
 
-**genesis-os** v0.2.0 is a unified Python framework implementing the GenesisAeon
+**genesis-os** v0.4.0 is a unified Python framework implementing the GenesisAeon
 architecture: a self-reflecting, entropy-governed, phase-transitioning system
 described by the **Unified Lagrangian** formalism. It integrates CREP
 (Coherence-Resonance-Emergence-Poetics) evaluation, a UTAC-Logistic entropy ODE,
 live **cosmic-web emergence simulation** via `CosmicWebSimulator`, a real-time
 **Dash web GUI**, Mandala visualisation, and sonification.
+
+v0.4.0 completes the **unified-mandala Integration** across eight phases, bringing
+canonical CREP, stochastic SDE bridges, AFET/Landauer thermodynamic consistency,
+FraktalRun exploration, live NATS/Prometheus streaming, and governance via OPA into
+a single cohesive system.
+
+### unified-mandala Integration — Phases A–H
+
+| Phase | Module | Feature |
+|-------|--------|---------|
+| **A** | `core/crep_engine.py` | Canonical CREP Engine (Γ-weighted, TypeScript bridge) |
+| **B** | `core/utac_stoch_bridge.py` | SDE/Stochastic UTAC Bridge (Euler–Maruyama + JAX) |
+| **C** | `afet/` | AFET + Landauer Consistency (thermodynamic KI-energy bounds) |
+| **D** | `mirror/` | Mirror Machine (Tension Metric, DualDetector, 87.2× damping) |
+| **E** | `sigillin/` | Sigillin & Ritual Hooks (symbolic trigger generation) |
+| **F** | `runtime/fraktalrun_engine.py` | FraktalRun Engine (fractal phase-space, Lyapunov exponent) |
+| **G** | `runtime/nats_publisher.py` + `monitoring/` | Live NATS streaming + Prometheus `/metrics` |
+| **H** | `governance/` | EthicsGate circuit-breaker + OPA Bridge + PersonhoodLevel |
 
 ### The Unified Lagrangian
 
@@ -234,6 +252,56 @@ for state in genesis.phase_transition_loop():
         print(f"Cycle {state.cycle}: C={frame.frequencies['C']:.1f} Hz")
 ```
 
+### Canonical CREP + Mandala Bridge (v0.4.0)
+
+```python
+from genesis_os import GenesisOS
+from genesis_os.core.orchestrator import GenesisConfig
+from genesis_os.core.crep_engine import CanonicalCREPEngine
+from genesis_os.dashboard.mandala import MandalaDashboard
+
+config = GenesisConfig(entropy=0.5, max_cycles=30, seed=42)
+genesis = GenesisOS(config=config)
+crep_engine = CanonicalCREPEngine()
+mandala = MandalaDashboard()
+
+for state in genesis.phase_transition_loop():
+    if state.crep:
+        # Canonical Γ with Gaussian coherence weighting
+        canonical = crep_engine.evaluate(state.crep)
+        tension = float(state.metadata.get("tension", 0.0))
+        print(
+            f"Cycle {state.cycle:3d} | "
+            f"Γ_canonical={canonical.gamma:.4f} | "
+            f"Tension={tension:.3f} | "
+            f"Phase={state.phase.value}"
+        )
+        print(mandala.render_ascii(state.crep, state.phase, state.cycle))
+```
+
+### EthicsGate + Tension Circuit-Breaker (v0.4.0)
+
+```python
+from genesis_os import GenesisOS
+from genesis_os.core.orchestrator import GenesisConfig
+
+# EthicsGate enabled by default; halts cycles when tension > 5.0
+config = GenesisConfig(
+    entropy=0.6,
+    max_cycles=100,
+    ethics_gate_enabled=True,
+    tension_threshold=5.0,   # Tension(t) = Γ_Klima · Q_KI / (V_Eis + ε)
+    min_personhood_level=1,  # Require at least REACTIVE level
+    seed=7,
+)
+genesis = GenesisOS(config=config)
+
+for state in genesis.phase_transition_loop():
+    tension = state.metadata.get("tension", 0.0)
+    print(f"Cycle {state.cycle}: tension={tension:.3f}")
+# Loop stops automatically if EthicsGate triggers
+```
+
 ---
 
 ## CLI
@@ -285,22 +353,35 @@ genesis-os info
 genesis-os/
 ├── src/genesis_os/
 │   ├── core/
-│   │   ├── crep.py          # CREPEvaluator, CREPScore
-│   │   ├── phase.py         # Phase, PhaseMatrix, PhaseTransition
-│   │   └── orchestrator.py  # GenesisOS (main entry point) + EmergenceEvent
+│   │   ├── crep.py               # CREPEvaluator, CREPScore
+│   │   ├── crep_engine.py        # CanonicalCREPEngine (Phase A)
+│   │   ├── utac_stoch_bridge.py  # SDE/JAX bridge (Phase B)
+│   │   ├── phase.py              # Phase, PhaseMatrix, PhaseTransition
+│   │   └── orchestrator.py       # GenesisOS orchestrator
+│   ├── afet/                     # AFET + Landauer thermodynamics (Phase C)
+│   ├── mirror/
+│   │   ├── tension_metric.py     # Tension(t) = Γ·Q_KI/(V_Eis+ε) (Phase D)
+│   │   └── dual_detector.py      # Collapse + regeneration detector
+│   ├── sigillin/                 # Symbolic trigger generation (Phase E)
 │   ├── runtime/
-│   │   ├── engine.py        # RuntimeEngine (Unified Lagrangian)
-│   │   ├── utac.py          # UTACLogistic ODE
-│   │   └── emergence.py     # CosmicWebSimulator, EmergenceEvent (v0.2.0)
-│   ├── cli/
-│   │   └── main.py          # Typer CLI
+│   │   ├── engine.py             # RuntimeEngine (Unified Lagrangian)
+│   │   ├── utac.py               # UTACLogistic ODE
+│   │   ├── emergence.py          # CosmicWebSimulator
+│   │   ├── fraktalrun_engine.py  # Fractal phase-space exploration (Phase F)
+│   │   └── nats_publisher.py     # Async NATS streaming (Phase G)
+│   ├── monitoring/
+│   │   └── prometheus_exporter.py  # /metrics endpoint (Phase G)
+│   ├── governance/
+│   │   ├── ethics_gate.py        # EthicsGate circuit-breaker (Phase H)
+│   │   ├── opa_bridge.py         # OPA policy bridge (Phase H)
+│   │   └── personhood.py         # PersonhoodLevel CREP assessment
 │   ├── dashboard/
-│   │   ├── mandala.py       # MandalaDashboard
-│   │   ├── sonification.py  # Sonifier
-│   │   └── web_gui.py       # GenesisWebGUI – Dash live dashboard (v0.2.0)
+│   │   ├── mandala.py            # MandalaDashboard
+│   │   ├── sonification.py       # Sonifier
+│   │   └── web_gui.py            # Dash live dashboard
 │   └── plugins/
-│       ├── registry.py      # PluginRegistry
-│       └── adapters/        # One adapter per optional package
+│       ├── registry.py           # PluginRegistry
+│       └── adapters/             # One adapter per optional package
 ```
 
 ---
@@ -373,9 +454,12 @@ APA: Römer, J. (2026, April). *GenesisAeon v0.3.1: A unified variational framew
 
 ## License
 
-- **Code**: MIT License
-- **Documentation**: CC BY 4.0
-- **UI Assets**: MPL-2.0
+- **Code**: [GNU General Public License v3 or later (GPLv3+)](LICENSE)
+- **Documentation**: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
+
+The dual-licence model allows free academic use and redistribution under GPLv3
+while ensuring documentation and scientific content remain openly citable under
+CC BY 4.0.  See `LICENSE` for the full GPLv3 text.
 
 > *"A system that listens - a pattern that lives."*
 > *Im Kreis der Genesis erwacht das Mandala.*
