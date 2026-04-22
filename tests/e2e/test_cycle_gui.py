@@ -1,4 +1,4 @@
-"""End-to-end tests for the genesis-os v0.2.0 cycle with GUI and emergence.
+"""End-to-end tests for the genesis-os v0.4.0 cycle with GUI and emergence.
 
 Tests cover:
 - CLI cycle with emergence JSON output
@@ -30,13 +30,13 @@ runner = CliRunner()
 
 
 class TestVersion:
-    def test_version_is_0_2_0(self) -> None:
-        assert __version__ == "0.2.0"
+    def test_version_is_0_4_0(self) -> None:
+        assert __version__ == "0.4.0"
 
-    def test_cli_info_shows_0_2_0(self) -> None:
+    def test_cli_info_shows_0_4_0(self) -> None:
         result = runner.invoke(app, ["info"])
         assert result.exit_code == 0
-        assert "0.2.0" in result.output
+        assert "0.4.0" in result.output
 
 
 # ---------------------------------------------------------------------------
@@ -81,10 +81,10 @@ class TestCLISimulateEmergence:
         summary = data["emergence_summary"]
         assert "event_count" in summary
 
-    def test_simulate_version_0_2_0(self) -> None:
+    def test_simulate_version_0_4_0(self) -> None:
         result = runner.invoke(app, ["cycle", "--simulate", "--max-cycles", "5"])
         data = json.loads(result.output)
-        assert data["version"] == "0.2.0"
+        assert data["version"] == "0.4.0"
 
     def test_simulate_deterministic_emergence_with_seed(self) -> None:
         args = ["cycle", "--simulate", "--seed", "77", "--max-cycles", "10"]

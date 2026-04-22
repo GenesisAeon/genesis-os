@@ -79,9 +79,11 @@ class OPABridge:
             )
             if resp.status_code == 200:
                 result = resp.json()
-                allowed = result.get("result", {}).get("allow", True)
+                # OPA /v1/data/{policy} returns {"result": <bool>} for boolean rules
+                raw = result.get("result")
+                allowed = bool(raw) if raw is not None else True
                 return PolicyDecision(
-                    allowed=bool(allowed),
+                    allowed=allowed,
                     reason="OPA policy evaluated",
                     policy_name=policy,
                 )

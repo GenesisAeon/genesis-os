@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "genesis-os"
-version = "0.2.0"
+version = "0.4.0"
 description = "Self-reflecting OS framework with live cosmic-web emergence simulation, Dash GUI, real-time phase transitions, and resonance coupling for GenesisAeon"
 readme = "README.md"
 license = { text = "GPL-3.0-or-later" }
@@ -20,7 +20,7 @@ keywords = [
     "lagrangian",
 ]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Programming Language :: Python :: 3",
