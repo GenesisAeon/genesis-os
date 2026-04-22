@@ -34,7 +34,6 @@ REPOS: list[str] = [
     "entropy-table",
     "entropy-governance",
     "implosive-genesis",
-    "advanced-weighting-systems",
     "diamond-setup",
     "unified-mandala-Demo",
 ]
@@ -55,7 +54,18 @@ COMMIT_MSG: str = (
 
 def _run(cmd: list[str], cwd: Path | None = None) -> None:
     """Run a shell command, raising CalledProcessError on non-zero exit."""
-    subprocess.run(cmd, cwd=cwd, check=True, text=True)  # noqa: S603
+    subprocess.run(cmd, cwd=cwd, check=True, text=True, encoding="utf-8")  # noqa: S603
+
+
+def _has_staged_changes(cwd: Path) -> bool:
+    """Return True if there are staged changes ready to commit."""
+    result = subprocess.run(  # noqa: S603
+        ["git", "diff", "--cached", "--quiet"],
+        cwd=cwd,
+        text=True,
+        encoding="utf-8",
+    )
+    return result.returncode != 0
 
 
 def _copy_templates(repo_path: Path) -> None:
@@ -63,7 +73,7 @@ def _copy_templates(repo_path: Path) -> None:
     for target, source in TEMPLATE_FILES.items():
         dst = repo_path / target
         dst.parent.mkdir(parents=True, exist_ok=True)
-        dst.write_text((TEMPLATES_DIR / source).read_text())
+        dst.write_text((TEMPLATES_DIR / source).read_text(encoding="utf-8"), encoding="utf-8")
 
 
 def _merge_pyproject(repo_path: Path, repo: str) -> None:
@@ -71,7 +81,7 @@ def _merge_pyproject(repo_path: Path, repo: str) -> None:
     pyproject = repo_path / "pyproject.toml"
     if not pyproject.exists():
         return
-    content = pyproject.read_text()
+    content = pyproject.read_text(encoding="utf-8")
     if "project.urls" in content:
         return
     addition = (
@@ -81,7 +91,7 @@ def _merge_pyproject(repo_path: Path, repo: str) -> None:
         f'Documentation = "https://genesisaeon.github.io/{repo}"\n'
         'Zenodo = "https://doi.org/10.5281/zenodo.XXXXXXXX"  # <- enter your DOI\n'
     )
-    pyproject.write_text(content + addition)
+    pyproject.write_text(content + addition, encoding="utf-8")
 
 
 def propagate(repo: str, base_dir: Path) -> None:
@@ -98,6 +108,9 @@ def propagate(repo: str, base_dir: Path) -> None:
     _merge_pyproject(repo_path, repo)
 
     _run(["git", "add", "."], cwd=repo_path)
+    if not _has_staged_changes(repo_path):
+        print(f"  {repo}: nothing to propagate, skipping commit/push.")
+        return
     _run(["git", "commit", "-m", COMMIT_MSG], cwd=repo_path)
     _run(["git", "push", "origin", f"HEAD:{BRANCH}"], cwd=repo_path)
     print(f"PR ready: https://github.com/{ORG}/{repo}/pull/new/{BRANCH}")
