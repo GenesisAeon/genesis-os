@@ -8,7 +8,7 @@ and :class:`~genesis_os.runtime.emergence.CosmicWebSimulator`.
 
 from __future__ import annotations
 
-__version__ = "0.4.0"
+__version__ = "0.4.1"
 __author__ = "GenesisAeon"
 __license__ = "GPL-3.0-or-later"
 __all__ = [
