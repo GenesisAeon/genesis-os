@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "genesis-os"
-version = "0.4.1"
+version = "0.4.2"
 description = "Self-reflecting OS framework with live cosmic-web emergence simulation, Dash GUI, real-time phase transitions, and resonance coupling for GenesisAeon"
 readme = "README.md"
 license = { text = "GPL-3.0-or-later" }
