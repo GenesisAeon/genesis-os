@@ -1,38 +1,41 @@
 {
-  "title": "GenesisAeon v0.3.1: A Self-Reflective Thermodynamic Operating System for Emergent Realities",
-  "version": "0.3.1",
-  "creators": [
-    {
-      "name": "Römer, Johann",
-      "affiliation": "GenesisAeon Project (Independent Researcher)"
-    }
-  ],
-  "description": "GenesisAeon v0.3.1 is a self-reflective, entropy-governed operating framework combining classical Lagrangian mechanics, self-organized criticality, and coherence-resonance dynamics into a unified formalism. The Unified Lagrangian L = T − V + Φ(H) + Γ(C,R,E,P) governs entropy evolution via the UTAC-Logistic ODE and drives live cosmic-web emergence simulation. Two independent benchmarks validate the framework: (1) UTAC climate model achieves 37.3% RMSE reduction vs. linear baseline on ERA5 Arctic sea ice 1940–2023, with automatic tipping-point detection at ~1998; (2) CosmicWebSimulator resonance metric reproduces GADGET-4 reference filament/void structure at 1–50 Mpc/h scales. Novel contributions: UTAC (Universal Threshold Activation Criticality), CREP metrics (Coherence·Resonance·Emergence·Poetics), AFET (Allgemeine Feld-Entropie-Theorie), v_RIG information-geometric framework, and σ_Φ ≈ 1/16 Frame Principle. Python implementation with 99.1% test coverage, Dash web GUI, and deterministic reproducibility. MIT licence.",
-  "keywords": [
-    "self-organized criticality",
-    "coherence resonance",
-    "unified Lagrangian",
-    "entropy dynamics",
-    "UTAC",
-    "CREP metrics",
-    "AFET",
-    "phase transitions",
-    "cosmic web simulation",
-    "Arctic sea ice",
-    "ERA5",
-    "climate tipping points",
-    "variational thermodynamics",
-    "information geometry",
-    "GenesisAeon",
-    "emergence",
-    "self-reflection",
-    "nonequilibrium thermodynamics"
-  ],
-  "license": "MIT",
+  "title": "genesis-os v0.4.2: Self-Reflective Thermodynamic Operating System for Emergent Realities",
+  "version": "0.4.2",
   "upload_type": "software",
   "access_right": "open",
   "language": "eng",
+  "creators": [
+    {
+      "name": "Römer, Johann",
+      "affiliation": "GenesisAeon (Independent Researcher)"
+    }
+  ],
+  "description": "genesis-os v0.4.2 is a self-reflective, entropy-governed operating framework combining classical Lagrangian mechanics, self-organized criticality, and coherence-resonance dynamics into a unified formalism. The Unified Lagrangian L = T − V + Φ(H) + Γ(C,R,E,P) governs entropy evolution via the UTAC-Logistic ODE and drives live cosmic-web emergence simulation. The unified-mandala integration (Phases A–H) delivers: Canonical CREP Engine, SDE/Stochastic UTAC Bridge, AFET+Landauer thermodynamic consistency, Mirror Machine (87.2× damping), Sigillin ritual hooks, FraktalRun phase-space engine (Lyapunov exponent), live NATS/Prometheus streaming, and OPA-based ethics governance. v0.4.2 moves sonification to an optional [audio] extra for cross-platform compatibility. Python implementation with 92% test coverage and 1221 tests, Dash web GUI, and deterministic reproducibility. Dual-licensed: GPLv3-or-later (code) + CC BY 4.0 (documentation).",
+  "keywords": [
+    "genesis-aeon",
+    "utac",
+    "crep",
+    "criticality",
+    "self-organized-criticality",
+    "mirror-machine",
+    "fractal",
+    "unified-lagrangian",
+    "entropy-dynamics",
+    "phase-transitions",
+    "coherence-resonance",
+    "emergence",
+    "cosmic-web",
+    "nonequilibrium-thermodynamics",
+    "information-geometry"
+  ],
+  "license": "GPL-3.0-or-later",
   "related_identifiers": [
+    {
+      "identifier": "https://doi.org/10.5281/zenodo.19645351",
+      "relation": "isDocumentedBy",
+      "scheme": "doi",
+      "resource_type": "publication-article"
+    },
     {
       "identifier": "https://github.com/GenesisAeon/genesis-os",
       "relation": "isSupplementTo",
