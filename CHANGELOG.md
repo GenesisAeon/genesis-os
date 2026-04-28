@@ -6,6 +6,18 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [0.4.2] – 2026-04-28
+
+### Fixed
+
+- Moved `sonification>=0.1.0` from `full-stack` to a new `audio` extra.
+  The package has no Windows wheel on PyPI, causing `ResolutionImpossible`
+  for all Windows users. The internal `Sonifier` class already handles the
+  missing package gracefully via `ImportError` fallback, so no functionality
+  is lost. Users who need audio output can install `genesis-os[audio]`.
+
+---
+
 ## [0.4.0] – 2026-04-22
 
 ### Summary

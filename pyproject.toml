@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "genesis-os"
-version = "0.4.1"
+version = "0.4.2"
 description = "Self-reflecting OS framework with live cosmic-web emergence simulation, Dash GUI, real-time phase transitions, and resonance coupling for GenesisAeon"
 readme = "README.md"
 license = { text = "GPL-3.0-or-later" }
@@ -55,12 +55,14 @@ full-stack = [
     "entropy-governance>=0.1.0",
     "utac-core>=0.1.0",
     "mandala-visualizer>=0.1.0",
-    "sonification>=0.1.0",
     "climate-dashboard>=0.1.0",
     "implosive-genesis>=0.1.0",
     "entropy-table>=0.1.0",
     "matplotlib>=3.7.0",
     "plotly>=5.15.0",
+]
+audio = [
+    "sonification>=0.1.0",
 ]
 gui = [
     "dash>=2.14.0",
