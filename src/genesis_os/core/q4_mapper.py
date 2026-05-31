@@ -19,8 +19,8 @@ from dataclasses import dataclass, field
 from typing import Final
 
 from genesis_os.core.crep import CREPScore
-from genesis_os.core.gray_code import hamming_distance, encode as gray_encode
-from genesis_os.core.q4_state import Q4State, InvalidTransitionError
+from genesis_os.core.gray_code import hamming_distance
+from genesis_os.core.q4_state import InvalidTransitionError, Q4State
 
 logger = logging.getLogger(__name__)
 

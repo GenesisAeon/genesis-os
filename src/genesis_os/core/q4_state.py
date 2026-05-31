@@ -116,7 +116,10 @@ class Q4State:
         return cls(C=int(binary[0]), R=int(binary[1]), E=int(binary[2]), P=int(binary[3]))
 
     def __repr__(self) -> str:
-        return f"Q4State(C={self.C}, R={self.R}, E={self.E}, P={self.P}, id={self.id}, binary='{self.binary}')"
+        return (
+            f"Q4State(C={self.C}, R={self.R}, E={self.E}, P={self.P},"
+            f" id={self.id}, binary='{self.binary}')"
+        )
 
     def to_dict(self) -> dict[str, int | str]:
         """Serialisiert Q4State als Dictionary."""
