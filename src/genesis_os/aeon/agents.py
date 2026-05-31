@@ -23,14 +23,15 @@ import hashlib
 import json
 import logging
 import time
+from collections.abc import Callable, Coroutine
 from dataclasses import dataclass, field
-from typing import Any, Callable, Coroutine
+from typing import Any
 
 import numpy as np
 
 from genesis_os.core.crep import CREPScore
 from genesis_os.core.gray_code import suggest_gray_path
-from genesis_os.core.q4_mapper import Q4Mapper, ThresholdCrossingDetector, validate_q4_transition
+from genesis_os.core.q4_mapper import Q4Mapper, validate_q4_transition
 from genesis_os.core.q4_state import InvalidTransitionError, Q4State
 from genesis_os.core.utac_bridge import UTACBridge
 
@@ -557,7 +558,7 @@ class PhilosophyAgent:
     def __post_init__(self) -> None:
         self.coordinator.policy.register_veto(self._gemeinwohl_veto)
 
-    def _gemeinwohl_veto(self, from_state: Q4State, to_state: Q4State) -> bool:
+    def _gemeinwohl_veto(self, from_state: Q4State, to_state: Q4State) -> bool:  # noqa: ARG002
         """Vetoisiert Übergänge die Governance-Grenzen verletzen.
 
         Aktuell: Übergänge VON kritischem Zustand (alle Flags 1) werden
@@ -644,7 +645,10 @@ class UIAgent:
         if self._publisher is not None:
             await self._publisher.publish_agent_state(
                 role="ui",
-                payload={"input_type": input_type, "q4_binary": self.coordinator.current_state.binary},
+                payload={
+                    "input_type": input_type,
+                    "q4_binary": self.coordinator.current_state.binary,
+                },
             )
 
     async def broadcast_state(self) -> None:
@@ -708,7 +712,7 @@ class AgentLoop:
             return_exceptions=True,
         )
         names = ["coordinator", "transform", "philosophy", "ui"]
-        return {name: bool(r) for name, r in zip(names, results)}
+        return {name: bool(r) for name, r in zip(names, results, strict=True)}
 
     async def tick(self, crep: CREPScore) -> dict[str, Any]:
         """Führt einen Loop-Tick aus.
@@ -784,7 +788,7 @@ class AgentLoop:
         nats_url: str = "nats://localhost:4222",
         tick_interval_s: float = 0.1,
         strict_policy: bool = True,
-    ) -> "AgentLoop":
+    ) -> AgentLoop:
         """Factory: Erstellt einen vollständig verdrahteten AgentLoop."""
         policy = PolicyEngine(strict=strict_policy)
         mapper = Q4Mapper()
