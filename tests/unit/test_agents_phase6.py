@@ -9,6 +9,8 @@ Alle Tests sind deterministisch (kein echtes NATS nötig).
 from __future__ import annotations
 
 import asyncio
+import itertools
+from typing import Any
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
@@ -171,8 +173,8 @@ class TestPolicyEngine:
         assert path[0].id == 0
         assert path[-1].id == 15
         # Alle Schritte haben Hamming-Distanz 1
-        for a, b in zip(path, path[1:]):
-            from genesis_os.core.gray_code import hamming_distance
+        from genesis_os.core.gray_code import hamming_distance
+        for a, b in itertools.pairwise(path):
             assert hamming_distance(a.id, b.id) == 1
 
     def test_gray_policy_enforced_all_pairs(self) -> None:
