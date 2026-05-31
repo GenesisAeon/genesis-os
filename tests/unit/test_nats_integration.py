@@ -38,25 +38,27 @@ class FakeCREP:
 
 
 class TestNATSPublisherNoServer:
-    def test_connect_no_server_returns_false(self) -> None:
+    @pytest.mark.asyncio
+    async def test_connect_no_server_returns_false(self) -> None:
         publisher = NATSPublisher(url="nats://localhost:19999")
-        result = asyncio.get_event_loop().run_until_complete(publisher.connect())
+        result = await publisher.connect()
         assert result is False
 
-    def test_publish_no_connection_no_error(self) -> None:
+    @pytest.mark.asyncio
+    async def test_publish_no_connection_no_error(self) -> None:
         publisher = NATSPublisher(url="nats://localhost:19999")
-        asyncio.get_event_loop().run_until_complete(
-            publisher.publish("test.subject", {"key": "value"})
-        )
+        await publisher.publish("test.subject", {"key": "value"})
 
-    def test_publish_cycle_state_no_error(self) -> None:
+    @pytest.mark.asyncio
+    async def test_publish_cycle_state_no_error(self) -> None:
         publisher = NATSPublisher(url="nats://localhost:19999")
         state = FakeState()
-        asyncio.get_event_loop().run_until_complete(publisher.publish_cycle_state(state))
+        await publisher.publish_cycle_state(state)
 
-    def test_close_no_connection_no_error(self) -> None:
+    @pytest.mark.asyncio
+    async def test_close_no_connection_no_error(self) -> None:
         publisher = NATSPublisher(url="nats://localhost:19999")
-        asyncio.get_event_loop().run_until_complete(publisher.close())
+        await publisher.close()
 
     def test_subject_constants(self) -> None:
         assert NATSPublisher.SUBJECT_CYCLE == "genesis.cycle.state"
