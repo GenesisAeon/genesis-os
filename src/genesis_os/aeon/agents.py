@@ -444,7 +444,7 @@ class CoordinatorAgent:
     async def connect(self) -> bool:
         from genesis_os.runtime.nats_publisher import NATSPublisher
         self._publisher = NATSPublisher(url=self.nats_url)
-        return await self._publisher.connect()
+        return bool(await self._publisher.connect())
 
     async def update_q4(self, crep: CREPScore) -> Q4State | None:
         """Mappt CREPScore auf Q4State, prüft Policy Gate, publiziert Frame.
@@ -510,7 +510,7 @@ class TransformAgent:
     async def connect(self) -> bool:
         from genesis_os.runtime.nats_publisher import NATSPublisher
         self._publisher = NATSPublisher(url=self.coordinator.nats_url)
-        return await self._publisher.connect()
+        return bool(await self._publisher.connect())
 
     async def process(self, crep: CREPScore) -> SigillinSnapshot:
         """Erzeugt Sigillin-Snapshot und publiziert ihn."""
@@ -571,7 +571,7 @@ class PhilosophyAgent:
     async def connect(self) -> bool:
         from genesis_os.runtime.nats_publisher import NATSPublisher
         self._publisher = NATSPublisher(url=self.coordinator.nats_url)
-        return await self._publisher.connect()
+        return bool(await self._publisher.connect())
 
     async def evaluate(self, crep: CREPScore) -> dict[str, Any]:
         """Bewertet CREPScore und publiziert Governance-Bewertung."""
@@ -630,7 +630,7 @@ class UIAgent:
     async def connect(self) -> bool:
         from genesis_os.runtime.nats_publisher import NATSPublisher
         self._publisher = NATSPublisher(url=self.coordinator.nats_url)
-        return await self._publisher.connect()
+        return bool(await self._publisher.connect())
 
     def register_input_handler(
         self, handler: Callable[[str, Any], Coroutine[Any, Any, None]]
