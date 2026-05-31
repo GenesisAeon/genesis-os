@@ -1,12 +1,19 @@
-"""NATS Publisher für genesis-os Cycle-States.
+"""NATS Publisher für genesis-os Cycle-States und Q4-Frame-Übergänge.
 
 Publiziert genesis-os Zustände via NATS/JetStream für unified-mandala Live-UI.
 
-NATS-Subjects (Konvention):
+NATS-Subjects (Legacy — rückwärtskompatibel, bleiben erhalten):
     genesis.cycle.state      → vollständiger GenesisState (JSON)
     genesis.crep.score       → CREPScore (JSON)
     genesis.emergence.event  → EmergenceEvent (JSON)
     genesis.mirror.trigger   → Phase-Transition ausgelöst (JSON)
+
+NATS-Subjects (Q4-Frame-Schema — neu, additiv):
+    ga.frame.<4bit>          → Q4-Zustandsübergänge (ga.frame.0000..ga.frame.1111)
+    ga.sigillin.<id>         → Sigillin-Events
+    ga.agent.<role>          → Agent-Zustandsupdates
+    ga.resonance.<metric>    → CREP-Metrik-Updates
+    ga.system.health         → System-Health-Broadcasts
 
 Graceful Degradation: Wenn nats-py nicht installiert oder Server nicht
 erreichbar, werden alle publish-Aufrufe stillschweigend ignoriert.
@@ -31,14 +38,25 @@ except ImportError:
 class NATSPublisher:
     """Publiziert genesis-os Zustände via NATS/JetStream.
 
+    Unterstützt das Legacy-Schema (genesis.*) und das neue Q4-Frame-Schema
+    (ga.frame.*). Beide Schemas sind aktiv und rückwärtskompatibel.
+
     Args:
         url: NATS-Server-URL (default: ``nats://localhost:4222``).
     """
 
+    # Legacy subjects (rückwärtskompatibel)
     SUBJECT_CYCLE = "genesis.cycle.state"
     SUBJECT_CREP = "genesis.crep.score"
     SUBJECT_EMERGE = "genesis.emergence.event"
     SUBJECT_MIRROR = "genesis.mirror.trigger"
+
+    # Q4-Frame-Schema (additiv)
+    FRAME_SUBJECT_PREFIX = "ga.frame."
+    SIGILLIN_SUBJECT_PREFIX = "ga.sigillin."
+    AGENT_SUBJECT_PREFIX = "ga.agent."
+    RESONANCE_SUBJECT_PREFIX = "ga.resonance."
+    HEALTH_SUBJECT = "ga.system.health"
 
     def __init__(self, url: str = "nats://localhost:4222") -> None:
         self.url = url
@@ -101,6 +119,75 @@ class NATSPublisher:
             "formula": "legacy",
         }
         await self.publish(self.SUBJECT_CREP, payload)
+
+    async def publish_q4_frame(
+        self,
+        state: Any,
+        payload: dict[str, Any],
+        from_state: Any | None = None,
+    ) -> bool:
+        """Publiziert Q4-Zustandsübergang auf ga.frame.<binary>.
+
+        Subject = f"ga.frame.{state.binary}"  z.B. "ga.frame.1011"
+
+        Wenn from_state angegeben, wird der Gray-Code Policy Gate geprüft.
+        Bei Verletzung (Hamming > 1) wird der Frame NICHT publiziert.
+
+        Args:
+            state: Q4State mit .binary Property.
+            payload: Zusätzliche Daten zum Frame.
+            from_state: Vorheriger Q4State für Policy-Gate-Prüfung (optional).
+
+        Returns:
+            True wenn erfolgreich publiziert, False sonst.
+        """
+        if from_state is not None:
+            try:
+                from genesis_os.runtime.policy_gate import FramePolicyGate
+                gate = FramePolicyGate(strict=False)
+                if not gate.check(from_state, state):
+                    return False
+            except Exception as exc:
+                logger.debug("PolicyGate check failed: %s", exc)
+
+        binary = getattr(state, "binary", "0000")
+        subject = f"{self.FRAME_SUBJECT_PREFIX}{binary}"
+        frame_payload: dict[str, Any] = {
+            "q4_state": {
+                "C": getattr(state, "C", 0),
+                "R": getattr(state, "R", 0),
+                "E": getattr(state, "E", 0),
+                "P": getattr(state, "P", 0),
+                "id": getattr(state, "id", 0),
+                "binary": binary,
+            },
+            **payload,
+        }
+        await self.publish(subject, frame_payload)
+        logger.debug("NATSPublisher: published Q4 frame to %s", subject)
+        return True
+
+    async def publish_sigillin(
+        self,
+        sigillin_id: str,
+        payload: dict[str, Any],
+    ) -> None:
+        """Publiziert Sigillin-Event auf ga.sigillin.<id>."""
+        subject = f"{self.SIGILLIN_SUBJECT_PREFIX}{sigillin_id}"
+        await self.publish(subject, payload)
+
+    async def publish_agent_state(
+        self,
+        role: str,
+        payload: dict[str, Any],
+    ) -> None:
+        """Publiziert Agent-Zustandsupdate auf ga.agent.<role>."""
+        subject = f"{self.AGENT_SUBJECT_PREFIX}{role}"
+        await self.publish(subject, payload)
+
+    async def publish_health(self, payload: dict[str, Any]) -> None:
+        """Publiziert System-Health-Broadcast auf ga.system.health."""
+        await self.publish(self.HEALTH_SUBJECT, payload)
 
     async def close(self) -> None:
         """Schließt die NATS-Verbindung."""
