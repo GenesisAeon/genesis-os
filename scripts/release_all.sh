@@ -113,6 +113,49 @@ run() {
     fi
 }
 
+bump_version() {
+    local repo_dir="$1"
+    local version="$2"
+    local changed=false
+
+    # pyproject.toml (hatchling / setuptools / flit style)
+    local pyproject="$repo_dir/pyproject.toml"
+    if [[ -f "$pyproject" ]]; then
+        local current
+        current=$(grep -m1 '^version' "$pyproject" | sed 's/.*= *"\(.*\)"/\1/' || echo "")
+        if [[ "$current" != "$version" ]]; then
+            if $DRY_RUN; then
+                dry "sed: $pyproject  version = \"$current\" → \"$version\""
+            else
+                sed -i "s/^version = \".*\"/version = \"$version\"/" "$pyproject"
+                ok "pyproject.toml bumped: $current → $version"
+            fi
+            changed=true
+        fi
+    fi
+
+    # __init__.py __version__ = "x.y.z"
+    local init
+    init=$(find "$repo_dir/src" "$repo_dir" -maxdepth 3 -name "__init__.py" 2>/dev/null | head -5)
+    for f in $init; do
+        if grep -q '__version__' "$f"; then
+            if $DRY_RUN; then
+                dry "sed: $f  __version__ → \"$version\""
+            else
+                sed -i "s/__version__ = \".*\"/__version__ = \"$version\"/" "$f"
+                ok "__init__.py bumped: $f"
+            fi
+            changed=true
+        fi
+    done
+
+    if $changed && ! $DRY_RUN; then
+        git -C "$repo_dir" add -u
+        git -C "$repo_dir" diff --cached --quiet || \
+            git -C "$repo_dir" commit -m "chore: bump version to $version for 1.0.0 release"
+    fi
+}
+
 install_workflow() {
     local repo_dir="$1"
     local workflow_src="$TEMPLATE_DIR/publish.yml"
@@ -151,6 +194,7 @@ tag_and_push() {
         return 0
     fi
 
+    bump_version "$repo_dir" "$version"
     install_workflow "$repo_dir"
 
     run "cd '$repo_dir' && git tag -a '$tag' -m 'Release $tag — GenesisAeon 1.0.0 milestone'"
