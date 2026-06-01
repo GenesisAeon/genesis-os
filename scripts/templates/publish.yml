@@ -44,7 +44,6 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          # Secret name inside the PYPITOKEN environment on GitHub
           password: ${{ secrets.PYPI_API_TOKEN }}
 
   github-release:
@@ -64,19 +63,3 @@ jobs:
           generate_release_notes: true
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
-
-  publish-zenodo:
-    name: Publish to Zenodo
-    needs: github-release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Upload to Zenodo
-        run: |
-          echo "Zenodo upload triggered for tag ${{ github.ref_name }}"
-          echo "Configure ZENODO_TOKEN secret and zenodraft/action for automatic upload."
-        # Replace with actual zenodo-upload action when token is configured:
-        # uses: zenodraft/action@main
-        # with:
-        #   concept-doi: 10.5281/zenodo.XXXXXXXX
-        #   token: ${{ secrets.ZENODO_TOKEN }}
