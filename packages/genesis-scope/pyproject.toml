@@ -1,0 +1,56 @@
+[build-system]
+requires = ["hatchling>=1.21.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "genesis-scope"
+version = "1.0.0"
+description = "Semantic coordinate system for Human-AI collaboration — GenesisAeon Package 39"
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+authors = [
+    { name = "GenesisAeon", email = "genesis@aeon.dev" },
+    { name = "Johann Römer" },
+]
+keywords = [
+    "genesis",
+    "CREP",
+    "semantic-anchors",
+    "human-ai-collaboration",
+    "drift-model",
+    "sigillin",
+    "information-geometry",
+    "UTAC",
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/GenesisAeon/genesis-scope"
+Repository = "https://github.com/GenesisAeon/genesis-scope"
+Zenodo = "https://doi.org/10.5281/zenodo.17472834"
+
+[tool.hatch.build.targets.wheel]
+packages = ["genesis_scope"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
