@@ -1,0 +1,46 @@
+{
+  "title": "PACKAGE_NAME v1.0.0: PACKAGE_DESCRIPTION — GenesisAeon Package PACKAGE_ID",
+  "version": "1.0.0",
+  "upload_type": "software",
+  "access_right": "open",
+  "language": "eng",
+  "creators": [
+    {
+      "name": "Römer, Johann",
+      "affiliation": "MOR Research Collective (Independent Researcher)"
+    }
+  ],
+  "description": "PACKAGE_NAME implements PACKAGE_DESCRIPTION as part of the GenesisAeon ecosystem. Domain: PACKAGE_DOMAIN. CREP value: Γ ≈ PACKAGE_GAMMA. Part of the 1.0.0 milestone release spanning 40 domain packages (P17–P40).",
+  "keywords": [
+    "GenesisAeon",
+    "CREP",
+    "UTAC",
+    "PACKAGE_DOMAIN",
+    "phase-transition",
+    "complex-systems",
+    "entropy",
+    "criticality",
+    "golden-ratio",
+    "GenesisAeon-PACKAGE_ID"
+  ],
+  "license": "GPL-3.0-or-later",
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.17472834",
+      "relation": "isPartOf",
+      "scheme": "doi",
+      "resource_type": "publication-preprint"
+    },
+    {
+      "identifier": "https://github.com/GenesisAeon/genesis-os",
+      "relation": "isDerivedFrom",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/GenesisAeon/PACKAGE_REPO",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "notes": "GenesisAeon ecosystem — CREP criticality spectrum P17–P40. Triple universality: AMOC = Neural Criticality = Theta-Resonance = Γ ≈ 0.251."
+}

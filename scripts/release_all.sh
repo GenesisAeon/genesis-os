@@ -34,31 +34,32 @@ DEFAULT_VERSION="1.0.0"
 
 # ─── Package-Liste P17–P40 ────────────────────────────────────────────────────
 
+# Format: "repo-name:domain:gamma"
 declare -A PACKAGES=(
-    [17]="cygnus-jet-utac"
-    [18]="amoc-utac"
-    [19]="amazon-utac"
-    [20]="neural-avalanche-utac"
-    [21]="solar-flare-utac"
-    [22]="sandpile-utac"
-    [23]="seismic-utac"
-    [24]="quantum-genesis"
-    [25]="cellular-genesis"
-    [26]="spiking-aeon"
-    [27]="theta-resonance"
-    [28]="epi-sigillin"
-    [29]="hikari-ledger"
-    [30]="diffusive-routing"
-    [31]="vrig-cosmological"
-    [32]="beta-clustering-utac"
-    [33]="implosive-origin-utac"
-    [34]="afet-tensions"
-    [35]="phaethon-chimera"
-    [36]="sa-sv-duality"
-    [37]="eml-utac-bridge"
-    [38]="phi-scaling-validator"
-    [39]="genesis-scope"
-    [40]="HexaAgent"
+    [17]="cygnus-jet-utac:astrophysics:0.046"
+    [18]="amoc-utac:oceanography:0.251"
+    [19]="amazon-utac:ecology:0.116"
+    [20]="neural-avalanche-utac:neuroscience:0.251"
+    [21]="solar-flare-utac:heliophysics:0.014"
+    [22]="sandpile-utac:statistical-mechanics:0.296"
+    [23]="seismic-utac:geophysics:0.200"
+    [24]="quantum-genesis:quantum-physics:0.050"
+    [25]="cellular-genesis:cell-biology:0.090"
+    [26]="spiking-aeon:neuromorphic:0.150"
+    [27]="theta-resonance:cognitive-neuroscience:0.251"
+    [28]="epi-sigillin:epigenetics:-"
+    [29]="hikari-ledger:distributed-systems:0.367"
+    [30]="diffusive-routing:network-science:0.443"
+    [31]="vrig-cosmological:information-geometry:-"
+    [32]="beta-clustering-utac:cross-domain:-"
+    [33]="implosive-origin-utac:cosmology:-"
+    [34]="afet-tensions:cosmology:-"
+    [35]="phaethon-chimera:asteroid-dynamics:0.165"
+    [36]="sa-sv-duality:mathematical-physics:-"
+    [37]="eml-utac-bridge:mathematical-foundations:-"
+    [38]="phi-scaling-validator:meta-analysis:-"
+    [39]="genesis-scope:meta-collaboration:-"
+    [40]="HexaAgent:agent-roles:-"
 )
 
 # Core-Repos (kein P-Nummer, eigene Versionen)
@@ -156,6 +157,46 @@ bump_version() {
     fi
 }
 
+install_zenodo() {
+    local repo_dir="$1"
+    local repo_name="$2"
+    local pkg_id="$3"
+    local domain="$4"
+    local gamma="$5"
+    local zenodo_dst="$repo_dir/.zenodo.json"
+    local zenodo_src="$TEMPLATE_DIR/zenodo.json"
+
+    [[ -f "$zenodo_src" ]] || { warn "zenodo template missing"; return; }
+
+    if [[ -f "$zenodo_dst" ]]; then
+        # Only bump the version field if file already exists
+        if $DRY_RUN; then
+            dry "sed: $zenodo_dst version → 1.0.0"
+        else
+            sed -i 's/"version": ".*"/"version": "1.0.0"/' "$zenodo_dst"
+            ok ".zenodo.json version bumped in $repo_name"
+            git -C "$repo_dir" add .zenodo.json
+        fi
+        return
+    fi
+
+    # Generate fresh .zenodo.json from template
+    if $DRY_RUN; then
+        dry "generate .zenodo.json for $repo_name (P$pkg_id, domain=$domain, Γ=$gamma)"
+    else
+        sed \
+            -e "s/PACKAGE_NAME/$repo_name/g" \
+            -e "s/PACKAGE_ID/P${pkg_id}/g" \
+            -e "s/PACKAGE_REPO/$repo_name/g" \
+            -e "s/PACKAGE_DOMAIN/$domain/g" \
+            -e "s/PACKAGE_GAMMA/$gamma/g" \
+            -e "s/PACKAGE_DESCRIPTION/$domain domain package/g" \
+            "$zenodo_src" > "$zenodo_dst"
+        git -C "$repo_dir" add .zenodo.json
+        ok ".zenodo.json created for $repo_name"
+    fi
+}
+
 install_workflow() {
     local repo_dir="$1"
     local workflow_src="$TEMPLATE_DIR/publish.yml"
@@ -179,6 +220,9 @@ install_workflow() {
 tag_and_push() {
     local repo_dir="$1"
     local version="$2"
+    local pkg_id="${3:-0}"
+    local domain="${4:-software}"
+    local gamma="${5:--}"
     local tag="v${version}"
 
     log "Processing $repo_dir → $tag"
@@ -195,6 +239,7 @@ tag_and_push() {
     fi
 
     bump_version "$repo_dir" "$version"
+    install_zenodo "$repo_dir" "$(basename "$repo_dir")" "$pkg_id" "$domain" "$gamma"
     install_workflow "$repo_dir"
 
     run "cd '$repo_dir' && git tag -a '$tag' -m 'Release $tag — GenesisAeon 1.0.0 milestone'"
@@ -228,7 +273,10 @@ SKIPPED=0
 FAILED=0
 
 for pid in $(echo "${!PACKAGES[@]}" | tr ' ' '\n' | sort -n); do
-    repo="${PACKAGES[$pid]}"
+    entry="${PACKAGES[$pid]}"
+    repo="${entry%%:*}"
+    domain="$(echo "$entry" | cut -d: -f2)"
+    gamma="$(echo "$entry" | cut -d: -f3)"
 
     # Filter by --package or --from
     if [[ -n "$ONLY_PACKAGE" ]]; then
@@ -246,7 +294,7 @@ for pid in $(echo "${!PACKAGES[@]}" | tr ' ' '\n' | sort -n); do
         continue
     fi
 
-    if tag_and_push "$repo_dir" "$DEFAULT_VERSION"; then
+    if tag_and_push "$repo_dir" "$DEFAULT_VERSION" "$pid" "$domain" "$gamma"; then
         ((SUCCESS++)) || true
     else
         ((FAILED++)) || true

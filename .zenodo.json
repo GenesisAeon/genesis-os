@@ -1,45 +1,72 @@
 {
-  "title": "genesis-os v0.4.2: Self-Reflective Thermodynamic Operating System for Emergent Realities",
-  "version": "0.4.2",
+  "title": "genesis-os v1.0.0: Self-Reflective OS Framework for GenesisAeon — CREP Orchestrator for 40 Domain Packages",
+  "version": "1.0.0",
   "upload_type": "software",
   "access_right": "open",
   "language": "eng",
   "creators": [
     {
       "name": "Römer, Johann",
-      "affiliation": "GenesisAeon (Independent Researcher)"
+      "affiliation": "MOR Research Collective (Independent Researcher)"
     }
   ],
-  "description": "genesis-os v0.4.2 is a self-reflective, entropy-governed operating framework combining classical Lagrangian mechanics, self-organized criticality, and coherence-resonance dynamics into a unified formalism. The Unified Lagrangian L = T − V + Φ(H) + Γ(C,R,E,P) governs entropy evolution via the UTAC-Logistic ODE and drives live cosmic-web emergence simulation. The unified-mandala integration (Phases A–H) delivers: Canonical CREP Engine, SDE/Stochastic UTAC Bridge, AFET+Landauer thermodynamic consistency, Mirror Machine (87.2× damping), Sigillin ritual hooks, FraktalRun phase-space engine (Lyapunov exponent), live NATS/Prometheus streaming, and OPA-based ethics governance. v0.4.2 moves sonification to an optional [audio] extra for cross-platform compatibility. Python implementation with 92% test coverage and 1221 tests, Dash web GUI, and deterministic reproducibility. Dual-licensed: GPLv3-or-later (code) + CC BY 4.0 (documentation).",
+  "description": "genesis-os v1.0.0 is the central runtime of the GenesisAeon ecosystem. It implements the Unified Lagrangian L = T − V + Φ(H) + Γ(C,R,E,P) governing entropy evolution via the UTAC-Logistic ODE, CREP tensor evaluation, and live cosmic-web emergence simulation. This 1.0.0 milestone integrates the full CREP criticality spectrum across 40 domain packages (P17–P40): from astrophysics (Cygnus X-1, Γ≈0.046) through climate (AMOC, Γ≈0.251), ecology (Amazon, Γ≈0.116), neuroscience, geophysics, quantum physics, and network science (diffusive-routing, Γ≈0.443). New in 1.0.0: genesis-scope (P39, semantic coordinate system for Human-AI collaboration), beta-clustering-utac (P32, Φ^(1/3) universal scaling), EML-UTAC bridge (P37), and Φ^(1/3) scaling validator (P38). Includes AFET+Landauer thermodynamic consistency, Mirror Machine, Sigillin semantic anchors, FraktalRun phase-space engine, SDE/Stochastic UTAC, and OPA-based ethics governance. Python 3.10+, 92% test coverage, Dash web GUI.",
   "keywords": [
-    "genesis-aeon",
-    "utac",
-    "crep",
+    "GenesisAeon",
+    "CREP",
+    "UTAC",
+    "phase-transition",
+    "complex-systems",
+    "entropy",
+    "unified-lagrangian",
+    "cosmic-web",
+    "self-reflection",
     "criticality",
     "self-organized-criticality",
+    "emergence",
+    "resonance",
+    "information-geometry",
+    "golden-ratio",
+    "phi-scaling",
+    "AFET",
+    "tipping-points",
+    "ERA5",
+    "climate-science",
+    "nonequilibrium-thermodynamics",
+    "coherence-resonance",
     "mirror-machine",
     "fractal",
-    "unified-lagrangian",
-    "entropy-dynamics",
-    "phase-transitions",
-    "coherence-resonance",
-    "emergence",
-    "cosmic-web",
-    "nonequilibrium-thermodynamics",
-    "information-geometry"
+    "sigillin",
+    "semantic-anchors",
+    "human-ai-collaboration",
+    "EML-operator",
+    "beta-clustering",
+    "cosmological-tensions"
   ],
   "license": "GPL-3.0-or-later",
   "related_identifiers": [
     {
-      "identifier": "https://doi.org/10.5281/zenodo.19645351",
+      "identifier": "10.5281/zenodo.19645351",
       "relation": "isDocumentedBy",
       "scheme": "doi",
       "resource_type": "publication-article"
     },
     {
+      "identifier": "10.5281/zenodo.17472834",
+      "relation": "isPartOf",
+      "scheme": "doi",
+      "resource_type": "publication-preprint"
+    },
+    {
       "identifier": "https://github.com/GenesisAeon/genesis-os",
       "relation": "isSupplementTo",
       "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/GenesisAeon/unified-mandala",
+      "relation": "references",
+      "scheme": "url"
     }
-  ]
+  ],
+  "notes": "1.0.0 milestone: all 40 GenesisAeon domain packages (P17–P40) reach production-stable status. CREP spectrum spans Γ = 0.014 (solar flares) to Γ = 0.443 (network routing). Triple universality confirmed: AMOC = Neural Criticality = Theta-Resonance = Γ ≈ 0.251."
 }
