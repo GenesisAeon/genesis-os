@@ -148,6 +148,8 @@ class GenesisScope:
                 "sigillin: Sigillin == SemanticAnchor",
                 "HexaAgent (P40): agent roles in scope-space",
                 "beta-clustering-utac (P32): Phi^(1/3) scales coordinate ratios",
+                "theta-resonance (P27): theta-band cognitive rhythm — Gamma=0.251",
+                "diamond-setup (P29): Diamond interface foundation — Gamma=0.367",
             ],
         }
 
