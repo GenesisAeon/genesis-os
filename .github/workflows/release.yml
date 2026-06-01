@@ -45,7 +45,7 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           # Secret name inside the PYPITOKEN environment on GitHub
-          password: ${{ secrets.PYPI_API_TOKEN }}
+          password: ${{ secrets.PYPITOKEN }}
 
   github-release:
     name: Create GitHub Release
