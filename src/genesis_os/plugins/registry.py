@@ -13,19 +13,32 @@ from genesis_os.core.orchestrator import GenesisState
 logger = logging.getLogger(__name__)
 
 _KNOWN_ADAPTERS: dict[str, str] = {
-    "aeon_ai": "genesis_os.plugins.adapters.aeon_ai",
-    "advanced_weighting": "genesis_os.plugins.adapters.advanced_weighting",
-    "fieldtheory": "genesis_os.plugins.adapters.fieldtheory",
-    "mirror_machine": "genesis_os.plugins.adapters.mirror_machine",
-    "cosmic_web": "genesis_os.plugins.adapters.cosmic_web",
-    "sigillin": "genesis_os.plugins.adapters.sigillin",
-    "entropy_governance": "genesis_os.plugins.adapters.entropy_governance",
-    "utac_core": "genesis_os.plugins.adapters.utac_core",
+    # ── Runtime core ──────────────────────────────────────────────────────────
+    "utac_core":          "genesis_os.plugins.adapters.utac_core",
+    "genesis_q4_core":    "genesis_os.plugins.adapters.genesis_q4_core",
+    # ── AI / mirror / semantic ────────────────────────────────────────────────
+    "aeon_ai":            "genesis_os.plugins.adapters.aeon_ai",
+    "mirror_machine":     "genesis_os.plugins.adapters.mirror_machine",
+    "sigillin":           "genesis_os.plugins.adapters.sigillin",
+    "medium_modulation":  "genesis_os.plugins.adapters.medium_modulation",
+    # ── Visualisation / mandala ───────────────────────────────────────────────
     "mandala_visualizer": "genesis_os.plugins.adapters.mandala_visualizer",
-    "sonification": "genesis_os.plugins.adapters.sonification_adapter",
-    "climate_dashboard": "genesis_os.plugins.adapters.climate_dashboard",
-    "implosive_genesis": "genesis_os.plugins.adapters.implosive_genesis",
-    "entropy_table": "genesis_os.plugins.adapters.entropy_table",
+    "sonification":       "genesis_os.plugins.adapters.sonification_adapter",
+    # ── Simulation ────────────────────────────────────────────────────────────
+    "cosmic_web":         "genesis_os.plugins.adapters.cosmic_web",
+    "universums_sim":     "genesis_os.plugins.adapters.universums_sim",
+    "cosmic_moment":      "genesis_os.plugins.adapters.cosmic_moment",
+    # ── Governance / ethics ───────────────────────────────────────────────────
+    "entropy_governance": "genesis_os.plugins.adapters.entropy_governance",
+    "worldview":          "genesis_os.plugins.adapters.worldview",
+    "gemeinwohl":         "genesis_os.plugins.adapters.gemeinwohl",
+    # ── Theory / science ──────────────────────────────────────────────────────
+    "fieldtheory":        "genesis_os.plugins.adapters.fieldtheory",
+    "advanced_weighting": "genesis_os.plugins.adapters.advanced_weighting",
+    # ── Data / climate ────────────────────────────────────────────────────────
+    "entropy_table":      "genesis_os.plugins.adapters.entropy_table",
+    "climate_dashboard":  "genesis_os.plugins.adapters.climate_dashboard",
+    "implosive_genesis":  "genesis_os.plugins.adapters.implosive_genesis",
 }
 
 

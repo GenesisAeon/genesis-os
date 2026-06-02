@@ -224,6 +224,17 @@ module = [
 ]
 ignore_errors = true
 
+[[tool.mypy.overrides]]
+module = [
+    "genesis_q4_core",
+    "medium_modulation",
+    "universums_sim",
+    "cosmic_moment",
+    "worldview",
+    "gemeinwohl",
+]
+ignore_missing_imports = true
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "--cov=genesis_os --cov-report=term-missing --cov-fail-under=60"
