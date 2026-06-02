@@ -12,7 +12,7 @@
   <a href="https://pypi.org/project/genesis-os/"><img src="https://img.shields.io/pypi/pyversions/genesis-os.svg" alt="Python versions"/></a>
   <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://github.com/GenesisAeon/genesis-os/workflows/CI/badge.svg" alt="CI status"/></a>
   <a href="https://doi.org/10.5281/zenodo.19645351"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19645351.svg" alt="DOI"/></a>
-  <a href="docs/whitepaper.md"><img src="https://img.shields.io/badge/whitepaper-v0.4.2-blue" alt="Whitepaper"/></a>
+  <a href="docs/whitepaper.md"><img src="https://img.shields.io/badge/whitepaper-v1.0.0-blue" alt="Whitepaper"/></a>
   <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://img.shields.io/badge/coverage-92%25-brightgreen" alt="92% test coverage"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="GPLv3 License"/></a>
   <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/docs-CC%20BY%204.0-lightblue.svg" alt="CC BY 4.0"/></a>
@@ -23,17 +23,18 @@
 
 ## Overview
 
-**genesis-os** v0.4.0 is a unified Python framework implementing the GenesisAeon
+**genesis-os** v1.0.0 is a unified Python framework implementing the GenesisAeon
 architecture: a self-reflecting, entropy-governed, phase-transitioning system
 described by the **Unified Lagrangian** formalism. It integrates CREP
 (Coherence-Resonance-Emergence-Poetics) evaluation, a UTAC-Logistic entropy ODE,
 live **cosmic-web emergence simulation** via `CosmicWebSimulator`, a real-time
 **Dash web GUI**, Mandala visualisation, and sonification.
 
-v0.4.0 completes the **unified-mandala Integration** across eight phases, bringing
-canonical CREP, stochastic SDE bridges, AFET/Landauer thermodynamic consistency,
-FraktalRun exploration, live NATS/Prometheus streaming, and governance via OPA into
-a single cohesive system.
+v1.0.0 is the **ecosystem milestone release**: all 40 domain packages (P17–P40)
+reach production-stable status, spanning the full CREP criticality spectrum from
+astrophysics (Γ ≈ 0.014) to network science (Γ ≈ 0.443). New in 1.0.0:
+genesis-scope (P39), beta-clustering-utac (P32), EML-UTAC bridge (P37),
+and Φ^(1/3) scaling validator (P38).
 
 ### unified-mandala Integration — Phases A–H
 
@@ -437,7 +438,7 @@ If you use **genesis-os** in academic work, please cite:
   title        = {{genesis-os}: GenesisAeon Unified Framework — Python Implementation},
   year         = {2026},
   publisher    = {Zenodo},
-  version      = {v0.4.2},
+  version      = {v1.0.0},
   doi          = {10.5281/zenodo.19645351},
   url          = {https://doi.org/10.5281/zenodo.19645351}
 }

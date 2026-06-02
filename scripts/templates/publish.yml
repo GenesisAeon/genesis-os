@@ -61,19 +61,3 @@ jobs:
           generate_release_notes: true
           draft: false
           prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
-
-  publish-zenodo:
-    name: Publish to Zenodo
-    needs: github-release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Upload to Zenodo
-        run: |
-          echo "Zenodo upload triggered for tag ${{ github.ref_name }}"
-          echo "Configure ZENODO_TOKEN secret for automatic upload."
-        # Activate when ZENODO_TOKEN is set as repository secret:
-        # uses: zenodraft/action@main
-        # with:
-        #   concept-doi: 10.5281/zenodo.XXXXXXXX
-        #   token: ${{ secrets.ZENODO_TOKEN }}

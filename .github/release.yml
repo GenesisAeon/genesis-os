@@ -1,0 +1,43 @@
+# GitHub Release Notes auto-generation config
+# Kategorisiert PRs automatisch in Release Notes nach Labels
+
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+      - duplicate
+  categories:
+    - title: "🚀 Features"
+      labels:
+        - feature
+        - enhancement
+        - feat
+    - title: "🐛 Bug Fixes"
+      labels:
+        - bug
+        - fix
+        - bugfix
+    - title: "🔬 Science / Physics"
+      labels:
+        - science
+        - physics
+        - crep
+        - utac
+    - title: "⚙️ CI / Release"
+      labels:
+        - ci
+        - release
+        - workflow
+    - title: "📚 Documentation"
+      labels:
+        - documentation
+        - docs
+    - title: "🧪 Tests"
+      labels:
+        - test
+        - tests
+    - title: "🔧 Maintenance"
+      labels:
+        - chore
+        - refactor
+        - maintenance
