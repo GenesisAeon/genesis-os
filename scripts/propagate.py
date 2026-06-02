@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-"""GenesisAeon Propagation Script — P17–P39 Package Health Check.
+"""GenesisAeon Propagation Script — Full Ecosystem Health Check.
 
 Verifies that all GenesisAeon ecosystem packages are importable,
 expose the Diamond interface, and return valid CREP/UTAC state dicts.
+
+Package tiers:
+  CORE  — runtime infrastructure (genesis-q4-core, utac-core, sigillin, …)
+  P17+  — domain science packages (Sprint 2, P17–P40)
+  LEGACY — Sprint 1 packages (P1–P16, medium-modulation, etc.)
 
 Usage:
     python scripts/propagate.py                # full check
     python scripts/propagate.py --json         # machine-readable output
     python scripts/propagate.py --install      # pip install missing packages
     python scripts/propagate.py --package P32  # single package check
+    python scripts/propagate.py --tier core    # only core packages
 """
 
 from __future__ import annotations
@@ -245,6 +251,179 @@ PACKAGE_REGISTRY: dict[int, dict[str, Any]] = {
     },
 }
 
+# ─── Core Infrastructure Packages ─────────────────────────────────────────────
+# Not domain packages — runtime/governance/visualization infrastructure.
+# Built with diamond-setup template → have Diamond interface.
+
+CORE_REGISTRY: dict[str, dict] = {
+    "genesis-q4-core": {
+        "pypi_name": "genesis-q4-core",
+        "import_name": "genesis_q4_core",
+        "class_name": "GenesisQ4Core",
+        "gamma": None,
+        "domain": "runtime-core",
+        "note": "Central Q4 state machine — built with diamond-setup template",
+    },
+    "utac-core": {
+        "pypi_name": "utac-core",
+        "import_name": "utac_core",
+        "class_name": "UTACEngine",
+        "gamma": None,
+        "domain": "runtime-core",
+        "note": "UTAC ODE engine — used by all P17–P40 domain packages",
+    },
+    "sigillin": {
+        "pypi_name": "sigillin",
+        "import_name": "sigillin",
+        "class_name": "Sigillin",
+        "gamma": None,
+        "domain": "semantic-core",
+        "note": "Sigillin semantic anchor system",
+    },
+    "unified-mandala": {
+        "pypi_name": "unified-mandala",
+        "import_name": "unified_mandala",
+        "class_name": "UnifiedMandala",
+        "gamma": None,
+        "domain": "visualization",
+        "note": "Visual OS of consciousness — v20.0.0",
+    },
+    "worldview": {
+        "pypi_name": "worldview",
+        "import_name": "worldview",
+        "class_name": "Worldview",
+        "gamma": None,
+        "domain": "governance",
+        "note": "Normative CREP compass — philosophical-ethical layer",
+    },
+    "gemeinwohl": {
+        "pypi_name": "gemeinwohl",
+        "import_name": "gemeinwohl",
+        "class_name": "Gemeinwohl",
+        "gamma": None,
+        "domain": "governance",
+        "note": "Common-good score + PersonhoodLevel governance",
+    },
+    "universums-sim": {
+        "pypi_name": "universums-sim",
+        "import_name": "universums_sim",
+        "class_name": "UniversumsSim",
+        "gamma": None,
+        "domain": "simulation",
+        "note": "Cosmic emergence simulator (CosmicMoment, leapfrog)",
+    },
+    "cosmic-moment": {
+        "pypi_name": "cosmic-moment",
+        "import_name": "cosmic_moment",
+        "class_name": "CosmicMoment",
+        "gamma": None,
+        "domain": "simulation",
+        "note": "Single discrete cosmic moment — building block of universums-sim",
+    },
+    "Feldtheorie": {
+        "pypi_name": "fieldtheory",
+        "import_name": "fieldtheory",
+        "class_name": "Feldtheorie",
+        "gamma": None,
+        "domain": "theory",
+        "note": "Frame Principle, σ_Φ ≈ 1/16 — theoretical foundation repo",
+    },
+    "aeon-ai": {
+        "pypi_name": "aeon-ai",
+        "import_name": "aeon_ai",
+        "class_name": "AeonAI",
+        "gamma": None,
+        "domain": "ai-core",
+        "note": "Self-reflective engine + Mirror Machine phase-transition detection",
+    },
+    "mirror-machine": {
+        "pypi_name": "mirror-machine",
+        "import_name": "mirror_machine",
+        "class_name": "MirrorMachine",
+        "gamma": None,
+        "domain": "ai-core",
+        "note": "Tension metric, DualDetector, 87.2× damping",
+    },
+    "entropy-governance": {
+        "pypi_name": "entropy-governance",
+        "import_name": "entropy_governance",
+        "class_name": "EntropyGovernance",
+        "gamma": None,
+        "domain": "governance",
+        "note": "EthicsGate + entropy-based governance",
+    },
+    "entropy-table": {
+        "pypi_name": "entropy-table",
+        "import_name": "entropy_table",
+        "class_name": "EntropyTable",
+        "gamma": None,
+        "domain": "data",
+        "note": "Entropy lookup tables",
+    },
+    "sonification": {
+        "pypi_name": "sonification",
+        "import_name": "sonification",
+        "class_name": "Sonification",
+        "gamma": None,
+        "domain": "audio",
+        "note": "CREP sonification — optional [audio] extra",
+    },
+    "medium-modulation": {
+        "pypi_name": "medium-modulation",
+        "import_name": "medium_modulation",
+        "class_name": "MediumModulation",
+        "gamma": None,
+        "domain": "mathematical-physics",
+        "note": "Dynamic S_A/S_V coupling layer — fractal modulation operators, resonance spectra. Bridges sa-sv-duality (P36) with UTAC action-entropy.",
+    },
+}
+
+# ─── Sprint 1 Legacy Packages (P1–P16) ────────────────────────────────────────
+# First sprint packages — older architecture, not all have Diamond interface.
+
+LEGACY_REGISTRY: dict[str, dict] = {
+    "AdvancedWeightingSystems": {
+        "pypi_name": "advanced-weighting-systems",
+        "import_name": "advanced_weighting_systems",
+        "class_name": "AdvancedWeightingSystems",
+        "gamma": None,
+        "domain": "legacy-sprint1",
+        "note": "Sprint 1 — resonance engine for neural architectures",
+    },
+    "climate-dashboard": {
+        "pypi_name": "climate-dashboard",
+        "import_name": "climate_dashboard",
+        "class_name": "ClimateDashboard",
+        "gamma": None,
+        "domain": "legacy-sprint1",
+        "note": "Sprint 1 — ERA5 climate visualisation",
+    },
+    "implosive-genesis": {
+        "pypi_name": "implosive-genesis",
+        "import_name": "implosive_genesis",
+        "class_name": "ImplosiveGenesis",
+        "gamma": None,
+        "domain": "legacy-sprint1",
+        "note": "Sprint 1 — precursor to implosive-origin-utac (P33)",
+    },
+    "mandala-visualize": {
+        "pypi_name": "mandala-visualize",
+        "import_name": "mandala_visualize",
+        "class_name": "MandalaVisualize",
+        "gamma": None,
+        "domain": "legacy-sprint1",
+        "note": "Sprint 1 — precursor to unified-mandala",
+    },
+    "cosmic-web": {
+        "pypi_name": "cosmic-web",
+        "import_name": "cosmic_web",
+        "class_name": "CosmicWeb",
+        "gamma": None,
+        "domain": "legacy-sprint1",
+        "note": "Sprint 1 — CosmicWebSimulator (now in genesis-os core)",
+    },
+}
+
 # Diamond interface methods every package must expose
 DIAMOND_INTERFACE = [
     "run_cycle",
@@ -400,46 +579,98 @@ def to_json(results: list[PackageResult]) -> str:
     )
 
 
+def check_named_registry(
+    registry: dict[str, dict],
+    label: str,
+    install: bool,
+) -> list[PackageResult]:
+    """Check a name-keyed registry (CORE or LEGACY)."""
+    results = []
+    for name, meta in sorted(registry.items()):
+        full_meta = {"name": name, **meta}
+        r = check_package(0, full_meta)
+        r.name = name
+        if install and not r.importable:
+            print(f"Installing {meta['pypi_name']}...")
+            if install_package(meta["pypi_name"]):
+                r = check_package(0, full_meta)
+                r.name = name
+            else:
+                r.error = f"pip install {meta['pypi_name']} failed"
+        results.append(r)
+    return results
+
+
+def print_named_report(results: list[PackageResult], title: str) -> None:
+    if not results:
+        return
+    ok = sum(1 for r in results if r.status == "OK")
+    print(f"\n  ── {title} ({ok}/{len(results)} OK) ──")
+    for r in results:
+        note = r.error or ""
+        print(f"  {r.icon} {r.name:<32} {r.status:<22} {note[:40]}")
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="GenesisAeon Propagation Script P17–P39")
+    parser = argparse.ArgumentParser(description="GenesisAeon Full Ecosystem Propagation Check")
     parser.add_argument("--json", action="store_true", help="Output machine-readable JSON")
     parser.add_argument("--install", action="store_true", help="pip install missing packages")
-    parser.add_argument("--package", type=str, help="Check single package, e.g. P32 or 32")
+    parser.add_argument("--package", type=str, help="Check single domain package, e.g. P32 or 32")
+    parser.add_argument("--tier", choices=["domain", "core", "legacy", "all"], default="all",
+                        help="Which tier to check (default: all)")
     args = parser.parse_args()
 
-    # Filter to single package if requested
-    registry = PACKAGE_REGISTRY
-    if args.package:
-        pid = int(args.package.lstrip("Pp"))
-        if pid not in registry:
-            print(f"Unknown package ID: {pid}", file=sys.stderr)
-            sys.exit(1)
-        registry = {pid: registry[pid]}
+    domain_results: list[PackageResult] = []
+    core_results: list[PackageResult] = []
+    legacy_results: list[PackageResult] = []
 
-    results: list[PackageResult] = []
+    # Domain packages P17–P40
+    if args.tier in ("domain", "all"):
+        registry = PACKAGE_REGISTRY
+        if args.package:
+            pid = int(args.package.lstrip("Pp"))
+            if pid not in registry:
+                print(f"Unknown package ID: {pid}", file=sys.stderr)
+                sys.exit(1)
+            registry = {pid: registry[pid]}
 
-    for pkg_id, meta in sorted(registry.items()):
-        if args.install:
-            r = check_package(pkg_id, meta)
-            if not r.importable:
-                print(f"Installing {meta['pypi_name']}...")
-                if install_package(meta["pypi_name"]):
-                    r = check_package(pkg_id, meta)
-                else:
-                    r.error = f"pip install {meta['pypi_name']} failed"
-            results.append(r)
-        else:
-            results.append(check_package(pkg_id, meta))
+        for pkg_id, meta in sorted(registry.items()):
+            if args.install:
+                r = check_package(pkg_id, meta)
+                if not r.importable:
+                    print(f"Installing {meta['pypi_name']}...")
+                    if install_package(meta["pypi_name"]):
+                        r = check_package(pkg_id, meta)
+                    else:
+                        r.error = f"pip install {meta['pypi_name']} failed"
+                domain_results.append(r)
+            else:
+                domain_results.append(check_package(pkg_id, meta))
+
+    # Core infrastructure
+    if args.tier in ("core", "all") and not args.package:
+        core_results = check_named_registry(CORE_REGISTRY, "Core", args.install)
+
+    # Legacy Sprint 1
+    if args.tier in ("legacy", "all") and not args.package:
+        legacy_results = check_named_registry(LEGACY_REGISTRY, "Legacy Sprint 1", args.install)
+
+    all_results = domain_results + core_results + legacy_results
 
     if args.json:
-        print(to_json(results))
+        print(to_json(all_results))
     else:
-        print_report(results)
+        if domain_results:
+            print_report(domain_results)
+        if core_results:
+            print_named_report(core_results, "Core Infrastructure")
+        if legacy_results:
+            print_named_report(legacy_results, "Legacy Sprint 1 (P1–P16)")
 
-    # Exit non-zero if any package is not OK
-    if any(r.status == "NOT_INSTALLED" for r in results):
+    # Exit non-zero if any domain package is not OK (core/legacy are optional)
+    if any(r.status == "NOT_INSTALLED" for r in domain_results):
         sys.exit(2)
-    if any(r.status in ("PARTIAL_DIAMOND", "IMPORT_OK_CLASS_MISSING") for r in results):
+    if any(r.status in ("PARTIAL_DIAMOND", "IMPORT_OK_CLASS_MISSING") for r in domain_results):
         sys.exit(1)
 
 
