@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from genesis_os.core.orchestrator import GenesisState
 
 try:  # pragma: no cover
-    import medium_modulation as _mod  # type: ignore[import-not-found]
+    import medium_modulation as _mod
     _AVAILABLE = True
 except ImportError:
     _AVAILABLE = False
