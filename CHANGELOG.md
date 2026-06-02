@@ -6,6 +6,28 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.0] – 2026-06-02
+
+### Milestone — GenesisAeon Ecosystem Release
+
+- Full CREP criticality spectrum: 40 domain packages (P17–P40) at production-stable status
+- **P39 genesis-scope**: semantic coordinate system for Human-AI collaboration
+  (SemanticAnchor, DriftModel, CollaborationCREP, SessionTracker — Diamond interface)
+- **P32 beta-clustering-utac**: Φ^(1/3) ≈ 1.174 universal scaling across 78 threshold systems
+- **P37 eml-utac-bridge**: full GenesisAeon reduction to single EML operator eml(x,y) = exp(x)−ln(y)
+- **P38 phi-scaling-validator**: cross-domain Φ^(1/3) universality tests P17–P38
+- Propagation script `scripts/propagate.py`: Diamond interface health check for all 40 packages
+- Release infrastructure: `scripts/release_all.sh` + `.github/workflows/release.yml`
+  with PyPI publish (PYPITOKEN repo secret), GitHub Release, Zenodo metadata
+- `.zenodo.json` updated: 29 keywords, ecosystem context, Triple Universality note
+- Version bumped: 0.4.2 → 1.0.0
+
+### Triple Universality confirmed
+
+AMOC (P18) = Neural Criticality (P20) = Theta-Resonance (P27) = Γ ≈ 0.251
+
+---
+
 ## [0.4.2] – 2026-04-28
 
 ### Fixed
