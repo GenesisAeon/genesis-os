@@ -1,6 +1,8 @@
 """Adapter for universums-sim: optional GenesisAeon ecosystem package."""
 from __future__ import annotations
+
 from typing import TYPE_CHECKING, Any
+
 if TYPE_CHECKING:
     from genesis_os.core.orchestrator import GenesisState
 try:
