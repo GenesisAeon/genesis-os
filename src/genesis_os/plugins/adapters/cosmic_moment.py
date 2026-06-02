@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 if TYPE_CHECKING:
     from genesis_os.core.orchestrator import GenesisState
 try:
-    import cosmic_moment as _mod  # type: ignore[import-not-found]
+    import cosmic_moment as _mod
     _AVAILABLE = True
 except ImportError:
     _AVAILABLE = False

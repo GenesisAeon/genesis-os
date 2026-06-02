@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Any
 if TYPE_CHECKING:
     from genesis_os.core.orchestrator import GenesisState
 try:
-    import genesis_q4_core as _mod  # type: ignore[import-not-found]
+    import genesis_q4_core as _mod
     _AVAILABLE = True
 except ImportError:
     _AVAILABLE = False
