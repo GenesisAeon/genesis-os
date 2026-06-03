@@ -6,18 +6,13 @@ The CREP framework evaluates system states across four orthogonal axes:
 - **E** (Emergence): complexity arising from low-level interactions
 - **P** (Poetics): symbolic density and meaning-richness of state configurations
 
-Two gamma formulas are supported:
-
-Legacy (default, backward-compatible):
+Canonical formula (Römer 2026 whitepaper):
 
 .. math::
-    \\Gamma = \\frac{C \\cdot R + E \\cdot P}{2} \\cdot
-    \\exp\\left(-\\frac{(1 - C)^2}{2\\sigma_C^2}\\right)
+    \\Gamma = (C \\cdot R \\cdot E \\cdot P)^{1/4}
 
-Canonical (geometric mean, Römer 2026 whitepaper):
-
-.. math::
-    \\Gamma_{\\text{canon}} = (C \\cdot R \\cdot E \\cdot P)^{1/4}
+Any zero component yields Γ=0 (hard coupling requirement).
+The legacy weighted-exponential formula is preserved as :attr:`CREPScore.gamma_legacy`.
 """
 
 from __future__ import annotations
@@ -55,29 +50,29 @@ class CREPScore(BaseModel):
 
     @property
     def gamma(self) -> float:
-        """CREP coupling term Γ(C,R,E,P) — legacy formula (backward-compatible).
+        """Canonical CREP coupling Γ = (C·R·E·P)^(1/4) — geometric mean.
+
+        Any zero component yields Γ=0 (hard coupling requirement).
 
         .. math::
-            \\Gamma = \\frac{C \\cdot R + E \\cdot P}{2} \\cdot
-            \\exp\\left(-\\frac{(1-C)^2}{2\\sigma_C^2}\\right)
+            \\Gamma = (C \\cdot R \\cdot E \\cdot P)^{1/4}
+        """
+        return float(
+            (self.coherence * self.resonance * self.emergence * self.poetics) ** 0.25
+        )
 
-        Use :meth:`gamma_canonical` for the whitepaper geometric-mean formula.
+    @property
+    def gamma_legacy(self) -> float:
+        """Legacy CREP formula — weighted exponential (pre-v1.0.0, kept for reference).
+
+        .. math::
+            \\Gamma_{\\text{legacy}} = \\frac{C \\cdot R + E \\cdot P}{2} \\cdot
+            \\exp\\left(-\\frac{(1-C)^2}{2\\sigma_C^2}\\right)
         """
         sigma_c = 0.3
         base = (self.coherence * self.resonance + self.emergence * self.poetics) / 2.0
         coherence_weight = math.exp(-((1.0 - self.coherence) ** 2) / (2.0 * sigma_c**2))
         return base * coherence_weight
-
-    @property
-    def gamma_canonical(self) -> float:
-        """Canonical CREP coupling Γ — geometric mean (Römer 2026 whitepaper).
-
-        .. math::
-            \\Gamma_{\\text{canon}} = (C \\cdot R \\cdot E \\cdot P)^{1/4}
-        """
-        return float(
-            (self.coherence * self.resonance * self.emergence * self.poetics) ** 0.25
-        )
 
     @property
     def mean(self) -> float:

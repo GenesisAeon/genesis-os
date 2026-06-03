@@ -22,8 +22,7 @@ $$\Phi(H) = \phi_0 \ln(1 + H)$$
 
 **CREP Coupling Term**:
 
-$$\Gamma(C, R, E, P) = \frac{C \cdot R + E \cdot P}{2} \cdot
-\exp\!\left(-\frac{(1-C)^2}{2\sigma_C^2}\right)$$
+$$\Gamma(C, R, E, P) = (C \cdot R \cdot E \cdot P)^{1/4}$$
 
 ### UTAC-Logistic Entropy Evolution
 

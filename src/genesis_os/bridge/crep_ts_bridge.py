@@ -92,7 +92,7 @@ class CREPTypeScriptBridge:
 
     def _local_fallback(self, crep: CREPScore) -> dict[str, object]:
         """Lokaler Fallback: kanonisches Gamma + Basis-Trikāya-Klassifikation."""
-        gamma = crep.gamma_canonical
+        gamma = crep.gamma
         trikaya = self._classify_trikaya(gamma)
         return {
             "gamma": gamma,

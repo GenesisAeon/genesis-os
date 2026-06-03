@@ -4,8 +4,8 @@ Unified-mandala Grafana-Dashboard kann diese importieren.
 
 Metriken:
     genesis_entropy_current           Aktuelle Entropie H
-    genesis_crep_gamma_current        Aktuelles CREP-Gamma (legacy)
-    genesis_crep_gamma_canonical      Aktuelles kanonisches CREP-Gamma
+    genesis_crep_gamma_current        Aktuelles CREP-Gamma (kanonisch, geometrisches Mittel)
+    genesis_crep_gamma_legacy         Aktuelles CREP-Gamma (Legacy, gewichtetes Exponential)
     genesis_phi_current               Aktuelles Φ(H)
     genesis_lagrangian_current        Aktueller Lagrangian-Wert
     genesis_cycle_total               Gesamtzahl der Zyklen
@@ -45,10 +45,10 @@ class GenesisPrometheusExporter:
         if _PROMETHEUS_AVAILABLE:
             self.entropy: Any = Gauge("genesis_entropy_current", "Current entropy H")
             self.gamma: Any = Gauge(
-                "genesis_crep_gamma_current", "Current CREP gamma (legacy)"
+                "genesis_crep_gamma_current", "Current CREP gamma (canonical geometric mean)"
             )
-            self.gamma_canonical: Any = Gauge(
-                "genesis_crep_gamma_canonical", "Current CREP gamma (canonical)"
+            self.gamma_legacy: Any = Gauge(
+                "genesis_crep_gamma_legacy", "Current CREP gamma (legacy weighted-exponential)"
             )
             self.phi: Any = Gauge("genesis_phi_current", "Current Phi(H)")
             self.lagrangian: Any = Gauge(
@@ -92,7 +92,7 @@ class GenesisPrometheusExporter:
             crep = getattr(state, "crep", None)
             if crep is not None:
                 self.gamma.set(float(getattr(crep, "gamma", 0.0)))
-                self.gamma_canonical.set(float(getattr(crep, "gamma_canonical", 0.0)))
+                self.gamma_legacy.set(float(getattr(crep, "gamma_legacy", 0.0)))
             self.phi.set(float(getattr(state, "phi", 0.0)))
             self.lagrangian.set(float(getattr(state, "lagrangian", 0.0)))
             self.cycles.inc()

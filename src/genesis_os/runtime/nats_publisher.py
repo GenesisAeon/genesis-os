@@ -115,8 +115,8 @@ class NATSPublisher:
             "E": float(getattr(crep, "emergence", 0.0)),
             "P": float(getattr(crep, "poetics", 0.0)),
             "gamma": float(getattr(crep, "gamma", 0.0)),
-            "gamma_canonical": float(getattr(crep, "gamma_canonical", 0.0)),
-            "formula": "legacy",
+            "gamma_legacy": float(getattr(crep, "gamma_legacy", 0.0)),
+            "formula": "canonical",
         }
         await self.publish(self.SUBJECT_CREP, payload)
 
