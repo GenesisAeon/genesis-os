@@ -60,7 +60,7 @@ where:
 - `T = (1/2) * kappa * R^2` — kinetic resonance-coupling energy
 - `V = (1/2) * eta * H^2` — entropic resistance potential
 - `Phi(H) = phi0 * ln(1 + H)` — self-reflection potential
-- `Gamma(C,R,E,P) = ((C*R + E*P) / 2) * exp(-(1-C)^2 / (2*sigma_C^2))` — CREP coupling term
+- `Gamma(C,R,E,P) = (C * R * E * P)^(1/4)` — CREP coupling term (geometric mean; any zero component yields Γ=0)
 
 ### UTAC-Logistic Entropy Evolution
 

@@ -33,8 +33,8 @@ hier den aktuellen Stand ablesen und nahtlos weiterarbeiten.
 
 ### CREP-Kanonisierung (Phase A)
 - **Kanonische Formel**: `Γ = (C·R·E·P)^(1/4)` (geometrischer Mittelwert, Römer 2026)
-- **Legacy-Formel** bleibt erhalten: `Γ = ((CR + EP)/2) · exp(-(1-C)²/2σ_C²)`
-- `CREPScore.gamma` Property verwendet weiterhin Legacy für Rückwärtskompatibilität
+- **Legacy-Formel** erreichbar via `CREPScore.gamma_legacy`: `Γ = ((CR + EP)/2) · exp(-(1-C)²/2σ_C²)`
+- `CREPScore.gamma` Property verwendet ab v1.0.0 die kanonische geometrische Formel
 - Neue `CREPEvaluator.evaluate(state, mode="canonical")` Methode für kanonischen Modus
 
 ### ODE↔SDE-Brücke (Phase A)

@@ -98,16 +98,16 @@ The logistic component $r\,H(1-H/K)$ derives from the Verhulst equation (1838), 
 
 The **CREP tensor** $\Gamma: [0,1]^4 \to [0,1]$ is defined as:
 
-$$\Gamma(C,R,E,P) = \frac{C \cdot R + E \cdot P}{2} \cdot \exp\!\left(-\frac{(1-C)^2}{2\,\sigma_C^2}\right)$$
+$$\Gamma(C,R,E,P) = (C \cdot R \cdot E \cdot P)^{1/4}$$
 
-with $\sigma_C = 0.3$. The four dimensions are:
+The four dimensions are:
 
 - $C \in [0,1]$: **Coherence** — structural integrity of the system state
 - $R \in [0,1]$: **Resonance** — coupling strength between subsystems
 - $E \in [0,1]$: **Emergence** — complexity / novel structure generation rate
 - $P \in [0,1]$: **Poetics** — symbolic information density
 
-The Gaussian weight $\exp(-(1-C)^2/2\sigma_C^2)$ ensures that low coherence exponentially suppresses the coupling — when $C \to 0$ the entire CREP tensor vanishes regardless of $R$, $E$, $P$. This mirrors coherence resonance (CR) in excitable systems [PikovskyKurths1997], where there exists an optimal noise intensity at which regularity is maximised. Here, optimal $\Gamma$ drives maximum phase-transition rate. Standard CR metrics (coefficient of variation $\text{CV} = \sigma_T/\langle T\rangle$, quality factor $Q = \omega_p/\Delta\omega$) serve as calibration analogues for the CREP dimensions [Lindner2004]. The network-level emergence of CR demonstrated in [Tonjes2021] directly motivates the multi-node CosmicWebSimulator architecture.
+The geometric mean ensures that any zero component yields $\Gamma = 0$ — a hard coupling requirement that any single failed dimension brings the entire CREP score to zero. This is stronger than the legacy weighted-exponential form and correctly captures the multiplicative nature of coherence, resonance, emergence, and poetics. Optimal $\Gamma \to 1$ drives maximum phase-transition rate in the UTAC ODE. Standard CR metrics (coefficient of variation $\text{CV} = \sigma_T/\langle T\rangle$, quality factor $Q = \omega_p/\Delta\omega$) serve as calibration analogues for the CREP dimensions [Lindner2004]. The network-level emergence of CR demonstrated in [Tonjes2021] directly motivates the multi-node CosmicWebSimulator architecture.
 
 The **Poetics** dimension $P$ represents symbolic information density — the degree to which system states carry interpretable, structured meaning. This extends standard CR metrics into a domain without prior formalisation; grounding $P$ in measurable entropy of symbolic sequences is an open research direction.
 

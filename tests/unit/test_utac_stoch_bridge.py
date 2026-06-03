@@ -37,27 +37,27 @@ class TestCREPCanonicalMode:
     def test_canonical_crep_geometric_mean(self) -> None:
         score = CREPScore(coherence=0.8, resonance=0.7, emergence=0.9, poetics=0.6)
         expected = (0.8 * 0.7 * 0.9 * 0.6) ** 0.25
-        assert score.gamma_canonical == pytest.approx(expected, rel=1e-6)
+        assert score.gamma == pytest.approx(expected, rel=1e-6)
         # (0.3024)^0.25 ≈ 0.7416
-        assert score.gamma_canonical == pytest.approx(0.7416, abs=1e-3)
+        assert score.gamma == pytest.approx(0.7416, abs=1e-3)
 
     def test_canonical_vs_legacy_differ(self) -> None:
         score = CREPScore(coherence=0.8, resonance=0.7, emergence=0.9, poetics=0.6)
-        assert score.gamma_canonical != pytest.approx(score.gamma, rel=1e-3)
+        assert score.gamma != pytest.approx(score.gamma_legacy, rel=1e-3)
 
     def test_canonical_all_ones(self) -> None:
         score = CREPScore(coherence=1.0, resonance=1.0, emergence=1.0, poetics=1.0)
-        assert score.gamma_canonical == pytest.approx(1.0)
+        assert score.gamma == pytest.approx(1.0)
 
     def test_canonical_all_zeros(self) -> None:
         score = CREPScore(coherence=0.0, resonance=0.0, emergence=0.0, poetics=0.0)
-        assert score.gamma_canonical == pytest.approx(0.0)
+        assert score.gamma == pytest.approx(0.0)
 
     def test_evaluator_mode_canonical(self) -> None:
         evaluator = CREPEvaluator()
         state = {"coherence": 0.8, "resonance": 0.7, "emergence": 0.9, "poetics": 0.6}
         score = evaluator.evaluate(state, mode="canonical")
-        assert score.gamma_canonical == pytest.approx(0.7416, abs=1e-3)
+        assert score.gamma == pytest.approx(0.7416, abs=1e-3)
         assert evaluator.last_mode == "canonical"
 
     def test_evaluator_mode_legacy_default(self) -> None:
@@ -73,7 +73,7 @@ class TestCREPCanonicalMode:
         expected = (
             (0.8 * 0.7 + 0.9 * 0.6) / 2.0
         ) * math.exp(-((1.0 - 0.8) ** 2) / (2.0 * sigma_c**2))
-        assert score.gamma == pytest.approx(expected, rel=1e-6)
+        assert score.gamma_legacy == pytest.approx(expected, rel=1e-6)
 
 
 class TestSDEDrift:
