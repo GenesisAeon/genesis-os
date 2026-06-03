@@ -78,12 +78,18 @@ class TestCREPGamma:
         assert s_high.gamma > s_low.gamma
 
     def test_gamma_formula_manual(self) -> None:
+        c, r, e, p = 0.8, 0.7, 0.6, 0.5
+        s = CREPScore(coherence=c, resonance=r, emergence=e, poetics=p)
+        expected = (c * r * e * p) ** 0.25
+        assert s.gamma == pytest.approx(expected, rel=1e-6)
+
+    def test_gamma_legacy_formula_manual(self) -> None:
         c, r, e, p, sigma = 0.8, 0.7, 0.6, 0.5, 0.3
         s = CREPScore(coherence=c, resonance=r, emergence=e, poetics=p)
         base = (c * r + e * p) / 2.0
         weight = math.exp(-((1.0 - c) ** 2) / (2.0 * sigma**2))
         expected = base * weight
-        assert s.gamma == pytest.approx(expected, rel=1e-6)
+        assert s.gamma_legacy == pytest.approx(expected, rel=1e-6)
 
 
 # ──────────────────────────────────────────────────────────────────────────────
