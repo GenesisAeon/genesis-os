@@ -1,0 +1,493 @@
+# GenesisAeon Release Mapping v1.0.0
+#
+# Single source of truth for release orchestration across 48 repositories.
+# Maps PyPI names, target versions, Zenodo depositions, and release strategy.
+
+---
+
+# CORE INFRASTRUCTURE
+diamond-setup:
+  pypi_name: "diamond-setup"
+  import_name: "diamond_setup"
+  target_version: "1.0.0"
+  current_version: "1.0.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Scaffold tool; already at 1.0.0. Release FIRST to establish template."
+
+genesis-os:
+  pypi_name: "genesis-os"
+  import_name: "genesis_os"
+  target_version: "1.0.0"
+  current_version: "1.0.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Central runtime; already at 1.0.0. Depends on most packages; coordinate carefully."
+
+genesis-scope:
+  pypi_name: "genesis-scope"
+  import_name: "genesis_scope"
+  target_version: "1.0.0"
+  current_version: "1.0.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "System telemetry and observability. Already at 1.0.0."
+
+# UTAC CLUSTER (Self-Organized Criticality)
+utac-core:
+  pypi_name: "utac-core"
+  import_name: "utac_core"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Base UTAC engine for all criticality simulations."
+
+sandpile-utac:
+  pypi_name: "sandpile-utac"
+  import_name: "sandpile_utac"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Bak-Tang-Wiesenfeld model; proof of UTAC criticality."
+
+seismic-utac:
+  pypi_name: "seismic-utac"
+  import_name: "seismic_utac"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Geological tipping points via Gutenberg-Richter law."
+
+neural-avalanche-utac:
+  pypi_name: "neural-avalanche-utac"
+  import_name: "neural_avalanche_utac"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Neuromorphic criticality; edge-of-chaos dynamics."
+
+amoc-utac:
+  pypi_name: "amoc-utac"
+  import_name: "amoc_utac"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Atlantic Meridional Overturning Circulation bifurcation."
+
+amazon-utac:
+  pypi_name: "amazon-utac"
+  import_name: "amazon_utac"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Rainforest dieback and moisture recycling."
+
+solar-flare-utac:
+  pypi_name: "solar-flare-utac"
+  import_name: "solar_flare_utac"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Coronal mass ejection dynamics."
+
+cygnus-jet-utac:
+  pypi_name: "cygnus-jet-utac"
+  import_name: "cygnus_jet_utac"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Astrophysical jets around black holes."
+
+eml-utac-bridge:
+  pypi_name: "eml-utac-bridge"
+  import_name: "eml_utac_bridge"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Data assimilation bridge from empirical ML to UTAC."
+
+beta-clustering-utac:
+  pypi_name: "beta-clustering-utac"
+  import_name: "beta_clustering_utac"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Statistical clustering of avalanche distributions."
+
+implosive-origin-utac:
+  pypi_name: "implosive-origin-utac"
+  import_name: "implosive_origin_utac"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Implosive criticality and topological defects."
+
+afet-tensions:
+  pypi_name: "afet-tensions"
+  import_name: "afet_tensions"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Asymmetric field-effect tension calculation."
+
+# COSMOLOGY & SPACE-TIME
+universums-sim:
+  pypi_name: "universums-sim"
+  import_name: "universums_sim"
+  target_version: "1.0.0"
+  current_version: "0.3.1"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Cosmic expansion and large-scale structure."
+
+cosmic-web:
+  pypi_name: "cosmic-web"
+  import_name: "cosmic_web"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Filamentary network topology; Entropy-Gates."
+
+cosmic-moment:
+  pypi_name: "cosmic-moment"
+  import_name: "cosmic_moment"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Discrete time steps; CHRONOPOEM integration."
+
+quantum-genesis:
+  pypi_name: "quantum-genesis"
+  import_name: "quantum_genesis"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Quantum superposition and entanglement."
+
+vrig-cosmological:
+  pypi_name: "vrig-cosmological"
+  import_name: "vrig_cosmological"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Vacuum Resonance Interaction Grid."
+
+cellular-genesis:
+  pypi_name: "cellular-genesis"
+  import_name: "cellular_genesis"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Cellular automata for emergent structure."
+
+implosive-genesis:
+  pypi_name: "implosive-genesis"
+  import_name: "implosive_genesis"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Structure via contraction."
+
+fieldtheory:
+  pypi_name: "fieldtheory"
+  import_name: "fieldtheory"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Continuous field dynamics."
+
+Feldtheorie:
+  pypi_name: "feldtheorie"
+  import_name: "feldtheorie"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "German variant; consider consolidating with fieldtheory."
+
+sa-sv-duality:
+  pypi_name: "sa-sv-duality"
+  import_name: "sa_sv_duality"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Surface-Area ↔ Volume-State duality."
+
+# GOVERNANCE & ETHICS
+worldview:
+  pypi_name: "worldview"
+  import_name: "worldview"
+  target_version: "1.0.0"
+  current_version: "0.3.1"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Philosophical-ethical assessment."
+
+gemeinwohl:
+  pypi_name: "gemeinwohl"
+  import_name: "gemeinwohl"
+  target_version: "1.0.0"
+  current_version: "0.3.1"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Common-good alignment metrics."
+
+entropy-governance:
+  pypi_name: "entropy-governance"
+  import_name: "entropy_governance"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Entropy reduction as ethical governance."
+
+# COGNITIVE & AI
+aeon-ai:
+  pypi_name: "aeon-ai"
+  import_name: "aeon_ai"
+  target_version: "1.0.0"
+  current_version: "0.3.1"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Multi-agent coordination framework."
+
+AdvancedWeightingSystems:
+  pypi_name: "advanced-weighting-systems"
+  import_name: "advanced_weighting_systems"
+  target_version: "1.0.0"
+  current_version: "0.3.1"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Resonance-based synaptic plasticity."
+
+genesis-q4-core:
+  pypi_name: "genesis-q4-core"
+  import_name: "genesis_q4_core"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Quantization core; likely 4-bit inference."
+
+HexaAgent:
+  pypi_name: "hexaagent"
+  import_name: "hexaagent"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Hexagonal grid agent topology."
+
+spiking-aeon:
+  pypi_name: "spiking-aeon"
+  import_name: "spiking_aeon"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Spiking neural networks."
+
+phaethon-chimera:
+  pypi_name: "phaethon-chimera"
+  import_name: "phaethon_chimera"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Chimera states in coupled oscillators."
+
+# OBSERVABILITY & AESTHETICS
+unified-mandala:
+  pypi_name: "unified-mandala"
+  import_name: "unified_mandala"
+  target_version: "1.0.0"
+  current_version: "0.3.1"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Core mandala visualization. (Check for PyPI collision!)"
+
+unified-mandala-Demo:
+  pypi_name: "unified-mandala-demo"
+  import_name: "unified_mandala_demo"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Demo repository; may not need separate PyPI release."
+
+mandala-visualize:
+  pypi_name: "mandala-visualize"
+  import_name: "mandala_visualize"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "High-dimensional data visualization."
+
+sonification:
+  pypi_name: "sonification"
+  import_name: "sonification"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Acoustic data representation."
+
+theta-resonance:
+  pypi_name: "theta-resonance"
+  import_name: "theta_resonance"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Theta-band synchronization; agent pulse."
+
+medium-modulation:
+  pypi_name: "medium-modulation"
+  import_name: "medium_modulation"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Runtime transmission medium properties."
+
+climate-dashboard:
+  pypi_name: "climate-dashboard"
+  import_name: "climate_dashboard"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Dedicated climate UTAC monitoring via Dash."
+
+entropy-table:
+  pypi_name: "entropy-table"
+  import_name: "entropy_table"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Tabular aggregation of entropy metrics."
+
+phi-scaling-validator:
+  pypi_name: "phi-scaling-validator"
+  import_name: "phi_scaling_validator"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Golden-ratio validation for frac symmetry."
+
+# ROUTING & UTILITIES
+diffusive-routing:
+  pypi_name: "diffusive-routing"
+  import_name: "diffusive_routing"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Gradient-based signal diffusion."
+
+mirror-machine:
+  pypi_name: "mirror-machine"
+  import_name: "mirror_machine"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Digital twin and self-reflection."
+
+sigillin:
+  pypi_name: "sigillin"
+  import_name: "sigillin"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Cryptographic sealing of cosmic moments."
+
+epi-sigillin:
+  pypi_name: "epi-sigillin"
+  import_name: "epi_sigillin"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Epigenetic context-dependent crypto."
+
+hikari-ledger:
+  pypi_name: "hikari-ledger"
+  import_name: "hikari_ledger"
+  target_version: "1.0.0"
+  current_version: "0.1.0"
+  zenodo_concept_doi: null
+  zenodo_community: "genesisaeon"
+  owner: "GenesisAeon"
+  notes: "Immutable distributed ledger (Hikari=Light)."
