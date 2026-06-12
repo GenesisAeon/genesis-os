@@ -222,11 +222,11 @@ implosive-genesis:
   pypi_name: "implosive-genesis"
   import_name: "implosive_genesis"
   target_version: "1.0.0"
-  current_version: "0.1.0"
+  current_version: "0.3.1"
   zenodo_concept_doi: null
   zenodo_community: "genesisaeon"
   owner: "GenesisAeon"
-  notes: "Structure via contraction."
+  notes: "Structure via contraction. 10 dependents require >=0.4.0; needs version bump before they can release. See DEPENDENCY_FIXES.md."
 
 fieldtheory:
   pypi_name: "fieldtheory"
@@ -425,11 +425,11 @@ entropy-table:
   pypi_name: "entropy-table"
   import_name: "entropy_table"
   target_version: "1.0.0"
-  current_version: "0.1.0"
+  current_version: "0.3.1"
   zenodo_concept_doi: null
   zenodo_community: "genesisaeon"
   owner: "GenesisAeon"
-  notes: "Tabular aggregation of entropy metrics."
+  notes: "Tabular aggregation of entropy metrics. Dynamic version via setuptools_scm (tag v0.3.1). 10 dependents require >=1.0.1; needs release before they can release. See DEPENDENCY_FIXES.md."
 
 phi-scaling-validator:
   pypi_name: "phi-scaling-validator"
