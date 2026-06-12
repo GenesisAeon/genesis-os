@@ -163,11 +163,45 @@ def print_dry_run_summary(reports: list[RepositoryMetadataReport]) -> None:
     print("=" * 80 + "\n")
 
 
+def write_markdown_report(reports: list[RepositoryMetadataReport], output: str) -> None:
+    lines = []
+    lines.append("# GenesisAeon Metadata Normalization Report")
+    lines.append("")
+    lines.append("Dry-run validation of `pyproject.toml`, `zenodo.json`, and `README.md` "
+                  "against GenesisAeon ecosystem metadata standards. No files were modified.")
+    lines.append("")
+    lines.append(f"Repositories analyzed: **{len(reports)}**")
+    lines.append("")
+    lines.append(f"Summary: {sum(1 for r in reports if r.status == 'OK')} OK, "
+                  f"{sum(1 for r in reports if r.status == 'WARNING')} Warnings, "
+                  f"{sum(1 for r in reports if r.status == 'ERROR')} Errors")
+    lines.append("")
+
+    for report in sorted(reports, key=lambda r: r.repo_name):
+        status_icon = "✅" if report.status == "OK" else "⚠️" if report.status == "WARNING" else "❌"
+        lines.append(f"## {status_icon} {report.repo_name} — {report.status}")
+        lines.append("")
+        if not report.issues:
+            lines.append("No issues found.")
+        else:
+            lines.append("| File | Severity | Issue | Suggested Fix |")
+            lines.append("|---|---|---|---|")
+            for issue in report.issues:
+                severity_icon = "❌" if issue.severity == "error" else "⚠️" if issue.severity == "warning" else "ℹ️"
+                fix = issue.suggested_fix or "—"
+                lines.append(f"| {issue.file} | {severity_icon} {issue.severity} | {issue.message} | {fix} |")
+        lines.append("")
+
+    Path(output).write_text("\n".join(lines), encoding="utf-8")
+    print(f"[*] Report written to {output}")
+
+
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Normalize GenesisAeon repository metadata.")
     parser.add_argument("--repos", default="diamond-setup,genesis-os,unified-mandala,worldview,gemeinwohl", help="Comma-separated repo names")
     parser.add_argument("--dry-run", action="store_true", default=True, help="Dry-run mode (default)")
+    parser.add_argument("--output", default="METADATA_REPORT.md", help="Output Markdown report path")
     args = parser.parse_args()
 
     repos_to_analyze = [r.strip() for r in args.repos.split(",")]
@@ -194,6 +228,8 @@ def main():
 
     if args.dry_run:
         print_dry_run_summary(reports)
+
+    write_markdown_report(reports, args.output)
 
 
 if __name__ == "__main__":
