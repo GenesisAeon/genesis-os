@@ -6,6 +6,20 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.1] — 2026
+
+### Changed
+- Dependency floor pins synchronised to match actual released versions
+  across all 48 GenesisAeon ecosystem packages:
+  - `entropy-table` pinned to `>=2.0.2` (released at v2.0.2, not v2.0.0)
+  - `diamond-setup` pinned to `>=2.0.0` (v1.0.0 tag was pre-existing)
+  - `hexaagent` renamed to `genesisaeon-hexaagent>=1.0.0` (actual PyPI name)
+  - `sonification` renamed to `genesisaeon-sonification>=1.0.0` (actual PyPI name)
+  - All other ecosystem packages pinned to `>=1.0.0`
+- No logic, API, or interface changes. Pure metadata/dependency sync.
+
+---
+
 ## [1.0.0] – 2026-06-02
 
 ### Milestone — GenesisAeon Ecosystem Release
