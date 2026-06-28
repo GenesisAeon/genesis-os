@@ -16,6 +16,18 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   - `hexaagent` renamed to `genesisaeon-hexaagent>=1.0.0` (actual PyPI name)
   - `sonification` renamed to `genesisaeon-sonification>=1.0.0` (actual PyPI name)
   - All other ecosystem packages pinned to `>=1.0.0`
+- `mandala-visualizer` renamed to `mandala-visualize>=1.0.0` (actual PyPI name per `release_map.yml`)
+- Added the remaining GenesisAeon ecosystem packages as optional `full-stack`
+  dependencies (previously undeclared), each pinned `>=1.0.0` unless noted:
+  `diamond-setup>=2.0.0`, `feldtheorie>=6.0.0` (PyPI version, distinct from GitHub
+  tag v13.0.0), `genesisaeon-hexaagent`, `genesis-scope`, `genesis-q4-core`,
+  `epi-sigillin`, `unified-mandala`, `unified-mandala-demo`, `sandpile-utac`,
+  `seismic-utac`, `neural-avalanche-utac`, `amoc-utac`, `amazon-utac`,
+  `solar-flare-utac`, `cygnus-jet-utac`, `eml-utac-bridge`, `beta-clustering-utac`,
+  `implosive-origin-utac`, `afet-tensions`, `universums-sim`, `cosmic-moment`,
+  `quantum-genesis`, `vrig-cosmological`, `cellular-genesis`, `sa-sv-duality`,
+  `worldview`, `gemeinwohl`, `spiking-aeon`, `phaethon-chimera`, `theta-resonance`,
+  `medium-modulation`, `phi-scaling-validator`, `diffusive-routing`, `hikari-ledger`.
 - No logic, API, or interface changes. Pure metadata/dependency sync.
 
 ---
