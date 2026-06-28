@@ -6,6 +6,32 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.1] — 2026
+
+### Changed
+- Dependency floor pins synchronised to match actual released versions
+  across all 48 GenesisAeon ecosystem packages:
+  - `entropy-table` pinned to `>=2.0.2` (released at v2.0.2, not v2.0.0)
+  - `diamond-setup` pinned to `>=2.0.0` (v1.0.0 tag was pre-existing)
+  - `hexaagent` renamed to `genesisaeon-hexaagent>=1.0.0` (actual PyPI name)
+  - `sonification` renamed to `genesisaeon-sonification>=1.0.0` (actual PyPI name)
+  - All other ecosystem packages pinned to `>=1.0.0`
+- `mandala-visualizer` renamed to `mandala-visualize>=1.0.0` (actual PyPI name per `release_map.yml`)
+- Added the remaining GenesisAeon ecosystem packages as optional `full-stack`
+  dependencies (previously undeclared), each pinned `>=1.0.0` unless noted:
+  `diamond-setup>=2.0.0`, `feldtheorie>=6.0.0` (PyPI version, distinct from GitHub
+  tag v13.0.0), `genesisaeon-hexaagent`, `genesis-scope`, `genesis-q4-core`,
+  `epi-sigillin`, `unified-mandala`, `unified-mandala-demo`, `sandpile-utac`,
+  `seismic-utac`, `neural-avalanche-utac`, `amoc-utac`, `amazon-utac`,
+  `solar-flare-utac`, `cygnus-jet-utac`, `eml-utac-bridge`, `beta-clustering-utac`,
+  `implosive-origin-utac`, `afet-tensions`, `universums-sim`, `cosmic-moment`,
+  `quantum-genesis`, `vrig-cosmological`, `cellular-genesis`, `sa-sv-duality`,
+  `worldview`, `gemeinwohl`, `spiking-aeon`, `phaethon-chimera`, `theta-resonance`,
+  `medium-modulation`, `phi-scaling-validator`, `diffusive-routing`, `hikari-ledger`.
+- No logic, API, or interface changes. Pure metadata/dependency sync.
+
+---
+
 ## [1.0.0] – 2026-06-02
 
 ### Milestone — GenesisAeon Ecosystem Release
