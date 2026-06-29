@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import math
+from importlib.metadata import version as installed_version
 
 import pytest
 from typer.testing import CliRunner
@@ -30,13 +31,13 @@ runner = CliRunner()
 
 
 class TestVersion:
-    def test_version_is_0_4_0(self) -> None:
-        assert __version__ == "1.0.0"
+    def test_version_matches_installed_distribution(self) -> None:
+        assert __version__ == installed_version("genesis-os")
 
-    def test_cli_info_shows_0_4_0(self) -> None:
+    def test_cli_info_shows_version(self) -> None:
         result = runner.invoke(app, ["info"])
         assert result.exit_code == 0
-        assert "1.0.0" in result.output
+        assert __version__ in result.output
 
 
 # ---------------------------------------------------------------------------
@@ -81,10 +82,10 @@ class TestCLISimulateEmergence:
         summary = data["emergence_summary"]
         assert "event_count" in summary
 
-    def test_simulate_version_0_4_0(self) -> None:
+    def test_simulate_version_matches_package(self) -> None:
         result = runner.invoke(app, ["cycle", "--simulate", "--max-cycles", "5"])
         data = json.loads(result.output)
-        assert data["version"] == "1.0.0"
+        assert data["version"] == __version__
 
     def test_simulate_deterministic_emergence_with_seed(self) -> None:
         args = ["cycle", "--simulate", "--seed", "77", "--max-cycles", "10"]
