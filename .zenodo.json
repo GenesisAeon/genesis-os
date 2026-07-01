@@ -1,5 +1,5 @@
 {
-  "title": "genesis-os v1.0.1: Self-Reflective OS Framework for GenesisAeon — CREP Orchestrator for 40 Domain Packages",
+  "title": "genesis-os v1.0.1: Self-Reflective OS Framework for GenesisAeon — CREP Orchestrator with 48-Package Ecosystem Sync",
   "version": "1.0.1",
   "upload_type": "software",
   "access_right": "open",
@@ -10,7 +10,7 @@
       "affiliation": "MOR Research Collective (Independent Researcher)"
     }
   ],
-  "description": "genesis-os v1.0.1 is the central runtime of the GenesisAeon ecosystem. It implements the Unified Lagrangian L = T − V + Φ(H) + Γ(C,R,E,P) governing entropy evolution via the UTAC-Logistic ODE, CREP tensor evaluation, and live cosmic-web emergence simulation. This 1.0.0 milestone integrates the full CREP criticality spectrum across 40 domain packages (P17–P40): from astrophysics (Cygnus X-1, Γ≈0.046) through climate (AMOC, Γ≈0.251), ecology (Amazon, Γ≈0.116), neuroscience, geophysics, quantum physics, and network science (diffusive-routing, Γ≈0.443). New in 1.0.0: genesis-scope (P39, semantic coordinate system for Human-AI collaboration), beta-clustering-utac (P32, Φ^(1/3) universal scaling), EML-UTAC bridge (P37), and Φ^(1/3) scaling validator (P38). Includes AFET+Landauer thermodynamic consistency, Mirror Machine, Sigillin semantic anchors, FraktalRun phase-space engine, SDE/Stochastic UTAC, and OPA-based ethics governance. Python 3.10+, 92% test coverage, Dash web GUI.",
+  "description": "genesis-os v1.0.1 is the central runtime of the GenesisAeon ecosystem. It implements the Unified Lagrangian L = T − V + Φ(H) + Γ(C,R,E,P) governing entropy evolution via the UTAC-Logistic ODE, CREP tensor evaluation, and live cosmic-web emergence simulation. Version 1.0.1 synchronises the optional [full-stack] extra to 48 GenesisAeon ecosystem packages on PyPI (correct distribution names, floor pins >=1.0.0) — no API or logic changes. The v1.0.0 milestone (2026-06) established the full CREP criticality spectrum across 40 domain packages (P17–P40): from astrophysics (Cygnus X-1, Γ≈0.046) through climate (AMOC, Γ≈0.251), ecology (Amazon, Γ≈0.116), neuroscience, geophysics, quantum physics, and network science (diffusive-routing, Γ≈0.443), including genesis-scope (P39), beta-clustering-utac (P32), EML-UTAC bridge (P37), and Φ^(1/3) scaling validator (P38). Includes AFET+Landauer thermodynamic consistency, Mirror Machine, Sigillin semantic anchors, FraktalRun phase-space engine, SDE/Stochastic UTAC, and OPA-based ethics governance. Python 3.10+, 91% test coverage, Dash web GUI.",
   "keywords": [
     "GenesisAeon",
     "CREP",
@@ -68,5 +68,5 @@
       "scheme": "url"
     }
   ],
-  "notes": "1.0.0 milestone: all 40 GenesisAeon domain packages (P17–P40) reach production-stable status. CREP spectrum spans Γ = 0.014 (solar flares) to Γ = 0.443 (network routing). Triple universality confirmed: AMOC = Neural Criticality = Theta-Resonance = Γ ≈ 0.251."
+  "notes": "v1.0.1 (2026): dependency/metadata release — [full-stack] extra expanded to 48 PyPI packages; corrected distribution names (e.g. mandala-visualizer, genesisaeon-sonification). v1.0.0 milestone (2026-06): all 40 GenesisAeon domain packages (P17–P40) reach production-stable status. CREP spectrum spans Γ = 0.014 (solar flares) to Γ = 0.443 (network routing). Triple universality confirmed: AMOC = Neural Criticality = Theta-Resonance = Γ ≈ 0.251."
 }
