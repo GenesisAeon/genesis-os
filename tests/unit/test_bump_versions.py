@@ -173,14 +173,14 @@ class TestMainValidation:
 
 
 class TestMainRepos:
-    def test_default_version_0_2_0(
-        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+    def test_missing_version_arg_exits(
+        self, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
     ) -> None:
         monkeypatch.setattr(sys, "argv", ["bump_versions"])
-        monkeypatch.setattr(bv_module, "__file__", str(_fake_file(tmp_path)))
-        monkeypatch.setattr(bv_module, "REPOS", [])
-        main()
-        assert "0.2.0" in capsys.readouterr().out
+        with pytest.raises(SystemExit) as exc_info:
+            main()
+        assert exc_info.value.code == 1
+        assert "required" in capsys.readouterr().out
 
     def test_missing_repos_go_to_skipped(
         self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]

@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """GenesisAeon Version Bump Tool.
 
-Bumps version strings in pyproject.toml (and __init__.py where present)
-across all GenesisAeon sibling repositories.
+Bumps version strings in pyproject.toml, .zenodo.json, and __init__.py
+where present across GenesisAeon sibling repositories.
 
 Usage::
 
-    uv run python -m genesis_os.tools.bump_versions 0.3.0
-    uv run python -m genesis_os.tools.bump_versions          # defaults to 0.2.0
+    uv run python -m genesis_os.tools.bump_versions 1.0.4
 """
 
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -44,6 +44,7 @@ REPOS: list[str] = [
 
 VERSION_RE = re.compile(r'(version\s*=\s*")[^"]+(")')
 INIT_VERSION_RE = re.compile(r'(__version__\s*=\s*")[^"]+(")')
+ZENODO_VERSION_RE = re.compile(r'("version"\s*:\s*")[^"]+(")')
 
 
 def bump_repo(repo_path: Path, new_version: str) -> bool:
@@ -66,11 +67,36 @@ def bump_repo(repo_path: Path, new_version: str) -> bool:
             init_py.write_text(new_content, encoding="utf-8")
             changed = True
 
+    zenodo = repo_path / ".zenodo.json"
+    if zenodo.exists():
+        raw = zenodo.read_text(encoding="utf-8")
+        new_raw = ZENODO_VERSION_RE.sub(rf"\g<1>{new_version}\g<2>", raw, count=1)
+        if new_raw != raw:
+            zenodo.write_text(new_raw, encoding="utf-8")
+            changed = True
+        else:
+            try:
+                data = json.loads(raw)
+            except json.JSONDecodeError:
+                pass
+            else:
+                if data.get("version") != new_version:
+                    data["version"] = new_version
+                    zenodo.write_text(
+                        json.dumps(data, indent=2, ensure_ascii=False) + "\n",
+                        encoding="utf-8",
+                    )
+                    changed = True
+
     return changed
 
 
 def main() -> None:
-    new_version = sys.argv[1] if len(sys.argv) > 1 else "0.2.0"
+    if len(sys.argv) < 2:
+        print("Usage: python -m genesis_os.tools.bump_versions X.Y.Z")
+        print("ERROR: version argument required (no default — avoids accidental 0.2.0 bumps)")
+        sys.exit(1)
+    new_version = sys.argv[1]
 
     if not re.fullmatch(r"\d+\.\d+\.\d+", new_version):
         print(f"ERROR: '{new_version}' is not a valid semver (e.g. 0.3.0)")

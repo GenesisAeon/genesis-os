@@ -8,6 +8,13 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+- Zenodo version sync: `parse_release_tag()` — never use `lstrip('v1.')` on tags
+  (`v1.0.2` → `0.2` bug that produced `0.2.0`-style Zenodo versions).
+- `scripts/sync_zenodo_version.py` syncs `.zenodo.json` from `pyproject.toml` or `--tag`.
+- `bump_versions` now updates `.zenodo.json` and requires an explicit version argument.
+- `release.yml`: sync Zenodo metadata before archive; read `.zenodo.json` (not only `zenodo.json`).
+
 ---
 
 ## [1.0.4] — 2026-07-01

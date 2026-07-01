@@ -220,12 +220,19 @@ jobs:
       - name: Read concept_doi from zenodo.json
         id: zenodo-meta
         run: |
-          if [ -f zenodo.json ]; then
+          if [ -f .zenodo.json ]; then
+            CONCEPT_DOI=$(python -c "import json; print(json.load(open('.zenodo.json')).get('concept_doi') or '')")
+          elif [ -f zenodo.json ]; then
             CONCEPT_DOI=$(python -c "import json; print(json.load(open('zenodo.json')).get('concept_doi') or '')")
           else
             CONCEPT_DOI=""
           fi
           echo "concept_doi=${CONCEPT_DOI}" >> "$GITHUB_OUTPUT"
+
+      - name: Sync .zenodo.json version from release tag
+        run: |
+          pip install -e .
+          python scripts/sync_zenodo_version.py --tag "${{ github.ref_name }}"
 
       - name: Archive release on Zenodo
         env:
@@ -234,6 +241,7 @@ jobs:
         run: |
           echo "Archiving ${{ github.ref_name }} on Zenodo (production)"
           echo "Concept DOI: ${CONCEPT_DOI:-<none, new deposition will be created>}"
+          python -c "from genesis_os.tools.release_version import parse_release_tag as p; print('Zenodo version:', p('${{ github.ref_name }}'))"
         # Activate once ZENODO_TOKEN is configured on the production environment:
         # uses: zenodraft/action@main
         # with:
@@ -262,12 +270,19 @@ jobs:
       - name: Read concept_doi from zenodo.json
         id: zenodo-meta
         run: |
-          if [ -f zenodo.json ]; then
+          if [ -f .zenodo.json ]; then
+            CONCEPT_DOI=$(python -c "import json; print(json.load(open('.zenodo.json')).get('concept_doi') or '')")
+          elif [ -f zenodo.json ]; then
             CONCEPT_DOI=$(python -c "import json; print(json.load(open('zenodo.json')).get('concept_doi') or '')")
           else
             CONCEPT_DOI=""
           fi
           echo "concept_doi=${CONCEPT_DOI}" >> "$GITHUB_OUTPUT"
+
+      - name: Sync .zenodo.json version from release tag
+        run: |
+          pip install -e .
+          python scripts/sync_zenodo_version.py --tag "${{ github.ref_name }}"
 
       - name: Archive release on Zenodo Sandbox
         env:
