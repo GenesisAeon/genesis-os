@@ -61,3 +61,18 @@ jobs:
         run: pip install -e ".[dev]"
       - name: Build docs
         run: mkdocs build --strict
+
+  diamond-contract:
+    name: Diamond contract (reference UTAC batch)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install contract extra + PyYAML
+        run: pip install -e ".[dev,diamond-contract]" pyyaml
+      - name: Validate contract spec + reference UTACs
+        run: |
+          python scripts/validate_diamond_ci.py
+          pytest tests/contract/test_diamond_utac_batch.py -m contract -q

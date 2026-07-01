@@ -10,6 +10,19 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.4] — 2026-07-01
+
+### Added
+- `contracts/diamond.interface.yaml` — machine-readable Diamond spec (synced with diamond-setup).
+- `scripts/validate_diamond_ci.py` + `tests/contract/test_diamond_utac_batch.py`.
+- CI job `diamond-contract`: validates amoc / beta-clustering / implosive-origin / phi-scaling UTACs.
+- Optional extra `[diamond-contract]` for local ecosystem validation.
+
+### Changed
+- `unified-mandala-demo` floor pin `>=1.0.1` (importable Python shim; fixes empty wheel).
+
+---
+
 ## [1.0.3] — 2026-07-01
 
 ### Fixed

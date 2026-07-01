@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "genesis-os"
-version = "1.0.3"
+version = "1.0.4"
 description = "Self-reflecting OS framework with live cosmic-web emergence simulation, Dash GUI, real-time phase transitions, and resonance coupling for GenesisAeon"
 readme = "README.md"
 license = { text = "GPL-3.0-or-later" }
@@ -58,7 +58,7 @@ full-stack = [
     "utac-core>=1.0.0",
     "mandala-visualizer>=1.0.0",
     "unified-mandala>=1.0.0",
-    "unified-mandala-demo>=1.0.0",
+    "unified-mandala-demo>=1.0.1",
     "climate-dashboard>=1.0.0",
     "implosive-genesis>=1.0.0",
     "implosive-origin-utac>=1.0.0",
@@ -106,6 +106,13 @@ gui = [
 jax = [
     "jax>=0.4.20",
     "jaxlib>=0.4.20",
+]
+diamond-contract = [
+    "diamond-setup>=2.1.0",
+    "amoc-utac>=1.1.0",
+    "beta-clustering-utac>=1.1.0",
+    "implosive-origin-utac>=1.1.0",
+    "phi-scaling-validator>=1.1.0",
 ]
 dev = [
     "pytest>=7.4.0",
