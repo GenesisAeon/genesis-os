@@ -1,0 +1,65 @@
+cff-version: 1.2.0
+message: >
+  If you use genesis-os in your research, please cite this software and the
+  primary GenesisAeon reference (Römer 2026, Zenodo).
+
+type: software
+title: "genesis-os: GenesisAeon Unified Framework — Python Implementation"
+version: 1.0.5
+date-released: "2026-07-01"
+doi: 10.5281/zenodo.19645351
+license: GPL-3.0-or-later
+
+authors:
+  - family-names: Römer
+    given-names: Johann
+    affiliation: "MOR Research Collective (Independent Researcher)"
+
+repository-code: "https://github.com/GenesisAeon/genesis-os"
+url: "https://pypi.org/project/genesis-os/"
+
+abstract: >
+  genesis-os is the central Python runtime of the GenesisAeon ecosystem: a
+  self-reflecting, entropy-governed framework implementing the Unified
+  Lagrangian formalism L = T − V + Φ(H) + Γ(C,R,E,P), UTAC-Logistic ODE,
+  CREP tensor evaluation, live cosmic-web emergence simulation, Dash web GUI,
+  Mandala visualisation, and orchestration across 40+ domain packages.
+  Includes AFET+Landauer thermodynamic consistency, Mirror Machine,
+  Sigillin semantic anchors, FraktalRun phase-space engine, and OPA-based
+  ethics governance. Python 3.10+.
+
+keywords:
+  - GenesisAeon
+  - CREP
+  - UTAC
+  - phase-transition
+  - complex-systems
+  - entropy
+  - unified-lagrangian
+  - cosmic-web
+  - self-reflection
+  - criticality
+  - emergence
+  - resonance
+  - self-organized-criticality
+
+references:
+  - type: article
+    title: >
+      GenesisAeon v0.3.1: A Unified Variational Framework for Emergent
+      Criticality Across Physical Domains
+    authors:
+      - family-names: Römer
+        given-names: Johann
+    journal: Zenodo
+    year: 2026
+    month: 4
+    doi: 10.5281/zenodo.19645351
+
+  - type: data
+    title: "UTAC v1.0 — Universal Threshold Adaptive Criticality"
+    authors:
+      - family-names: Römer
+        given-names: Johann
+    year: 2026
+    doi: 10.5281/zenodo.17472834
