@@ -87,9 +87,15 @@ if [[ "$SKIP_BUILD" == false ]]; then
   fi
 fi
 
-echo "Publishing to PyPI ..."
+mapfile -t FILES < <(find "$REPO_PATH/dist" -maxdepth 1 \( -name '*.whl' -o -name '*.tar.gz' \) -type f 2>/dev/null)
+if [[ ${#FILES[@]} -eq 0 ]]; then
+  echo "No .whl or .tar.gz in $REPO_PATH/dist" >&2
+  exit 1
+fi
+
+echo "Publishing to PyPI: ${FILES[*]##*/}"
 if [[ "$DRY_RUN" == true ]]; then
-  echo "[dry-run] uv publish (token loaded)"
+  echo "[dry-run] uv publish ${FILES[*]}"
 else
-  uv publish
+  uv publish "${FILES[@]}"
 fi
