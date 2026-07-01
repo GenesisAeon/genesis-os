@@ -83,6 +83,19 @@ uv build && uv publish --token pypi-...
 
 ---
 
+## Lokales PyPI-Token (für `uv publish` ohne GitHub Secret)
+
+```bash
+# Einmalig: copy .env.example → .env in genesis-os (gitignored)
+# PYPI_API_TOKEN / UV_PUBLISH_TOKEN eintragen
+
+pwsh D:\mandala\genesis-os\scripts\publish_pypi.ps1 -RepoPath D:\mandala\<paket>
+```
+
+Skript sucht Token in: Repo-`.env` → `genesis-os/.env` → `D:\mandala/.env`.
+
+---
+
 ## Arbeitsmodus für nächste Sessions
 
 | Aufgabe | Wo starten |
