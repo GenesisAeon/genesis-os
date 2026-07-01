@@ -57,7 +57,9 @@ name: Release
 on:
   push:
     tags:
-      - "v*.*.*"
+      # v*.*.* does not match semver tags in GHA glob — use v* (see SESSION_HANDOFF)
+      - "v*"
+  workflow_dispatch:
 
 permissions:
   contents: write

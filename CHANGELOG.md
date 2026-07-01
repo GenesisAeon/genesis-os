@@ -8,6 +8,10 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+---
+
+## [1.0.3] — 2026-07-01
+
 ### Fixed
 - `AgentMemory.record`: `sequence` in Sigillin content — FIFO eviction with distinct
   snapshots in tight loops (`test_max_depth_fifo`).
@@ -15,7 +19,7 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
   when package is installed locally.
 
 ### Changed
-- README + `.zenodo.json` metadata synced to v1.0.2.
+- `release.yml` tag trigger: `v*` (fixes workflow showing 0 jobs on `v*.*.*`).
 
 ---
 
