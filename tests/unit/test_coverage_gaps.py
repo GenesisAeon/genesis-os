@@ -52,7 +52,10 @@ class TestMandalaDashboardPlugin:
 
     def test_use_plugin_true_without_package_sets_plugin_none(self) -> None:
         """use_plugin=True + package absent → _plugin is None (covers the except branch)."""
-        dashboard = MandalaDashboard(use_plugin=True)
+        import sys
+
+        with patch.dict(sys.modules, {"mandala_visualizer": None}):
+            dashboard = MandalaDashboard(use_plugin=True)
         assert dashboard._plugin is None
 
     def test_plugin_render_with_mock_plugin_success(self, crep: CREPScore) -> None:

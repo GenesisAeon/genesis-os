@@ -317,6 +317,7 @@ class AgentMemory:
             "q4_state": q4_state.to_dict(),
             "crep_gamma": float(crep.gamma),
             "timestamp": time.time(),
+            "sequence": len(self._snapshots),
         }
         snap = SigillinSnapshot(
             sigillin_id=_compute_sigillin_id(content),

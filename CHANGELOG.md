@@ -6,6 +6,19 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [Unreleased]
+
+### Fixed
+- `AgentMemory.record`: `sequence` in Sigillin content — FIFO eviction with distinct
+  snapshots in tight loops (`test_max_depth_fifo`).
+- `test_use_plugin_true_without_package_sets_plugin_none`: mock `mandala_visualizer`
+  when package is installed locally.
+
+### Changed
+- README + `.zenodo.json` metadata synced to v1.0.2.
+
+---
+
 ## [1.0.2] — 2026-07-01
 
 ### Changed
