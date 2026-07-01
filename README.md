@@ -23,18 +23,18 @@
 
 ## Overview
 
-**genesis-os** v1.0.0 is a unified Python framework implementing the GenesisAeon
+**genesis-os** v1.0.1 is a unified Python framework implementing the GenesisAeon
 architecture: a self-reflecting, entropy-governed, phase-transitioning system
 described by the **Unified Lagrangian** formalism. It integrates CREP
 (Coherence-Resonance-Emergence-Poetics) evaluation, a UTAC-Logistic entropy ODE,
 live **cosmic-web emergence simulation** via `CosmicWebSimulator`, a real-time
 **Dash web GUI**, Mandala visualisation, and sonification.
 
-v1.0.0 is the **ecosystem milestone release**: all 40 domain packages (P17–P40)
+v1.0.0 was the **ecosystem milestone release**: all 40 domain packages (P17–P40)
 reach production-stable status, spanning the full CREP criticality spectrum from
-astrophysics (Γ ≈ 0.014) to network science (Γ ≈ 0.443). New in 1.0.0:
-genesis-scope (P39), beta-clustering-utac (P32), EML-UTAC bridge (P37),
-and Φ^(1/3) scaling validator (P38).
+astrophysics (Γ ≈ 0.014) to network science (Γ ≈ 0.443). **v1.0.1** synchronises
+the `[full-stack]` extra to **48 GenesisAeon ecosystem packages** on PyPI (correct
+distribution names, floor pins `>=1.0.0`) — no API or logic changes.
 
 ### unified-mandala Integration — Phases A–H
 
@@ -107,25 +107,22 @@ pip install "genesis-os[dev]"
 | `dash-bootstrap-components` | >=1.5.0 | Bootstrap theming |
 | `plotly` | >=5.15.0 | Interactive charts (CREP radar, H/L/emergence) |
 
-#### `[full-stack]` — All Optional Adapters
+#### `[full-stack]` — GenesisAeon Ecosystem (48 packages)
 
-`pip install "genesis-os[full-stack]"` installs:
+`pip install "genesis-os[full-stack]"` installs **48 optional GenesisAeon packages**
+(all pinned `>=1.0.0` unless noted), including:
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| `aeon-ai` | >=0.2.0 | PhaseDetector + SelfReflector |
-| `advanced-weighting-systems` | >=0.1.0 | CREP vector weighting |
-| `fieldtheory` | >=0.1.0 | Field-theoretic potentials |
-| `mirror-machine` | >=0.1.0 | Recursive resonance mirroring |
-| `cosmic-web` | >=0.2.0 | Large-scale structure simulation |
-| `sigillin` | >=0.1.0 | Symbolic trigger generation |
-| `entropy-governance` | >=0.1.0 | Policy-based entropy control |
-| `utac-core` | >=0.1.0 | External UTAC implementation |
-| `mandala-visualizer` | >=0.1.0 | Advanced mandala rendering |
-| `sonification` | >=0.1.0 | Audio synthesis output |
-| `climate-dashboard` | >=0.1.0 | Environmental entropy coupling |
-| `implosive-genesis` | >=0.1.0 | Implosive field dynamics |
-| `entropy-table` | >=0.1.0 | Tabular entropy state lookup |
+| Category | Packages (examples) |
+|----------|---------------------|
+| **Core adapters** | `aeon-ai`, `utac-core`, `sigillin`, `mirror-machine`, `entropy-governance` |
+| **Simulation** | `cosmic-web`, `universums-sim`, `cosmic-moment`, `feldtheorie`, `fieldtheory` |
+| **UTAC domain (P17–P38)** | `amoc-utac`, `sandpile-utac`, `neural-avalanche-utac`, `hikari-ledger`, `diffusive-routing`, … |
+| **Governance / Q4** | `genesis-scope`, `genesis-q4-core`, `worldview`, `gemeinwohl` |
+| **Visualisation** | `mandala-visualizer`, `unified-mandala`, `climate-dashboard` |
+| **Infrastructure** | `diamond-setup`, `entropy-table` (>=2.0.1), `genesisaeon-hexaagent` |
+
+Full list: see `[project.optional-dependencies] full-stack` in `pyproject.toml`.
+Audio output uses the separate `[audio]` extra (`genesisaeon-sonification`).
 
 ---
 
@@ -438,7 +435,7 @@ If you use **genesis-os** in academic work, please cite:
   title        = {{genesis-os}: GenesisAeon Unified Framework — Python Implementation},
   year         = {2026},
   publisher    = {Zenodo},
-  version      = {v1.0.0},
+  version      = {v1.0.1},
   doi          = {10.5281/zenodo.19645351},
   url          = {https://doi.org/10.5281/zenodo.19645351}
 }

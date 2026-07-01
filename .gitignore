@@ -148,6 +148,12 @@ build/
 .eggs/
 .venv/
 venv/
+.audit_venv/
+
+# Local audit / agent tooling (not for version control)
+terminals/
+test-results/audit_*
+test-results/pytest_output.txt
 .coverage
 .coverage.*
 htmlcov/

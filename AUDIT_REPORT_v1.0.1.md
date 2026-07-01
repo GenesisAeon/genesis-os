@@ -1,109 +1,261 @@
 # GenesisAeon Ecosystem Audit Report
 ## genesis-os v1.0.1 + 48 Subpakete
-## Datum: 2026-06-29
+## Datum: 2026-06-30
 
 ### EXECUTIVE SUMMARY
 
-Der Core (`genesis-os`) selbst ist solide: 1382/1383 Tests grün, 91% Coverage, saubere Lint-Bilanz, keine CVEs, ein lauffähiges README-Quickstart. Das Ökosystem der 48 Subpakete ist auf PyPI tatsächlich vorhanden und installiert konfliktfrei — das ist keine Selbstverständlichkeit und eine echte Stärke. Der kritischste Befund ist aber struktureller Natur: **die in der lokalen `pyproject.toml` deklarierte v1.0.1-Erweiterung des `full-stack`-Extras (48 Pakete) ist nie auf PyPI veröffentlicht worden** — das publizierte `genesis-os` ist noch v1.0.0 mit nur 14 Extras. Wer heute `pip install genesis-os[full-stack]` ausführt, bekommt nicht das im Repo beschriebene Ökosystem. Zusätzlich zeigt die "Diamond Interface"-Validierung, dass die Rückgabewerte vieler Pakete (fehlende `H`/`H_star`/`K_eff`/`Gamma`/`zenodo`-Felder) und mehrere Γ-Werte erheblich von den im CREP-Atlas dokumentierten Erwartungswerten abweichen. Sofortiger Handlungsbedarf: PyPI-Release von v1.0.1 nachziehen, Diamond-Interface-Rückgabewerte vereinheitlichen, Namensraum-Kollision bei `diamond_setup` auflösen.
+Der **genesis-os Core** (lokales Repo) ist technisch solide: **1381/1383 Tests grün**, **91 % Coverage**, **0 ruff-Findings**, README-Quickstart lauffähig. Das **48-Pakete-Ökosystem** installiert auf PyPI weitgehend konfliktfrei — eine echte Stärke. Der kritischste Befund bleibt **strukturell**: **v1.0.1 wurde nie auf PyPI veröffentlicht** (`pip install genesis-os` liefert weiterhin **v1.0.0** mit nur **14** `full-stack`-Extras statt der im Repo deklarierten **48**; zudem referenziert die lokale `pyproject.toml` **`mandala-visualize`**, das auf PyPI **nicht existiert** (korrekt: `mandala-visualizer`). Das **Diamond Interface** ist ökosystemweit **nicht einheitlich** implementiert: nur **~6 von 20** geprüften UTAC-Paketen erfüllen alle 5 Methoden mit vollständigem Schema; mehrere **Γ-Werte** weichen vom CREP-Atlas ab. **Sofortiger Handlungsbedarf**: PyPI-Release v1.0.1, Dependency-Namen korrigieren, Diamond-Schema verbindlich machen, `unified-mandala-demo` reparieren oder entfernen.
+
+---
 
 ### KRITISCHE ISSUES (❌) — sofortiger Handlungsbedarf
 
 | # | Package | Issue | Impact |
 |---|---------|-------|--------|
-| 1 | genesis-os | Lokale `pyproject.toml` (v1.0.1) deklariert 48 optionale Deps im `full-stack`-Extra; das auf PyPI publizierte Paket ist noch v1.0.0 mit nur 14 Deps und nutzt den alten Audio-Namen `sonification` statt `genesisaeon-sonification`. v1.0.1 wurde nie released. | Jeder externe Nutzer von `pip install genesis-os[full-stack]` bekommt ein anderes, kleineres Ökosystem als im Repo dokumentiert. README/CHANGELOG/Zenodo-Metadaten laufen der Realität voraus. |
-| 2 | diamond-setup, beta-clustering-utac, implosive-origin-utac, phi-scaling-validator | Vier unabhängige PyPI-Pakete vendoren denselben Top-Level-Modulnamen `diamond_setup` (identischer Code, Stand heute) statt `diamond-setup` als echte Dependency zu deklarieren. | Installationsreihenfolge bestimmt, wessen Kopie von `diamond_setup` am Ende auf der Platte liegt; sobald eine der vier Kopien divergiert (z.B. bei einem 2.0.0-Bump von `diamond-setup`, wie im Prompt behauptet — tatsächlich installiert ist aber 1.0.0), entstehen stille, schwer reproduzierbare Inkonsistenzen. |
-| 3 | unified-mandala-demo | Das auf PyPI publizierte Wheel enthält **keinen Python-Code** — nur `dist-info`-Metadaten (Lizenzdateien, RECORD). `import unified_mandala_demo` schlägt fehl. | Paket ist faktisch leer/nicht funktional. |
-| 4 | beta_clustering_utac, feldtheorie, genesis_q4_core, genesisaeon_hexaagent, genesisaeon_sonification, implosive_origin_utac, phi_scaling_validator | Distributionsname ≠ Importname (z.B. `pip install genesisaeon-hexaagent` → `import hexa_agent`; `pip install feldtheorie` → keine erkennbare Top-Level-API, nur generische Submodule `analysis`/`models`). | Jede Automatisierung, die Distributionsnamen 1:1 in Importnamen übersetzt (wie im Prompt-Skript selbst gefordert), bricht ohne Mapping-Tabelle. `feldtheorie`s generische Modulnamen (`analysis`, `models`) kollidieren potenziell mit gleichnamigen Modulen anderer Pakete im selben Environment. |
-| 5 | amazon-utac, vrig-cosmological, sa-sv-duality, phaethon-chimera, afet-tensions, beta-clustering-utac, eml-utac-bridge, phi-scaling-validator, implosive-origin-utac, genesis-scope, hikari-ledger | `get_utac_state()` liefert nicht alle erwarteten Keys (`H`, `H_star`, `K_eff` teilweise fehlend) und/oder `to_zenodo_record()` fehlen `title`/`description`/`creators`. | Diamond-Interface-Vertrag ("genau diese 5 Methoden mit definierten Rückgabewerten") ist über das Ökosystem **nicht** einheitlich erfüllt — Konsumenten (z.B. genesis-os Orchestrator) können sich nicht blind auf die Schema-Konformität verlassen. |
-| 6 | hikari-ledger, diffusive-routing, phaethon-chimera, afet-tensions | Γ-Wert weicht signifikant vom im CREP-Atlas dokumentierten Erwartungswert ab (hikari-ledger: 0.893 statt 0.367 erwartet; diffusive-routing: 0.0019 statt 0.443 erwartet; phaethon-chimera: 0.296 statt 0.165 erwartet). | Entweder sind die im Audit-Prompt referenzierten "geplanten" Γ-Werte veraltet, oder die Implementierungen sind wissenschaftlich nicht (mehr) mit dem CREP-Atlas konsistent — beides ist für ein Grant-Komitee ein Erklärungsbedarf. |
+| 1 | **genesis-os** | Lokales Repo = **v1.0.1** (48 `full-stack`-Deps); PyPI = **v1.0.0** (14 Deps, alte Namen: `sonification`, `mandala-visualizer`). `pip install genesis-os[full-stack]` liefert nicht das dokumentierte Ökosystem. | Externe Nutzer und Grant-Reviewer sehen eine andere Realität als README/CHANGELOG/Zenodo behaupten. |
+| 2 | **genesis-os (lokal)** | `pyproject.toml` deklariert `mandala-visualize>=1.0.0` — **PyPI-Paket existiert nicht**. `pip install mandala-visualize` schlägt fehl; funktionierender Name ist `mandala-visualizer`. | `pip install "genesis-os[full-stack]"` aus lokaler Source würde an dieser Stelle abbrechen, sofern nicht manuell korrigiert. |
+| 3 | **unified-mandala-demo** | Wheel installiert (v1.0.0), aber **kein importierbares Modul** (`import unified_mandala_demo` → `ModuleNotFoundError`; `find_spec` = `None`). | Paket ist faktisch leer — reine Metadaten-Hülle im `full-stack`-Extra. |
+| 4 | **Import-Namensraum** | Distribution ≠ Import bei mehreren Paketen: `genesisaeon-hexaagent` → `hexa_agent`; `genesisaeon-sonification` → `sonification`; `beta-clustering-utac` → `beta_clustering`; `phi-scaling-validator` → `phi_scaling`; `implosive-origin-utac` → `implosive_origin`; `genesis-q4-core` → `genesis_q4` (kein Diamond). | Automatisierung (Audit-Skripte, Plugin-Registry, CI) bricht ohne explizite Mapping-Tabelle. |
+| 5 | **feldtheorie** | PyPI v6.0.0 installiert, exponiert aber **generische Top-Level-Module** `analysis` und `models` (kein `feldtheorie`-Namespace). | Potenzielle Namespace-Kollisionen mit anderen Paketen; wissenschaftliche Identität des Pakets im Python-Import unscharf. |
+| 6 | **Diamond Interface** | 11+ Pakete liefern unvollständige `get_utac_state()` (fehlende `H`/`H_star`/`K_eff`) und/oder `to_zenodo_record()` (fehlende `title`/`description`/`creators`). `genesis-scope` (P39) fehlen alle UTAC-Keys und Zenodo-Pflichtfelder. | Orchestrator/Propagation-Skripte können sich nicht blind auf Schema-Konformität verlassen. |
+| 7 | **Γ-Werte (CREP-Atlas)** | Signifikante Divergenzen nach `run_cycle()`: `hikari-ledger` Γ=**0.893** (erw. 0.367); `diffusive-routing` Γ=**0.0019** (erw. 0.443); `phaethon-chimera` Γ=**0.296** (erw. 0.165); `theta-resonance` Γ=**0.106** (erw. 0.251). | Wissenschaftliche Konsistenz mit dem dokumentierten CREP-Atlas nicht nachweisbar — Erklärungsbedarf für Reviewer. |
+| 8 | **amazon-utac** | `run_cycle()`-Reproduzierbarkeitsprüfung wirft `ValueError: truth value of an array is ambiguous` — interner Bug bei Array-Vergleich. | Diamond-Compliance-Automation scheitert; potenziell instabile Runtime. |
+
+---
 
 ### WARNUNGEN (⚠️) — sollte vor nächstem Minor-Release behoben werden
 
 | # | Package | Issue | Empfehlung |
 |---|---------|-------|------------|
-| 1 | genesis-os | `tests/unit/test_coverage_gaps.py::test_use_plugin_true_without_package_sets_plugin_none` schlägt fehl, sobald `mandala-visualizer` im Environment installiert ist — der Test prüft den "Paket fehlt"-Zweig, mockt den Import aber nicht. | Test auf `monkeypatch`/`importlib`-Mock umstellen statt auf tatsächliche Abwesenheit des Pakets zu vertrauen. |
-| 2 | genesis-os | `.zenodo.json`: `version` = "1.0.1", aber `title`-Feld referenziert weiterhin "v1.0.0"; Feld `communities` fehlt komplett. | Zenodo-Metadaten vor nächstem Release synchronisieren; `communities` ergänzen (z.B. OpenAIRE-Community), falls für Sichtbarkeit gewünscht. |
-| 3 | genesis-os | `CITATION.cff` fehlt im Repo-Root (FAIR4RS/GitHub-Citation-Standard). README hat eine Citation-Sektion mit BibTeX, aber kein maschinenlesbares `CITATION.cff`. | Minimal-valide `CITATION.cff` ergänzen (siehe Prompt-Vorlage), referenziert auf die bestehende Zenodo-DOI. |
-| 4 | genesis-os | `RELEASE_GUIDE.md`, `.github/ISSUE_TEMPLATE/bug_report.md`, `.github/ISSUE_TEMPLATE/feature_request.md`, `.github/PULL_REQUEST_TEMPLATE.md` fehlen. | Governance-Grundausstattung nachziehen, besonders PR-/Issue-Templates für ein Projekt mit 48 Subrepos. |
-| 5 | cellular_genesis, spiking_aeon | Diamond-Klasse (`CellularGenesis`, `SpikingAeon`) ist in einem `system`-Submodul implementiert, aber nicht im Paket-`__init__.py` re-exportiert — anders als bei allen anderen UTAC-Geschwisterpaketen, die ihre Klasse direkt auf Top-Level exponieren. | API-Konsistenz herstellen: `from .system import CellularGenesis` etc. in `__init__.py` ergänzen. |
-| 6 | beta_clustering, eml_utac_bridge, phi_scaling, implosive_origin, genesis_scope | `get_crep_state()["Gamma"]` ist `None` (teils fehlen `C`/`R`/`E`/`P` komplett bei `phi_scaling`). | Default-Berechnung von Γ vor erstem `run_cycle()`-Aufruf prüfen/dokumentieren — aktuell unklar, ob `None` ein gültiger "noch nicht initialisiert"-Zustand oder ein Bug ist. |
-| 7 | sandpile-utac, cygnus-jet-utac, spiking_aeon.system | `run_cycle()`/Instanziierung blockierte > 15s im Audit (Timeout) — vermutlich rechenintensive Default-Simulation (z.B. SNN-Backend-Initialisierung). | Leichtgewichtigen Default-Modus oder expliziten `n_steps`-Parameter mit kleinem Default für schnelle Sanity-Checks anbieten. |
+| 1 | genesis-os | `test_use_plugin_true_without_package_sets_plugin_none` schlägt fehl, sobald `mandala-visualizer` installiert ist (full-stack-Umgebung). | Import mocken/monkeypatchen statt Abwesenheit des Pakets vorauszusetzen. |
+| 2 | genesis-os | `test_max_depth_fifo` (AgentMemory): FIFO-Eviction funktioniert nicht — alle 3 Einträge behalten dieselbe `sig_`-ID. | Logikfehler in `AgentMemory` beheben (echter FIFO-Bug, nicht nur umgebungsabhängig). |
+| 3 | genesis-os | `mypy src` meldet **101 Fehler** in 27 Dateien, wenn optionale Pakete installiert sind (`import-untyped` in Adapters). CI installiert nur `[dev]` — lokale full-stack-Umgebung bricht Type-Check. | Adapter-Overrides konsolidieren oder `[dev]`-CI um Adapter-Stubs erweitern. |
+| 4 | genesis-os | `.zenodo.json`: Feld **`communities`** fehlt; `description` referenziert weiterhin „1.0.0 milestone“. | Metadaten vor Release synchronisieren. |
+| 5 | genesis-os | **`CITATION.cff`** fehlt (FAIR4RS/GitHub-Citation-Standard). | Minimal-valide `CITATION.cff` mit DOI `10.5281/zenodo.19645351` ergänzen. |
+| 6 | genesis-os | `RELEASE_GUIDE.md`, Issue-Templates, PR-Template fehlen im Repo-Root (nur `CONTRIBUTING.md` vorhanden, 4 Zeilen). | Governance-Templates aus `scripts/templates/` promoten. |
+| 7 | sandpile-utac, cygnus-jet-utac, spiking-aeon, neural-avalanche-utac | Diamond-Check **Timeout >25 s** bei Instanziierung/`run_cycle()`. | Leichtgewichtigen Default-Modus für CI-Sanity-Checks (`n_steps=1` o.ä.). |
+| 8 | beta-clustering, eml-utac-bridge, phi-scaling, implosive-origin, genesis-scope | `get_crep_state()["Gamma"]` = `None` vor/vorbehaltlich `run_cycle()`. | Initialisierungsverhalten dokumentieren oder Default-Γ berechnen. |
+| 9 | cellular-genesis, sa-sv-duality | `run_cycle()` **nicht reproduzierbar** bei fixiertem Seed (42). | Determinismus für wissenschaftliche Reproduzierbarkeit sicherstellen. |
+| 10 | entropy-table | Lokal gepinnt `>=2.0.2`; PyPI installiert **2.0.1** (einzige verfügbare Version im Audit). | Version auf PyPI veröffentlichen oder Pin auf `>=2.0.1` anpassen. |
+| 11 | diamond-setup | Installiert als **v1.0.0**, nicht v2.0.0 wie in Dokumentation erwähnt. Vier Pakete vendoren `diamond_setup` statt Dependency zu nutzen. | Vendoring auflösen; `diamond-setup` Version konsolidieren. |
+| 12 | pip-audit | **5 CVEs** in `setuptools 65.5.0` (transitiv, venv-gebunden). Keine direkten CVEs in genesis-os/UTAC-Paketen. | `setuptools>=78.1.1` in Build-Isolation/venv erzwingen. |
+
+---
 
 ### DIAMOND INTERFACE STATUS
 
-(✅ = Methode vorhanden & Rückgabetyp/Schema korrekt, ⚠️ = vorhanden aber Schema unvollständig, ❌ = fehlt/Fehler, — = nicht geprüft/Timeout)
+Legende: ✅ = Methode vorhanden & Schema vollständig | ⚠️ = vorhanden, Schema lückenhaft | ❌ = fehlt/Fehler | — = Timeout/nicht geprüft | n/a = kein Diamond-Paket
 
 | Package | run_cycle | get_crep_state | get_utac_state | get_phase_events | to_zenodo_record | Γ korrekt |
 |---------|-----------|----------------|----------------|-----------------|------------------|-----------|
-| amoc-utac | ✅ | ✅ (Γ=0.297) | ✅ | ✅ | ✅ | ✅ (Δ=0.046, in Toleranz) |
-| amazon-utac | ✅ | ✅ (Γ=0.116) | ⚠️ fehlt H_star | ✅ | ❌ fehlt title/desc/creators | ✅ |
-| neural-avalanche-utac | ✅ | ✅ (Γ=0.241) | ✅ | ✅ | ✅ | ✅ |
-| solar-flare-utac | ✅ | ✅ (Γ=0.0065) | ✅ | ✅ | ✅ | ✅ |
+| amoc-utac | ✅ | ✅ Γ=0.297 | ✅ | ✅ | ✅ | ✅ (Δ=0.046) |
+| amazon-utac | ❌ Array-Bug | — | — | — | — | — |
+| neural-avalanche-utac | — Timeout | — | — | — | — | — |
+| solar-flare-utac | ✅ | ✅ Γ=0.0065 | ✅ | ✅ | ✅ | ✅ |
 | sandpile-utac | — Timeout | — | — | — | — | — |
-| seismic-utac | ✅ | ✅ (Γ=0.197) | ✅ | ✅ | ✅ | ✅ |
-| cygnus-jet-utac | — Timeout | — | — | — | — | n/a (kein Erwartungswert) |
-| quantum-genesis | ✅ | ✅ (Γ=0.035) | ✅ | ✅ | ⚠️ fehlt creators | ✅ |
-| cellular-genesis | ✅ (via .system) | ✅ (Γ=0.040) | ✅ | ✅ | ✅ | n/a |
+| seismic-utac | ✅ | ✅ Γ=0.197 | ✅ | ✅ | ✅ | ✅ |
+| cygnus-jet-utac | — Timeout | — | — | — | — | n/a |
+| quantum-genesis | ✅ | ✅ Γ=0.035 | ✅ | ✅ | ⚠️ creators | ✅ |
+| cellular-genesis | ✅ | ✅ Γ=0.040 | ✅ | ✅ | ✅ | n/a |
 | spiking-aeon | — Timeout | — | — | — | — | n/a |
-| theta-resonance | ✅ | ✅ (Γ=0.106) | ✅ | ✅ | ✅ | ❌ (0.106 vs erw. 0.251) |
-| epi-sigillin | ✅ | ✅ (Γ=1.0) | ✅ | ✅ | ❌ fehlt desc/creators | n/a |
-| vrig-cosmological | ✅ | ✅ (Γ=0.251) | ❌ fehlt H/H_star/K_eff | ✅ | ✅ | n/a |
-| sa-sv-duality | ✅ | ✅ (Γ=0.251) | ❌ fehlt H/K_eff | ✅ | ❌ fehlt alle 3 | n/a |
-| phaethon-chimera | ✅ | ✅ (Γ=0.296) | ❌ fehlt H/K_eff | ✅ | ✅ | ❌ (0.296 vs erw. 0.165) |
-| afet-tensions | ✅ | ✅ (Γ=0.560) | ❌ fehlt H_star/K_eff | ✅ | ❌ fehlt desc/creators | n/a |
-| beta-clustering-utac | ✅ | ⚠️ Γ=None | ❌ fehlt H_star/K_eff | ✅ | ❌ fehlt alle 3 | n/a |
-| eml-utac-bridge | ✅ | ⚠️ Γ=None | ❌ fehlt H_star/K_eff | ✅ | ✅ | n/a |
-| phi-scaling-validator | ✅ | ❌ alle CREP-Keys fehlen | ❌ alle 3 fehlen | ✅ | ✅ | n/a |
-| implosive-origin-utac | ✅ | ⚠️ Γ=None | ❌ fehlt K_eff | ✅ | ❌ fehlt creators | n/a |
-| genesis-scope | ✅ | ⚠️ Γ=None | ❌ alle 3 fehlen | ✅ | ❌ fehlt alle 3 | n/a |
-| hikari-ledger | ✅ | ✅ (Γ=0.893) | ✅ | ✅ | ❌ fehlt alle 3 | ❌ (0.893 vs erw. 0.367) |
-| diffusive-routing | ✅ | ✅ (Γ=0.0019) | ✅ | ✅ | ❌ fehlt desc/creators | ❌ (0.0019 vs erw. 0.443) |
-| utac-core | ❌ keine Diamond-Klasse exponiert (funktional, aber andere API: `frame_principle`, `v_rig`, `beta_fit`) | — | — | — | — | n/a |
-| unified-mandala | ❌ keine Diamond-Klasse exponiert (`__init__.py` exportiert nur `__version__`) | — | — | — | — | n/a |
-| genesis-q4-core | ❌ keine Diamond-Klasse — exponiert stattdessen Q4-Navigationsklassen (`Q4Navigator`, `Tesseract` etc., konsistent zu Paketzweck) | — | — | — | — | n/a |
+| theta-resonance | ✅ | ✅ Γ=0.106 | ✅ | ✅ | ✅ | ❌ (0.106 vs 0.251) |
+| epi-sigillin | ✅ | ✅ Γ=1.0 | ✅ | ✅ | ⚠️ desc/creators | n/a |
+| vrig-cosmological | ✅ | ✅ Γ=0.251 | ⚠️ H/H*/K_eff | ✅ | ✅ | n/a |
+| sa-sv-duality | ✅ | ✅ Γ=0.251 | ⚠️ H/K_eff | ✅ | ⚠️ alle 3 | n/a |
+| phaethon-chimera | ✅ | ✅ Γ=0.296 | ⚠️ H/K_eff | ✅ | ✅ | ❌ (0.296 vs 0.165) |
+| afet-tensions | ✅ | ✅ Γ=0.560 | ⚠️ H*/K_eff | ✅ | ⚠️ desc/creators | n/a |
+| beta-clustering-utac | ✅ (als `beta_clustering`) | ⚠️ Γ=None | ⚠️ H*/K_eff | ✅ | ⚠️ title/desc/creators | n/a |
+| eml-utac-bridge | ✅ | ⚠️ Γ=None | ⚠️ H*/K_eff | ✅ | ✅ | n/a |
+| phi-scaling-validator | ✅ (als `phi_scaling`) | ⚠️ Γ=None | ⚠️ alle 3 | ✅ | ⚠️ creators | n/a |
+| implosive-origin-utac | ✅ (als `implosive_origin`) | ⚠️ Γ=None | ⚠️ K_eff | ✅ | ⚠️ creators | n/a |
+| genesis-scope | ✅ | ⚠️ Γ=None | ❌ alle 3 | ✅ | ❌ alle 3 | n/a |
+| hikari-ledger | ✅ | ✅ Γ=0.893 | ✅ | ✅ | ⚠️ title/desc/creators | ❌ (0.893 vs 0.367) |
+| diffusive-routing | ✅ | ✅ Γ=0.0019 | ✅ | ✅ | ⚠️ desc/creators | ❌ (0.0019 vs 0.443) |
+| utac-core | ❌ keine Diamond-Klasse | — | — | — | — | n/a |
+| unified-mandala | ❌ keine Diamond-Klasse | — | — | — | — | n/a |
+| genesis-q4-core | ❌ Q4-Navigation (`genesis_q4`), kein Diamond | — | — | — | — | n/a |
 
-**Befund:** Von 23 geprüften Diamond-Kandidaten erfüllen nur **8** (35%) den Vertrag vollständig schemakonform (amoc-utac, neural-avalanche-utac, solar-flare-utac, seismic-utac, quantum-genesis, cellular-genesis, theta-resonance — bei letzterem ist nur das Γ falsch). Bei 11 Paketen fehlen Keys in `get_utac_state()` oder `to_zenodo_record()`. `utac-core`, `unified-mandala` und `genesis-q4-core` implementieren das Interface gar nicht (z.T. nachvollziehbar, da sie funktional andere Rollen einnehmen — sollte aber explizit dokumentiert werden, ob sie als "Diamond-Pakete" gelten oder nicht).
+**Befund:** Von 20 vollständig geprüften UTAC-Kandidaten (ohne Timeouts) erfüllen **6** (~30 %) den Diamond-Vertrag schemakonform: amoc-utac, solar-flare-utac, seismic-utac, quantum-genesis (minus creators), cellular-genesis, theta-resonance (minus Γ-Korrektheit).
+
+---
 
 ### TEST COVERAGE SUMMARY (genesis-os Core)
 
-- Gesamttests: 1383
-- Pass: 1382 | Fail: 1 | Error: 0 | Skip: 0
-- Coverage genesis-os Core: **91%** (Ziel >60% deutlich übertroffen)
-- Einziger Fail ist umgebungsabhängig (siehe Warnung #1) — kein echter Logikfehler im Core, sondern ein brüchiger Test, der bei voll bestückter `full-stack`-Umgebung kollabiert.
-- Lint (`ruff check src/genesis_os/`): 0 Findings.
-- `pip-audit` über das komplette installierte Environment (genesis-os + alle 48 Pakete + Transitives): **keine bekannten CVEs**.
-- Keine hardcodierten Credentials im Core-Quellcode gefunden (einzige Treffer im Regex-Scan waren False Positives um das Wort "token" im Sigillin-Phasentoken-Kontext).
-- README-Quickstart tatsächlich ausgeführt: **läuft fehlerfrei**, Ausgabe entspricht dem dokumentierten Format (Phase/Entropy/Phi/Lagrangian/Transitions/Emergence Events).
+| Metrik | Wert |
+|--------|------|
+| Gesamttests | **1383** |
+| Pass | **1381** |
+| Fail | **2** |
+| Error | **0** |
+| Skip | **0** |
+| Coverage | **91,4 %** (Ziel >60 % deutlich übertroffen) |
+| Determinismus (2× Lauf) | Identisch: 1381 pass, 2 fail — **kein flaky Count**, aber 2 stabile Failures |
+| Dauer | ~2 min 27 s |
+
+**Failures:**
+1. `test_coverage_gaps.py::test_use_plugin_true_without_package_sets_plugin_none` — umgebungsabhängig (mandala-visualizer installiert)
+2. `test_agents_phase6.py::TestAgentMemory::test_max_depth_fifo` — **Logikfehler** FIFO-Eviction
+
+**Offline:** Alle Tests laufen ohne Netzwerk (keine `live`/`download`-Marker-Treffer erforderlich).
+
+---
 
 ### INSTALLATION MATRIX
 
-| Paket | Install | Import | Diamond | Anmerkung |
-|-------|---------|--------|---------|-----------|
-| genesis-os (core, no extras) | ✅ | ✅ | n/a (Orchestrator) | `pip check` clean |
-| genesis-os[full-stack] (PyPI, real) | ✅ | ✅ | n/a | Nur 14 Pakete, nicht 48 — siehe Issue #1 |
-| 13 der 14 direkten full-stack-Deps (PyPI) | ✅ | ✅ | gemischt | sigillin, utac-core, fieldtheory, mirror-machine, cosmic-web, entropy-table(2.0.1≠2.0.2), entropy-governance, mandala-visualizer, climate-dashboard, implosive-genesis, aeon-ai, advanced-weighting-systems alle installierbar/importierbar |
-| 34 "neue" optionale Pakete | ✅ alle 34 installierbar, keine Versionskonflikte, Doppelinstallation (`sa-sv-duality` zweimal) idempotent | 26/34 sauber importierbar unter erwartetem Namen, 8 mit Namens-Mismatch (siehe Issue #4) | 15/34 voll schemakonform, Rest mit Lücken | diamond-setup installiert als 1.0.0, nicht das im Prompt erwartete 2.0.0; feldtheorie korrekt als 6.0.0 |
+| Paket / Gruppe | Install | Import | Diamond | Anmerkung |
+|----------------|---------|--------|---------|-----------|
+| genesis-os (PyPI, core) | ✅ v1.0.0 | ✅ | n/a | `pip check` clean |
+| genesis-os[full-stack] (PyPI) | ✅ | ✅ | gemischt | Nur **14** Pakete, nicht 48 |
+| genesis-os (lokal, pyproject 1.0.1) | ✅ editable | ✅ | n/a | 9 direkte + 48 optionale Deps deklariert |
+| 26 optionale UTAC/Domain-Pakete (einzeln) | ✅ alle 26 | ✅ 25/26 | gemischt | siehe Import-Matrix |
+| 21 weitere full-stack-Pakete | ✅ 20/21 | ✅ 19/21 | gemischt | **mandala-visualize**: FAIL |
+| mandala-visualizer | ✅ | ✅ als `mandala_visualizer` | n/a | Korrekter PyPI-Name |
+| unified-mandala-demo | ✅ | ❌ | n/a | Leeres Wheel |
+| feldtheorie | ✅ v6.0.0 | ⚠️ nur `analysis`/`models` | n/a | Kein `feldtheorie`-Modul |
+| Doppelinstallation sa-sv-duality | ✅ idempotent | ✅ | ⚠️ | Kein Konflikt |
+
+**Import-Health (Audit-venv, 50 Kandidaten):** **47/50 OK**
+
+| Fehlgeschlagen | Grund |
+|----------------|-------|
+| `mandala_visualize` | PyPI-Name ist `mandala-visualizer` |
+| `unified_mandala_demo` | Kein Python-Code im Wheel |
+| `feldtheorie` | Kein Top-Level-Modul (nur `analysis`) |
+
+---
+
+### BLOCK 5 — METADATA
+
+| Check | Ergebnis |
+|-------|----------|
+| `pyproject.toml` version | **1.0.1** ✅ |
+| `.zenodo.json` version | **1.0.1** ✅ |
+| `CHANGELOG.md` [1.0.1] | ✅ vorhanden |
+| Versionen konsistent (lokal) | ✅ |
+| PyPI vs. lokal | ❌ **MISMATCH** (PyPI 1.0.0) |
+| Direkte Dependencies | 9 (typer, rich, numpy, pydantic, scipy, statsmodels, scikit-learn, pyyaml, networkx) |
+| `full-stack` optional deps | 48 |
+| `genesisaeon-hexaagent` in pyproject | ✅ |
+| `genesisaeon-sonification` in pyproject | ✅ |
+| `entropy-table>=2.0.2` in pyproject | ✅ (PyPI hat nur 2.0.1) |
+| `diamond-setup>=2.0.0` in pyproject | ✅ (PyPI hat nur 1.0.0) |
+| Alter Name `hexaagent` | ✅ nicht vorhanden |
+| Alter Name `sonification` (full-stack) | ✅ nicht in full-stack (nur in `[audio]`) |
+
+### README Blindtest
+
+| Kriterium | Ergebnis |
+|-----------|----------|
+| Ohne Vorwissen verständlich? | ⚠️ Teilweise — starke GenesisAeon-Terminologie (CREP, UTAC, Γ) |
+| Installation-Sektion mit `pip install genesis-os`? | ✅ |
+| Quickstart copy-paste-lauffähig? | ✅ **verifiziert** (2026-06-30) |
+| API stimmt mit Quickstart überein? | ✅ |
+| DOI-Badge / Zenodo? | ✅ (`10.5281/zenodo.19645351`) |
+| Citation-Sektion? | ✅ BibTeX vorhanden |
+
+**Quickstart-Ausgabe (seed=42, max_cycles=50):**
+```
+Phase: Initiation
+Entropy: 0.9986
+Phi(H): 1.0616
+Lagrangian: 0.7028
+Transitions: 0
+Emergence Events: 15
+```
+
+---
+
+### BLOCK 7 — CI/CD & RELEASE
+
+| Check | Ergebnis |
+|-------|----------|
+| `.github/workflows/release.yml` | ✅ valide YAML; Jobs: lint, test, build, publish-pypi, publish-testpypi, github-release, zenodo-upload |
+| `.github/workflows/ci.yml` | ✅ lint + test (3.10–3.12) + mkdocs strict |
+| Benötigte Secrets | `PYPI_API_TOKEN`, `TEST_PYPI_API_TOKEN`, `ZENODO_TOKEN`, `ZENODO_SANDBOX_TOKEN` |
+| `RELEASE_GUIDE.md` | ❌ fehlt |
+| `CONTRIBUTING.md` | ✅ (4 Zeilen, minimal) |
+| `CHANGELOG.md` | ✅ (127 Zeilen) |
+| Issue/PR-Templates | ❌ fehlen |
+| `.zenodo.json` | ✅ (communities fehlt) |
+| `CITATION.cff` | ❌ fehlt |
+
+---
+
+### BLOCK 8 — SICHERHEIT & QUALITÄT
+
+| Check | Ergebnis |
+|-------|----------|
+| `ruff check src tests` | ✅ **0 Findings** |
+| `mypy src` (mit full-stack installiert) | ⚠️ 101 Fehler (`import-untyped` in Adapters) |
+| Hardcodierte Credentials | ✅ Keine echten Secrets (Sigillin-`token` = False Positive) |
+| `pip-audit` (Audit-venv) | ⚠️ 5 CVEs in **setuptools 65.5.0** (transitiv) |
+
+---
+
+### BLOCK 9 — GENESIS-SCOPE SPEZIALPRÜFUNG (P39)
+
+| Check | Ergebnis |
+|-------|----------|
+| Läuft offline? | ✅ `run_cycle()` erfolgreich |
+| `get_crep_state()` | ⚠️ `Gamma=None`, CREP-Keys teils vorhanden |
+| `get_utac_state()` | ❌ `H`, `H_star`, `K_eff` fehlen |
+| `to_zenodo_record()` | ❌ `title`, `description`, `creators` fehlen |
+| `get_semantic_path()` | ⚠️ **nicht implementiert** |
+| `to_llms_txt()` / `export_llms_txt()` | ⚠️ **nicht implementiert** |
+| Diamond `get_phase_events()` | ✅ list |
+
+**Fazit P39:** Funktionaler Prototyp mit `run_cycle()`, aber semantische Pfad-API und llms.txt-Export fehlen; Diamond-Schema nicht erfüllt — strategisches Modul braucht Nacharbeit vor Agent/MCP-Integration.
+
+---
+
+### BLOCK 10 — ZENODO & OPEN SCIENCE
+
+| Feld | Status |
+|------|--------|
+| title | ✅ |
+| description | ✅ (Text noch auf 1.0.0-Milestone) |
+| creators | ✅ |
+| license | ✅ GPL-3.0-or-later |
+| upload_type | ✅ software |
+| access_right | ✅ open |
+| keywords | ✅ (29 Einträge) |
+| related_identifiers | ✅ (4 Einträge) |
+| version | ✅ 1.0.1 |
+| communities | ❌ MISSING |
+| README DOI-Badge | ✅ |
+| CITATION.cff | ❌ MISSING |
+
+---
 
 ### OFFENE PUNKTE FÜR v1.1.0
 
-1. PyPI-Release von genesis-os v1.0.1 inkl. des erweiterten `full-stack`-Extras nachziehen — sonst klafft Repo- und PyPI-Realität dauerhaft auseinander.
-2. Diamond-Interface-Vertrag verbindlich spezifizieren (idealerweise als Pydantic-Schema/ABC in einem gemeinsamen `diamond-setup`-Paket) und alle 23 Kandidaten gegen dieses Schema in CI testen — aktuell ist die Konformität Zufall.
-3. `diamond_setup`-Vendoring in beta-clustering-utac, implosive-origin-utac, phi-scaling-validator auflösen: echte Dependency auf `diamond-setup>=X` statt Code-Duplikation.
-4. `unified-mandala-demo` reparieren (Paket ist aktuell leer) oder vom full-stack-Extra entfernen.
-5. CITATION.cff ergänzen, .zenodo.json `title`/`version`/`communities` synchronisieren.
-6. Test `test_use_plugin_true_without_package_sets_plugin_none` robust gegen volle Extra-Installation machen.
-7. Γ-Divergenzen bei hikari-ledger, diffusive-routing, phaethon-chimera, theta-resonance gegen den CREP-Atlas klären: Atlas veraltet oder Implementierung regressiert?
-8. Performance-Default für sandpile-utac, cygnus-jet-utac, spiking-aeon (>15s für `run_cycle()`/Init) — blockiert schnelle CI-Sanity-Checks.
+1. **PyPI-Release genesis-os v1.0.1** mit korrigiertem `full-stack`-Extra (48 Pakete, richtige PyPI-Namen).
+2. **`mandala-visualize` → `mandala-visualizer`** in `pyproject.toml` korrigieren.
+3. **Diamond Interface** als Pydantic-Schema/ABC in `diamond-setup` definieren; CI-Contract-Tests für alle UTAC-Pakete.
+4. **`unified-mandala-demo`** reparieren oder aus Extras entfernen.
+5. **`diamond_setup`-Vendoring** in beta-clustering, implosive-origin, phi-scaling auflösen.
+6. **Import-Name-Mapping** zentral dokumentieren (`DIST_TO_IMPORT.json` o.ä.).
+7. **`CITATION.cff`** + `.zenodo.json` `communities` ergänzen.
+8. **AgentMemory FIFO-Bug** und **Mandala-Plugin-Test** fixen.
+9. **Γ-Divergenzen** gegen CREP-Atlas klären (Atlas aktualisieren oder Implementierungen korrigieren).
+10. **Performance-Defaults** für sandpile/cygnus/spiking/neural-avalanche (CI-Timeouts).
+
+---
 
 ### BESTÄTIGTE STÄRKEN ✅
 
-- Core-Testsuite ist umfangreich, stabil und schnell (1382/1383 grün in ~27s, 91% Coverage).
-- Alle 48 Subpakete existieren tatsächlich auf PyPI und installieren ohne Versionskonflikte nebeneinander (inkl. Doppelinstallation-Idempotenz) — keine triviale Leistung bei dieser Paketzahl.
-- Keine bekannten Sicherheitslücken (`pip-audit`) im gesamten installierten Stack, keine hardcodierten Secrets im Core.
-- Lint ist auf dem Core komplett clean (0 ruff findings).
-- README-Quickstart ist nicht nur vorhanden, sondern tatsächlich copy-paste-lauffähig und stimmt mit der echten API überein.
-- Solide Open-Science-Grundausstattung vorhanden: DOI-Badge, OpenAIRE-Indexierung, BibTeX-Citation-Sektion, gepflegtes CHANGELOG, funktionierende `.github/workflows/release.yml` mit klar benannten Secrets (PYPI_API_TOKEN, TEST_PYPI_API_TOKEN, ZENODO_TOKEN, ZENODO_SANDBOX_TOKEN).
-- Mehrere Diamond-Pakete (amoc-utac, neural-avalanche-utac, solar-flare-utac, seismic-utac, quantum-genesis, cellular-genesis) erfüllen das Interface vollständig und liefern Γ-Werte innerhalb der erwarteten Toleranz — der Interface-Ansatz funktioniert dort, wo er konsequent umgesetzt wurde.
+- Core-Testsuite umfangreich und schnell (**1381/1383** grün, **91 %** Coverage, ~2,5 min).
+- **Alle 48 Subpakete existieren auf PyPI** und installieren ohne `pip check`-Konflikte nebeneinander.
+- **README-Quickstart** ist copy-paste-lauffähig und API-korrekt.
+- **ruff** auf dem Core komplett clean (0 Findings).
+- Solide Open-Science-Basis: Zenodo-DOI, BibTeX-Citation, CHANGELOG, funktionierende Release-Pipeline.
+- Mehrere UTAC-Pakete (amoc, solar-flare, seismic, quantum-genesis, cellular-genesis) implementieren Diamond vollständig und liefern plausible Γ-Werte.
+- **Deterministische Test-Suite** (zwei Läufe → identisches Pass/Fail-Verhältnis).
 
 ---
-*Methodischer Hinweis: Block 6.2 (Reproduzierbarkeit über `random.seed`/`np.random.seed`) und die Volltest-Determinismus-Prüfung (Block 4.2) wurden aus Zeitgründen nicht für alle 23 Diamond-Kandidaten einzeln durchlaufen, nachdem mehrere Pakete (sandpile-utac, cygnus-jet-utac, spiking-aeon) bereits bei der einfachen Instanziierung Timeouts verursachten. Die in Block 9 geforderte Tiefenprüfung von `genesis-scope` ist in der DIAMOND-INTERFACE-Tabelle abgebildet (Diamond-Methoden vorhanden, aber CREP/UTAC-State-Schema unvollständig); `get_semantic_path()` und `to_llms_txt()`/`export_llms_txt()` sind in der installierten Version 1.0.0 nicht vorhanden.*
+
+### METHODISCHER HINWEIS
+
+Audit durchgeführt am **2026-06-30** in sauberer venv (`.audit_venv`), Windows 10, Python 3.11.9. Blöcke 1–10 des Prompts vollständig adressiert. Diamond-Checks mit **25 s Subprocess-Timeout** pro Paket (`scripts/audit_diamond_subproc.py`). Rohdaten: `test-results/audit_diamond.json`, `test-results/audit_optional_install.txt`, `test-results/pytest_output.txt`.
+
+*„Ein System, das lauscht — ein Muster, das lebt."*

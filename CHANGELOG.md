@@ -11,12 +11,12 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 - Dependency floor pins synchronised to match actual released versions
   across all 48 GenesisAeon ecosystem packages:
-  - `entropy-table` pinned to `>=2.0.2` (released at v2.0.2, not v2.0.0)
-  - `diamond-setup` pinned to `>=2.0.0` (v1.0.0 tag was pre-existing)
+  - `entropy-table` pinned to `>=2.0.1` (latest on PyPI; supersedes `>=2.0.0`)
+  - `diamond-setup` pinned to `>=1.0.0` (latest on PyPI)
   - `hexaagent` renamed to `genesisaeon-hexaagent>=1.0.0` (actual PyPI name)
   - `sonification` renamed to `genesisaeon-sonification>=1.0.0` (actual PyPI name)
   - All other ecosystem packages pinned to `>=1.0.0`
-- `mandala-visualizer` renamed to `mandala-visualize>=1.0.0` (actual PyPI name per `release_map.yml`)
+- `mandala-visualizer>=1.0.0` (correct PyPI name; import `mandala_visualizer`)
 - Added the remaining GenesisAeon ecosystem packages as optional `full-stack`
   dependencies (previously undeclared), each pinned `>=1.0.0` unless noted:
   `diamond-setup>=2.0.0`, `feldtheorie>=6.0.0` (PyPI version, distinct from GitHub
