@@ -70,11 +70,20 @@ fi
 cd "$REPO_PATH"
 
 if [[ "$SKIP_BUILD" == false ]]; then
+  if [[ -d "$REPO_PATH/dist" ]]; then
+    echo "Cleaning $REPO_PATH/dist ..."
+    if [[ "$DRY_RUN" == true ]]; then
+      echo "[dry-run] rm dist/*"
+    else
+      find "$REPO_PATH/dist" -mindepth 1 ! -name '.gitignore' -delete 2>/dev/null || rm -f "$REPO_PATH/dist"/*
+    fi
+  fi
   echo "Building in $REPO_PATH ..."
   if [[ "$DRY_RUN" == true ]]; then
     echo "[dry-run] uv build"
   else
     uv build
+    ls -la "$REPO_PATH/dist" 2>/dev/null || true
   fi
 fi
 

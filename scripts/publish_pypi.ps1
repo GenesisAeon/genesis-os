@@ -86,19 +86,39 @@ if (-not (Test-Path (Join-Path $RepoPath "pyproject.toml"))) {
 Push-Location $RepoPath
 try {
     if (-not $SkipBuild) {
+        $distDir = Join-Path $RepoPath "dist"
+        if (Test-Path $distDir) {
+            Write-Host "Cleaning $distDir ..."
+            if ($DryRun) {
+                Write-Host "[dry-run] remove dist/*"
+            } else {
+                Remove-Item (Join-Path $distDir "*") -Force -ErrorAction SilentlyContinue
+            }
+        }
         Write-Host "Building in $RepoPath ..."
         if ($DryRun) {
             Write-Host "[dry-run] uv build"
         } else {
             uv build
         }
+        if (-not $DryRun -and (Test-Path $distDir)) {
+            $artifacts = Get-ChildItem $distDir -File | Where-Object { $_.Name -ne ".gitignore" }
+            Write-Host "Artifacts: $($artifacts.Name -join ', ')"
+        }
     }
 
     Write-Host "Publishing to PyPI ..."
+    $distDir = Join-Path $RepoPath "dist"
+    $files = @(Get-ChildItem $distDir -File -ErrorAction SilentlyContinue |
+        Where-Object { $_.Extension -in ".whl", ".gz" })
+    if ($files.Count -eq 0) {
+        Write-Error "No .whl or .tar.gz in $distDir — run build first."
+    }
     if ($DryRun) {
-        Write-Host "[dry-run] uv publish (token loaded, $($env:UV_PUBLISH_TOKEN.Length) chars)"
+        Write-Host "[dry-run] uv publish $($files.Name -join ' ') (token $($env:UV_PUBLISH_TOKEN.Length) chars)"
     } else {
-        uv publish
+        # Explicit file list avoids stale dist/* and makes missing-wheel obvious
+        uv publish @($files.FullName)
     }
 } finally {
     Pop-Location
