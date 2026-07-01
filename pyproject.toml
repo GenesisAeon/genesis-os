@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "genesis-os"
-version = "1.0.1"
+version = "1.0.2"
 description = "Self-reflecting OS framework with live cosmic-web emergence simulation, Dash GUI, real-time phase transitions, and resonance coupling for GenesisAeon"
 readme = "README.md"
 license = { text = "GPL-3.0-or-later" }
@@ -63,7 +63,7 @@ full-stack = [
     "implosive-genesis>=1.0.0",
     "implosive-origin-utac>=1.0.0",
     "entropy-table>=2.0.1",
-    "diamond-setup>=1.0.0",
+    "diamond-setup>=2.1.0",
     "genesisaeon-hexaagent>=1.0.0",
     "genesis-scope>=1.0.0",
     "genesis-q4-core>=1.0.0",

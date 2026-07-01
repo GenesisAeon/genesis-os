@@ -6,6 +6,14 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.2] — 2026-07-01
+
+### Changed
+- `diamond-setup` pinned to `>=2.1.0` (DiamondPackage ABC, `NotConvergedError`,
+  `validate_diamond_instance`; published from diamond-setup v2.1.0).
+
+---
+
 ## [1.0.1] — 2026
 
 ### Changed
