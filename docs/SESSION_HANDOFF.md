@@ -1,4 +1,4 @@
-# Session Handoff — GenesisAeon · 2026-07-01
+# Session Handoff — GenesisAeon · 2026-07-01 (Update 2)
 
 > Copy-paste den Block **„Neue Session — Startprompt“** unten in die nächste Cursor/Grok-Session.
 
@@ -6,93 +6,101 @@
 
 ## Was in dieser Session erledigt wurde
 
-### genesis-os v1.0.1 Release (abgeschlossen)
+### A) diamond-setup 2.1.0 + genesis-os pin bump — **abgeschlossen**
 
-| Kanal | Status |
+| Paket | PyPI | GitHub | Notizen |
+|-------|------|--------|---------|
+| **diamond-setup** | `2.1.0` LATEST | Tag `v2.1.0`, [Release](https://github.com/GenesisAeon/diamond-setup/releases/tag/v2.1.0) | GH Actions + Trusted Publishing |
+| **genesis-os** | `1.0.1` LATEST (1.0.2 **noch nicht** auf PyPI) | `main` + Tag `v1.0.2` | `diamond-setup>=2.1.0` in `pyproject.toml` |
+
+**diamond-setup v2.1.0 — neu:**
+- `DiamondPackage` ABC, `CREPState` / `UTACState` / `ZenodoRecord`
+- `NotConvergedError` (Γ = Attraktor, nicht Initialwert)
+- `validate_diamond_instance()` für CI
+- `contracts/diamond.interface.yaml`
+- Fix: `test_version` nutzt `__version__` statt hardcoded `1.0.0`
+
+### B) amoc-utac — erste Diamond-Referenzmigration — **abgeschlossen**
+
+| | |
+|---|---|
+| **Version** | `1.1.0` auf PyPI (manuell + GH Tag `v1.1.0`) |
+| **Pfad** | `D:\mandala\amoc-utac` |
+| **Änderung** | `AmocUTAC(DiamondPackage)`, Vendoring `src/diamond_setup/` entfernt |
+| **Dep** | `diamond-setup>=2.1.0` |
+| **Tests** | 57/58 grün; `validate_diamond_instance()` OK |
+| **UTAC** | Kanonisch `{H, H_star, K_eff}`; AMOC-Felder in `run_cycle() → utac_extended` |
+
+**Referenz für alle weiteren UTAC-Migrationen:** `amoc_utac/system.py` + `tests/test_diamond_interface.py`
+
+### Lokales PyPI-Publish (neu) — **eingerichtet + Token gesetzt**
+
+| Datei | Status |
 |-------|--------|
-| **PyPI** | `genesis-os==1.0.1` (LATEST) — `uv publish` erfolgreich |
-| **GitHub** | Tag `v1.0.1`, Commit `AuditundFix` |
-| **Zenodo** | v1.0.1 — **Description/Notes manuell** aus `.zenodo.json` korrigiert (Texte sagten vorher noch „1.0.0“) |
+| `.env.example` | committet (Vorlage) |
+| `.env` | **gitignored**, Token eingetragen (`PYPI_API_TOKEN` = `UV_PUBLISH_TOKEN`) |
+| `scripts/publish_pypi.ps1` | Windows |
+| `scripts/publish_pypi.sh` | Bash |
 
-**pyproject.toml-Fixes (v1.0.1):**
-- `mandala-visualize` → `mandala-visualizer` (korrekter PyPI-Name)
-- `entropy-table>=2.0.1` (nicht 2.0.2 — existiert nicht auf PyPI)
-- `diamond-setup>=1.0.0` (nicht 2.0.0 auf PyPI zum Audit-Zeitpunkt)
-- `[full-stack]` = **48** GenesisAeon-Pakete
+**Propagieren von hier aus** — ohne GitHub Secret im Ziel-Repo:
 
-**README + CHANGELOG** auf v1.0.1 / 48-Pakete-Sync aktualisiert.
+```powershell
+# Build + Publish beliebiges Paket
+pwsh D:\mandala\genesis-os\scripts\publish_pypi.ps1 -RepoPath D:\mandala\<repo>
 
-### Ecosystem Deep Audit
+# Nur prüfen (kein Upload)
+pwsh D:\mandala\genesis-os\scripts\publish_pypi.ps1 -RepoPath D:\mandala\<repo> -DryRun
+```
 
-- Report: `AUDIT_REPORT_v1.0.1.md` (Root)
-- Diskussion: `docs/AuditErgebnisse.txt`
-- Rohdaten: `test-results/audit_*.json`, `pytest_output.txt`
-- **Issue #1 (PyPI hinter Repo)** → **geschlossen**
+Token-Lookup: Shell-Env → `<repo>/.env` → `genesis-os/.env` → `D:\mandala/.env`
 
-### Repo-Hygiene
+**Hinweis:** venv-Ordner (`.venv`, `.audit_venv`) enthalten **kein** Token — nur `.env`.
 
-- `.gitignore`: `.audit_venv/`, `terminals/`, `test-results/audit_*`
-- `dist/`: alte Wheels (0.1.0, 0.4.2, 1.0.0) entfernt — nur 1.0.1 übrig
+### Aus vorheriger Session (weiterhin gültig)
 
-### diamond-setup v2.1.0 (lokal, noch nicht publiziert)
-
-**Pfad:** `D:\mandala\diamond-setup`
-
-| Neu | Zweck |
-|-----|--------|
-| `src/diamond_setup/protocol.py` | `DiamondPackage` ABC, Pydantic-Modelle |
-| `src/diamond_setup/validation.py` | `validate_diamond_instance()` für CI |
-| `contracts/diamond.interface.yaml` | Maschinenlesbarer Vertrag |
-| `tests/test_protocol.py` | 5/5 grün |
-
-**Γ-Regel:** `get_crep_state()` / `get_utac_state()` → `NotConvergedError` vor erstem `run_cycle()` (Γ = Attraktor, nicht Initialwert).
-
-**Noch zu tun:** Commit + `uv build && uv publish` für `diamond-setup==2.1.0`.
+- genesis-os v1.0.1 auf PyPI/GitHub/Zenodo
+- Ecosystem-Audit: `AUDIT_REPORT_v1.0.1.md`, Issue #1 geschlossen
+- `[full-stack]` = 48 Pakete, `mandala-visualizer`, `entropy-table>=2.0.1`
 
 ---
 
 ## Offene Punkte (priorisiert)
 
-### P0 — diamond-setup veröffentlichen
-```bash
-cd D:\mandala\diamond-setup
-uv build && uv publish --token pypi-...
-```
+### P0 — genesis-os 1.0.2 auf PyPI nachziehen
+- Repo/Tag stehen (`v1.0.2`); Release-Workflow schlägt fehl (0 Jobs — Validierung)
+- **Workaround:** `publish_pypi.ps1 -RepoPath D:\mandala\genesis-os`
+- Optional: `release.yml` reparieren (wie `diamond-setup` Trusted Publishing?)
 
-### P1 — UTAC-Pakete auf `DiamondPackage` migrieren
-- Vendoring von `diamond_setup` in beta-clustering, implosive-origin, phi-scaling **auflösen**
-- Echte Dependency: `diamond-setup>=2.1.0`
-- Standard-Prompt (siehe `docs/AuditErgebnisse.txt`, Gemini-Abschnitt)
+### P1 — UTAC-Batch auf `DiamondPackage` (amoc-utac = Referenz)
+**Vendoring zuerst** (haben `src/diamond_setup/`):
+1. `beta-clustering-utac`
+2. `implosive-origin-utac`
+3. `phi-scaling-validator`
 
-**Batch-Reihenfolge:** erst die 6–8 voll konformen Pakete als Referenz, dann Rest.
+**Dann weitere UTACs:** `sandpile-utac`, `seismic-utac`, `neural-avalanche-utac`, …
+
+**Migrations-Checkliste pro Paket:**
+1. `class X(DiamondPackage)` + `_run_cycle` / `_build_*` Hooks
+2. `NotConvergedError` vor erstem `run_cycle` (kein Auto-Run in `get_*`)
+3. `diamond-setup>=2.1.0` in `pyproject.toml`; `src/diamond_setup/` löschen
+4. `validate_diamond_instance()` Test
+5. Version bump (minor), CHANGELOG, commit, tag, `publish_pypi.ps1`
+
+Prompt-Details: `docs/AuditErgebnisse.txt` (Gemini-Abschnitt)
 
 ### P2 — genesis-os Test-Fixes
-1. `test_use_plugin_true_without_package_sets_plugin_none` — mock statt Abwesenheit von `mandala-visualizer`
-2. `test_max_depth_fifo` (AgentMemory) — echter FIFO-Bug
+1. `test_use_plugin_true_without_package_sets_plugin_none` — mock statt fehlendem Paket
+2. `test_max_depth_fifo` (AgentMemory) — FIFO-Bug
 
-### P3 — Architektur (aus AuditErgebnisse.txt)
-- `contracts/` Verzeichnis (software / scientific / epistemic)
-- CI: Diamond-Validation als GitHub Action
+### P3 — Architektur
+- `contracts/` (software / scientific / epistemic) in genesis-os
+- CI: Diamond-Validation als GitHub Action (Template aus `diamond-setup/validation.py`)
 - 3 Tiers: Core / Scientific / Experimental
 - `unified-mandala-demo` reparieren oder aus `full-stack` entfernen
 
-### P4 — genesis-os Metadata
-- `.zenodo.json` im Repo committen (falls noch offen)
+### P4 — Metadata
+- `.zenodo.json` committen (falls noch offen)
 - `CITATION.cff` ergänzen
-- `genesis-os` optional: `diamond-setup>=2.1.0` nach Publish
-
----
-
-## Lokales PyPI-Token (für `uv publish` ohne GitHub Secret)
-
-```bash
-# Einmalig: copy .env.example → .env in genesis-os (gitignored)
-# PYPI_API_TOKEN / UV_PUBLISH_TOKEN eintragen
-
-pwsh D:\mandala\genesis-os\scripts\publish_pypi.ps1 -RepoPath D:\mandala\<paket>
-```
-
-Skript sucht Token in: Repo-`.env` → `genesis-os/.env` → `D:\mandala/.env`.
 
 ---
 
@@ -101,24 +109,26 @@ Skript sucht Token in: Repo-`.env` → `genesis-os/.env` → `D:\mandala/.env`.
 | Aufgabe | Wo starten |
 |---------|------------|
 | Ökosystem, deps, CI-Templates | Workspace `genesis-os` |
-| `DiamondPackage` vertiefen | `diamond-setup` (oder von genesis-os aus mit absoluten Pfaden) |
-| Ein UTAC-Paket migrieren | Workspace → dieses Repo, kurzer Kontext |
-| 48 Repos Batch | genesis-os + fester Migrations-Prompt |
+| Paket migrieren + publishen | Subrepo + `publish_pypi.ps1` |
+| Diamond-Protokoll | `diamond-setup` / `contracts/diamond.interface.yaml` |
+| Referenz-UTAC | `amoc-utac` v1.1.0 |
+| 48 Repos Batch | genesis-os Handoff + Migrations-Checkliste oben |
 
-**Delegations-Regel:** Agent meldet, wenn Workspace-Wechsel sinnvoller ist.
+**Delegations-Regel:** Agent meldet Workspace-Wechsel; Publish immer über lokales `.env`-Token möglich.
 
 ---
 
 ## Wichtige Pfade
 
 ```
-D:\mandala\genesis-os\          # Kommandozentrale
-D:\mandala\diamond-setup\       # Diamond Protocol (v2.1.0 lokal)
-D:\mandala\                     # 48+ geklonte Repos
-D:\mandala\genesis-os\.audit_venv\  # ~1.4 GB — NICHT committen, optional löschen
+D:\mandala\genesis-os\              # Kommandozentrale, .env (Token), publish-Skripte
+D:\mandala\diamond-setup\           # Diamond Protocol v2.1.0 (PyPI)
+D:\mandala\amoc-utac\               # Referenz-UTAC v1.1.0 (PyPI)
+D:\mandala\                         # 48+ geklonte Repos
+D:\mandala\genesis-os\.audit_venv\  # ~1.4 GB — NICHT committen
 ```
 
-## Import-Namen ≠ PyPI-Namen (Mapping)
+## Import-Namen ≠ PyPI-Namen
 
 | pip install | import |
 |-------------|--------|
@@ -129,6 +139,8 @@ D:\mandala\genesis-os\.audit_venv\  # ~1.4 GB — NICHT committen, optional lös
 | `implosive-origin-utac` | `implosive_origin` |
 | `genesis-q4-core` | `genesis_q4` |
 | `mandala-visualizer` | `mandala_visualizer` |
+| `diamond-setup` | `diamond_setup` |
+| `amoc-utac` | `amoc_utac` |
 
 ---
 
@@ -137,17 +149,20 @@ D:\mandala\genesis-os\.audit_venv\  # ~1.4 GB — NICHT committen, optional lös
 ```
 Kontext: GenesisAeon Ecosystem. Lies docs/SESSION_HANDOFF.md in genesis-os.
 
-Stand:
-- genesis-os v1.0.1 auf PyPI/GitHub/Zenodo (Texte sync)
-- Audit: AUDIT_REPORT_v1.0.1.md + docs/AuditErgebnisse.txt
-- diamond-setup v2.1.0 lokal: DiamondPackage ABC + NotConvergedError (Γ=Attraktor)
-  → noch publish auf PyPI
+Stand (2026-07-01):
+- diamond-setup 2.1.0 auf PyPI (DiamondPackage ABC)
+- amoc-utac 1.1.0 auf PyPI — Referenz-Migration (erste UTAC)
+- genesis-os: main v1.0.2 lokal, PyPI noch 1.0.1; diamond-setup>=2.1.0
+- Lokales Publish: genesis-os/.env (Token gesetzt) + scripts/publish_pypi.ps1
 
 Nächster Fokus: [WÄHLEN]
-A) diamond-setup 2.1.0 publish + genesis-os pin bump
-B) UTAC-Paket-Migration auf DiamondPackage (start: amoc-utac)
+A) genesis-os 1.0.2 PyPI + release.yml fix
+B) UTAC-Batch: beta-clustering-utac (Vendoring auflösen)
 C) genesis-os Test-Fixes (AgentMemory FIFO, mandala plugin mock)
 D) contracts/ + CI Diamond-Validation
+
+Publish-Befehl:
+  pwsh D:\mandala\genesis-os\scripts\publish_pypi.ps1 -RepoPath D:\mandala\<repo>
 
 Arbeitsordner: D:\mandala\ — Workspace genesis-os, Subrepos per Pfad.
 ```
