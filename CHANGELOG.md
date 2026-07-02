@@ -10,6 +10,15 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.6] — 2026-07-02
+
+### Fixed
+- Full-stack dependency pin: `cosmic-web>=1.0.1` — prevents `genesis_os` namespace
+  collision that broke `from genesis_os import GenesisOS` after
+  `pip install "genesis-os[full-stack]"` (fixed upstream in cosmic-web 1.0.1).
+
+---
+
 ## [1.0.5] — 2026-07-01
 
 ### Fixed

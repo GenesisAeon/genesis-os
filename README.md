@@ -23,7 +23,7 @@
 
 ## Overview
 
-**genesis-os** v1.0.5 is a unified Python framework implementing the GenesisAeon
+**genesis-os** v1.0.6 is a unified Python framework implementing the GenesisAeon
 architecture: a self-reflecting, entropy-governed, phase-transitioning system
 described by the **Unified Lagrangian** formalism. It integrates CREP
 (Coherence-Resonance-Emergence-Poetics) evaluation, a UTAC-Logistic entropy ODE,
@@ -32,8 +32,9 @@ live **cosmic-web emergence simulation** via `CosmicWebSimulator`, a real-time
 
 v1.0.0 was the **ecosystem milestone release**: all 40 domain packages (P17–P40)
 reach production-stable status, spanning the full CREP criticality spectrum from
-astrophysics (Γ ≈ 0.014) to network science (Γ ≈ 0.443). **v1.0.5** fixes
-Zenodo version sync (`parse_release_tag`, `sync_zenodo_version.py`); **v1.0.4** adds
+astrophysics (Γ ≈ 0.014) to network science (Γ ≈ 0.443). **v1.0.6** pins
+`cosmic-web>=1.0.1` (full-stack `GenesisOS` import fix); **v1.0.5** fixes Zenodo
+version sync (`parse_release_tag`, `sync_zenodo_version.py`); **v1.0.4** adds
 Diamond contract CI; **v1.0.3** fixes `AgentMemory` FIFO eviction and Mandala plugin
 test isolation; **v1.0.2** pins
 `diamond-setup>=2.1.0`; **v1.0.1** synchronised
@@ -439,7 +440,7 @@ If you use **genesis-os** in academic work, please cite:
   title        = {{genesis-os}: GenesisAeon Unified Framework — Python Implementation},
   year         = {2026},
   publisher    = {Zenodo},
-  version      = {v1.0.5},
+  version      = {v1.0.6},
   doi          = {10.5281/zenodo.19645351},
   url          = {https://doi.org/10.5281/zenodo.19645351}
 }

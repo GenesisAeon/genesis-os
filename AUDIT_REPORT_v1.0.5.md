@@ -1,6 +1,22 @@
 # GenesisAeon Ecosystem Audit Report
 ## genesis-os v1.0.5 + 48 Subpakete
-## Datum: 2026-07-01
+## Datum: 2026-07-01 · **Nachtrag: 2026-07-02 (v1.0.6)**
+
+---
+
+### NACHTRAG 2026-07-02 — P0 behoben (genesis-os 1.0.6 + cosmic-web 1.0.1)
+
+| Fix | Detail |
+|-----|--------|
+| **cosmic-web 1.0.1** | `genesis_os/`-Namespace aus Wheel entfernt; `CosmicWebSimulator` → `cosmic_web.universums_sim` |
+| **genesis-os 1.0.6** | `[full-stack]` pinnt `cosmic-web>=1.0.1` auf PyPI |
+| **Verifikation** | Frische venv: `pip install "genesis-os[full-stack]==1.0.6"` → `GenesisOS` importierbar ✅ |
+
+**Audit-Status P0 #1 (cosmic-web Namespace):** ✅ **BEHOBEN** — siehe kritische Issues unten (aktualisiert).
+
+Verbleibende kritische Punkte: amazon-utac Array-Bug, Import-Aliase, Γ-Divergenzen, genesis-scope P39.
+
+---
 
 ### EXECUTIVE SUMMARY
 
@@ -23,7 +39,7 @@ Seit dem Audit vom **2026-06-30** (v1.0.1) hat sich das Ökosystem **deutlich ve
 | Zenodo-Versionen | `0.2.0`-Bug | **`parse_release_tag` + sync** | ✅ Behoben (Tooling) |
 | `CITATION.cff` | Fehlte | **Vorhanden, cffconvert OK** | ✅ Behoben |
 | `release.yml` | 0 Jobs (`v*.*.*`) | **`v*` + workflow_dispatch** | ✅ Behoben |
-| Full-Stack `GenesisOS`-Import | Nicht geprüft / OK bei 14 Paketen | **`cosmic-web` kapert `genesis_os`** | ❌ **Regression** |
+| Full-Stack `GenesisOS`-Import | Nicht geprüft / OK bei 14 Paketen | ~~`cosmic-web` kapert `genesis_os`~~ → **1.0.6+1.0.1 fix** | ✅ **Behoben (2026-07-02)** |
 | Diamond-Schema-Quote | ~30 % vollständig | ~40 % + 3 migrierte UTACs 1.1.0 | ⚠️ Teilweise |
 | Γ-Atlas-Konsistenz | 4 starke Divergenzen | **Weiterhin 4+ Divergenzen** | ❌ Unverändert |
 | `.zenodo.json` communities | Fehlte | **Fehlt weiterhin** | ❌ Offen |
@@ -35,11 +51,11 @@ Seit dem Audit vom **2026-06-30** (v1.0.1) hat sich das Ökosystem **deutlich ve
 
 | # | Package | Issue | Impact |
 |---|---------|-------|--------|
-| 1 | **cosmic-web** | Wheel enthält `genesis_os/__init__.py` + `genesis_os/universums_sim.py` und **überschreibt** genesis-os beim Full-Stack-Install. | `from genesis_os import GenesisOS` → **ImportError**; README-Quickstart bricht nach `pip install "genesis-os[full-stack]"`. |
-| 2 | **amazon-utac** | `run_cycle()`-Reproduktion: `ValueError: truth value of an array is ambiguous`. | Diamond-Automation scheitert; instabile Runtime bei Array-Vergleich. |
-| 3 | **Import-Namensraum** | Distribution ≠ Import: `beta-clustering-utac` → `beta_clustering`; `phi-scaling-validator` → `phi_scaling`; `implosive-origin-utac` → `implosive_origin`; `genesis-q4-core` → `genesis_q4`; `genesisaeon-hexaagent` → `hexa_agent`; `feldtheorie` → `analysis`/`models`. | Audit-Skripte, Plugin-Registry und CI müssen Mapping kennen — blindes `import <pip-name>` scheitert. |
-| 4 | **Γ-Werte (CREP-Atlas)** | Nach `run_cycle()`: `theta-resonance` Γ=**0.106** (erw. 0.251); `phaethon-chimera` Γ=**0.296** (erw. 0.165); `hikari-ledger` Γ≈**0.0** (erw. 0.367); `diffusive-routing` Γ≈**3e-5** (erw. 0.443). | Wissenschaftliche Konsistenz mit dokumentiertem Atlas nicht nachweisbar. |
-| 5 | **genesis-scope (P39)** | `get_utac_state()` ohne `H/H_star/K_eff`; `to_zenodo_record()` ohne Pflichtfelder; `Gamma=None` vor `run_cycle()`. | Strategisches Modul nicht Diamond-konform; Agent/MCP-Integration blockiert. |
+| ~~1~~ | ~~**cosmic-web**~~ | ~~Namespace-Kollision~~ | ✅ **Behoben** in cosmic-web **1.0.1** + genesis-os **1.0.6** (`cosmic-web>=1.0.1`). |
+| 1 | **amazon-utac** | `run_cycle()`-Reproduktion: `ValueError: truth value of an array is ambiguous`. | Diamond-Automation scheitert; instabile Runtime bei Array-Vergleich. |
+| 2 | **Import-Namensraum** | Distribution ≠ Import: `beta-clustering-utac` → `beta_clustering`; `phi-scaling-validator` → `phi_scaling`; `implosive-origin-utac` → `implosive_origin`; `genesis-q4-core` → `genesis_q4`; `genesisaeon-hexaagent` → `hexa_agent`; `feldtheorie` → `analysis`/`models`. | Audit-Skripte, Plugin-Registry und CI müssen Mapping kennen — blindes `import <pip-name>` scheitert. |
+| 3 | **Γ-Werte (CREP-Atlas)** | Nach `run_cycle()`: `theta-resonance` Γ=**0.106** (erw. 0.251); `phaethon-chimera` Γ=**0.296** (erw. 0.165); `hikari-ledger` Γ≈**0.0** (erw. 0.367); `diffusive-routing` Γ≈**3e-5** (erw. 0.443). | Wissenschaftliche Konsistenz mit dokumentiertem Atlas nicht nachweisbar. |
+| 4 | **genesis-scope (P39)** | `get_utac_state()` ohne `H/H_star/K_eff`; `to_zenodo_record()` ohne Pflichtfelder; `Gamma=None` vor `run_cycle()`. | Strategisches Modul nicht Diamond-konform; Agent/MCP-Integration blockiert. |
 
 ---
 
@@ -125,7 +141,7 @@ Legende: ✅ = Methode OK & Schema vollständig | ⚠️ = vorhanden, Schema lü
 | Paket / Gruppe | Install | Import | Diamond | Anmerkung |
 |----------------|---------|--------|---------|-----------|
 | genesis-os (PyPI core) | ✅ **1.0.5** | ✅ | n/a | `pip check` clean |
-| genesis-os[full-stack] (PyPI) | ✅ **48 Deps** | ⚠️ **47/48**‡ | gemischt | **`GenesisOS`-Import kaputt** (cosmic-web) |
+| genesis-os[full-stack] (PyPI) | ✅ **48 Deps** | ✅ **47/48**‡ | gemischt | **`GenesisOS`-Import OK** ab 1.0.6 + cosmic-web 1.0.1 |
 | pip check (full-stack venv) | ✅ | — | — | Keine Konflikte |
 | unified-mandala-demo | ✅ 1.0.1 | ✅ | n/a | Shim funktioniert |
 | mandala-visualizer | ✅ | ✅ | n/a | Korrekter PyPI-Name |
@@ -161,7 +177,7 @@ Legende: ✅ = Methode OK & Schema vollständig | ⚠️ = vorhanden, Schema lü
 |-----------|----------|
 | Installation `pip install genesis-os`? | ✅ |
 | Quickstart (editable, GenesisConfig)? | ⚠️ Läuft bis Phase/Entropy; **`phi_h` → `phi`** |
-| Quickstart (full-stack PyPI)? | ❌ **`GenesisOS` nicht importierbar** |
+| Quickstart (full-stack PyPI)? | ✅ **`GenesisOS` importierbar** (ab 1.0.6) |
 | DOI / Zenodo | ✅ `10.5281/zenodo.19645351` |
 | Citation | ✅ BibTeX + **CITATION.cff** |
 
@@ -219,7 +235,7 @@ Legende: ✅ = Methode OK & Schema vollständig | ⚠️ = vorhanden, Schema lü
 
 ### OFFENE PUNKTE FÜR v1.1.0
 
-1. **`cosmic-web`**: `genesis_os`-Namespace aus Wheel entfernen oder in Subpackage `cosmic_web` verschieben — **P0**.
+1. ~~**`cosmic-web` Namespace**~~ — ✅ erledigt (1.0.1 + genesis-os 1.0.6).
 2. **Full-Stack Smoke-Test**: CI-Job `pip install genesis-os[full-stack] && python -c "from genesis_os import GenesisOS"`.
 3. **UTAC-Batch**: Verbleibende Pakete auf `DiamondPackage` migrieren; Floor-Pins `>=1.1.0` für migrierte UTACs.
 4. **`DIST_TO_IMPORT.json`**: Zentrales Mapping Distribution → Import-Modul.
