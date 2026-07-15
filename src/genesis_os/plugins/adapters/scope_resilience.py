@@ -16,7 +16,7 @@ except ImportError:
     _ScopeResilience = None  # type: ignore[assignment,misc]
 
 
-def plugin_fn(state: "GenesisState") -> dict[str, Any]:
+def plugin_fn(state: GenesisState) -> dict[str, Any]:
     """Assess hallucination resilience Ρ_sem for the active semantic context."""
     if not _AVAILABLE:
         return {"scope_resilience_available": False}

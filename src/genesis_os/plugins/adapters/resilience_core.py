@@ -16,7 +16,7 @@ except ImportError:
     _ResilienceCore = None  # type: ignore[assignment,misc]
 
 
-def plugin_fn(state: "GenesisState") -> dict[str, Any]:
+def plugin_fn(state: GenesisState) -> dict[str, Any]:
     """Compute system resilience Ρ from the current CREP Γ value."""
     if not _AVAILABLE or state.crep is None:
         return {"resilience_core_available": _AVAILABLE}

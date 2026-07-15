@@ -111,10 +111,10 @@ jax = [
 ]
 diamond-contract = [
     "diamond-setup>=2.1.0",
-    "amoc-utac>=1.1.0",
-    "beta-clustering-utac>=1.1.0",
-    "implosive-origin-utac>=1.1.0",
-    "phi-scaling-validator>=1.1.0",
+    "amoc-utac>=1.0.0",
+    "beta-clustering-utac>=1.0.0",
+    "implosive-origin-utac>=1.0.0",
+    "phi-scaling-validator>=1.0.0",
 ]
 dev = [
     "pytest>=7.4.0",
