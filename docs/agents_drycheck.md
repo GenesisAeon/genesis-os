@@ -5,4 +5,4 @@
 - SyncRunner simulated
 - PactDepthGatekeeper simulated
 - DepthBundleExporter simulated
-
+Dry run completed for 6 agents
