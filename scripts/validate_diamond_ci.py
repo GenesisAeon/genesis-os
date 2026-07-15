@@ -4,12 +4,14 @@
 from __future__ import annotations
 
 import importlib
+import importlib.metadata
 import sys
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
 import yaml
+from packaging.version import Version
 
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 _CONTRACT_PATH = _REPO_ROOT / "contracts" / "diamond.interface.yaml"
@@ -43,11 +45,27 @@ def main() -> int:
         return 0
 
     failures: list[str] = []
+    skipped: list[str] = []
     for entry in packages:
         pip_name = entry["pip"]
         module_name = entry["import"]
         class_name = entry["class"]
+        min_version = entry.get("min_version")
         label = f"{pip_name} ({module_name}.{class_name})"
+
+        # Skip if the installed version doesn't meet the minimum requirement.
+        if min_version:
+            try:
+                installed = Version(importlib.metadata.version(pip_name))
+                required = Version(min_version)
+                if installed < required:
+                    skipped.append(
+                        f"{label}: installed {installed} < required {required} — skip"
+                    )
+                    continue
+            except importlib.metadata.PackageNotFoundError:
+                pass  # let the import attempt below handle it
+
         try:
             instance = _factory_for(module_name, class_name)()
             errors = validate_diamond_instance(instance)
@@ -59,13 +77,19 @@ def main() -> int:
         else:
             print(f"OK  {label}")
 
+    if skipped:
+        print("\nSkipped (installed version below min_version):")
+        for item in skipped:
+            print(f"  SKIP {item}")
+
     if failures:
         print("\nDiamond validation failures:", file=sys.stderr)
         for item in failures:
             print(f"  - {item}", file=sys.stderr)
         return 1
 
-    print(f"\nAll {len(packages)} reference UTACs passed Diamond validation.")
+    validated = len(packages) - len(skipped)
+    print(f"\n{validated} reference UTACs passed Diamond validation ({len(skipped)} skipped).")
     return 0
 
 

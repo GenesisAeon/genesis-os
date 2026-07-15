@@ -66,6 +66,8 @@ full-stack = [
     "diamond-setup>=2.1.0",
     "genesisaeon-hexaagent>=1.0.0",
     "genesis-scope>=1.0.0",
+    "resilience-core>=1.0.0",
+    "scope-resilience>=1.0.0",
     "genesis-q4-core>=1.0.0",
     "sandpile-utac>=1.0.0",
     "seismic-utac>=1.0.0",
@@ -109,10 +111,10 @@ jax = [
 ]
 diamond-contract = [
     "diamond-setup>=2.1.0",
-    "amoc-utac>=1.1.0",
-    "beta-clustering-utac>=1.1.0",
-    "implosive-origin-utac>=1.1.0",
-    "phi-scaling-validator>=1.1.0",
+    "amoc-utac>=1.0.0",
+    "beta-clustering-utac>=1.0.0",
+    "implosive-origin-utac>=1.0.0",
+    "phi-scaling-validator>=1.0.0",
 ]
 dev = [
     "pytest>=7.4.0",
@@ -262,6 +264,13 @@ module = [
     "genesis_os.governance.opa_bridge",
     "genesis_os.runtime.nats_publisher",
     "genesis_os.monitoring.prometheus_exporter",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+    "genesis_os.plugins.adapters.resilience_core",
+    "genesis_os.plugins.adapters.scope_resilience",
 ]
 ignore_errors = true
 

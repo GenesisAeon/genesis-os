@@ -75,4 +75,4 @@ jobs:
       - name: Validate contract spec + reference UTACs
         run: |
           python scripts/validate_diamond_ci.py
-          pytest tests/contract/test_diamond_utac_batch.py -m contract -q
+          pytest tests/contract/test_diamond_utac_batch.py -m contract -q --no-cov
