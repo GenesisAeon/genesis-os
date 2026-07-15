@@ -70,9 +70,12 @@ class ScopeResilience:
         crep_comps = self._crep.compute(sigillin_ids, q4_transitions, self.domain)
         gamma_sem = self._crep.gamma_sem(crep_comps)
         d_gamma = self._monitor.update(gamma_sem)
+        from scope_resilience.semantic_crep import get_domain_r
+
         rho_sem = self._risk.compute_rho(
             gamma_sem,
             domain_profile=self._domain_profile,
+            r_sem=get_domain_r(self.domain) if self._domain_profile is None else None,
             d_gamma_dt=d_gamma,
         )
         risk_level, _ = self._risk.classify_risk(rho_sem)

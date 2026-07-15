@@ -269,6 +269,13 @@ ignore_errors = true
 
 [[tool.mypy.overrides]]
 module = [
+    "genesis_os.plugins.adapters.resilience_core",
+    "genesis_os.plugins.adapters.scope_resilience",
+]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
     "genesis_q4_core",
     "medium_modulation",
     "universums_sim",

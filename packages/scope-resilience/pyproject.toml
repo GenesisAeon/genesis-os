@@ -47,9 +47,6 @@ dev = [
     "ruff>=0.1.0",
 ]
 
-[project.scripts]
-scope-resilience = "scope_resilience.cli:app"
-
 [project.urls]
 Homepage = "https://github.com/GenesisAeon/scope-resilience"
 Repository = "https://github.com/GenesisAeon/scope-resilience"

@@ -20,11 +20,11 @@ from scope_resilience.domain_profile import DomainProfile
 
 
 _RISK_LEVELS: list[tuple[float, float, str, str]] = [
-    (0.70, 1.01, "safe",      "Path is semantically stable. Proceed."),
-    (0.40, 0.70, "moderate",  "Moderate drift risk. Inject grounding anchors."),
-    (0.10, 0.40, "high_risk", "High hallucination risk. Consider alternative path."),
-    (0.00, 0.10, "critical",  "Critical: near semantic phase boundary. "
-                               "Do not initialize on this path."),
+    (0.70, float("inf"), "safe",      "Path is semantically stable. Proceed."),
+    (0.40, 0.70,         "moderate",  "Moderate drift risk. Inject grounding anchors."),
+    (0.10, 0.40,         "high_risk", "High hallucination risk. Consider alternative path."),
+    (0.00, 0.10,         "critical",  "Critical: near semantic phase boundary. "
+                                       "Do not initialize on this path."),
 ]
 
 
@@ -60,4 +60,4 @@ class HallucinationRisk:
         for low, high, level, msg in _RISK_LEVELS:
             if low <= rho_sem < high:
                 return level, msg
-        return "critical", "Ρ_sem out of expected range."
+        return "critical", "Ρ_sem below minimum expected range."

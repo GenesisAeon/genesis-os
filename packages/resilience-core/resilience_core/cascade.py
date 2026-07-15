@@ -35,7 +35,7 @@ def detect_cascade(
 
     near_gamma_limit = gamma > gamma_max * 0.95  # noqa: PLR2004
     overloaded = load > c_critical * 0.5  # noqa: PLR2004
-    cascade_risk = near_gamma_limit and overloaded
+    cascade_risk = near_gamma_limit and overloaded and n_destabilising > 0
 
     return {
         "cascade_risk": cascade_risk,

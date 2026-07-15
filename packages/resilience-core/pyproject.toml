@@ -43,9 +43,6 @@ dev = [
     "ruff>=0.1.0",
 ]
 
-[project.scripts]
-resilience-core = "resilience_core.cli:app"
-
 [project.urls]
 Homepage = "https://github.com/GenesisAeon/resilience-core"
 Repository = "https://github.com/GenesisAeon/resilience-core"
