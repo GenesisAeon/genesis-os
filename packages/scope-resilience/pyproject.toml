@@ -1,0 +1,62 @@
+[build-system]
+requires = ["hatchling>=1.21.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "scope-resilience"
+version = "1.0.0"
+description = "Hallucination resilience mapping for LLM semantic paths — GenesisAeon Package 41"
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+authors = [
+    { name = "GenesisAeon", email = "genesis@aeon.dev" },
+    { name = "Johann Römer", email = "j.roemer@mor-research.org" },
+]
+keywords = [
+    "genesis",
+    "hallucination",
+    "resilience",
+    "CREP",
+    "semantic-paths",
+    "LLM",
+    "UTAC",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24.0",
+    "resilience-core>=1.0.0",
+]
+
+[project.optional-dependencies]
+mcp = [
+    "fastmcp>=0.1.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+scope-resilience = "scope_resilience.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/GenesisAeon/scope-resilience"
+Repository = "https://github.com/GenesisAeon/scope-resilience"
+
+[tool.hatch.build.targets.wheel]
+packages = ["scope_resilience"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=scope_resilience --cov-report=term-missing"

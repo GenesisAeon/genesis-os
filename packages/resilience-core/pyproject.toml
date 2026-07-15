@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling>=1.21.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "resilience-core"
+version = "1.0.0"
+description = "UTAC-derived system resilience (Ρ) for GenesisAeon — Package 40"
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+authors = [
+    { name = "GenesisAeon", email = "genesis@aeon.dev" },
+    { name = "Johann Römer", email = "j.roemer@mor-research.org" },
+]
+keywords = [
+    "genesis",
+    "resilience",
+    "UTAC",
+    "CREP",
+    "tipping-points",
+    "system-dynamics",
+    "phase-transition",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+resilience-core = "resilience_core.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/GenesisAeon/resilience-core"
+Repository = "https://github.com/GenesisAeon/resilience-core"
+
+[tool.hatch.build.targets.wheel]
+packages = ["resilience_core"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=resilience_core --cov-report=term-missing"

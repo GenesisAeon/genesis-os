@@ -39,6 +39,9 @@ _KNOWN_ADAPTERS: dict[str, str] = {
     "entropy_table":      "genesis_os.plugins.adapters.entropy_table",
     "climate_dashboard":  "genesis_os.plugins.adapters.climate_dashboard",
     "implosive_genesis":  "genesis_os.plugins.adapters.implosive_genesis",
+    # ── Resilience & Semantic AI (P40/P41) ───────────────────────────────────
+    "resilience_core":    "genesis_os.plugins.adapters.resilience_core",
+    "scope_resilience":   "genesis_os.plugins.adapters.scope_resilience",
 }
 
 
