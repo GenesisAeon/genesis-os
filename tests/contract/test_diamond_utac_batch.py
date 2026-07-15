@@ -3,28 +3,31 @@
 from __future__ import annotations
 
 import importlib
+import importlib.metadata
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
 import pytest
 import yaml
+from packaging.version import Version
 
 pytestmark = pytest.mark.contract
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
 _CONTRACT_PATH = _REPO_ROOT / "contracts" / "diamond.interface.yaml"
 
-_REFERENCE_UTACS: list[tuple[str, str, str, Callable[[], Any]]] = [
-    ("amoc_utac", "AmocUTAC", "amoc-utac", lambda m: m.AmocUTAC(seed=42)),
-    ("beta_clustering", "BetaClusteringUTAC", "beta-clustering-utac", lambda m: m.BetaClusteringUTAC()),
+_REFERENCE_UTACS: list[tuple[str, str, str, str, Callable[[], Any]]] = [
+    ("amoc_utac", "AmocUTAC", "amoc-utac", "1.1.0", lambda m: m.AmocUTAC(seed=42)),
+    ("beta_clustering", "BetaClusteringUTAC", "beta-clustering-utac", "1.1.0", lambda m: m.BetaClusteringUTAC()),
     (
         "implosive_origin",
         "ImplosiveOriginUTAC",
         "implosive-origin-utac",
+        "1.1.0",
         lambda m: m.ImplosiveOriginUTAC(),
     ),
-    ("phi_scaling", "PhiScalingValidator", "phi-scaling-validator", lambda m: m.PhiScalingValidator()),
+    ("phi_scaling", "PhiScalingValidator", "phi-scaling-validator", "1.1.0", lambda m: m.PhiScalingValidator()),
 ]
 
 
@@ -64,22 +67,33 @@ def test_diamond_contract_utac_keys(contract_spec: dict[str, Any]) -> None:
 def test_diamond_contract_ci_packages_match_batch(contract_spec: dict[str, Any]) -> None:
     ci = contract_spec.get("ci_reference_packages", [])
     ci_classes = {(e["import"], e["class"]) for e in ci}
-    batch_classes = {(mod, cls) for mod, cls, _, _ in _REFERENCE_UTACS}
+    batch_classes = {(mod, cls) for mod, cls, _, _, _ in _REFERENCE_UTACS}
     assert batch_classes <= ci_classes
 
 
 @pytest.mark.parametrize(
-    ("module_name", "class_name", "pip_name"),
-    [(mod, cls, pip) for mod, cls, pip, _ in _REFERENCE_UTACS],
+    ("module_name", "class_name", "pip_name", "min_version"),
+    [(mod, cls, pip, min_ver) for mod, cls, pip, min_ver, _ in _REFERENCE_UTACS],
 )
 def test_reference_utac_validate_diamond_instance(
     module_name: str,
     class_name: str,
     pip_name: str,
+    min_version: str,
 ) -> None:
     pytest.importorskip("diamond_setup")
     mod = pytest.importorskip(module_name)
-    factory = next(f for m, c, _, f in _REFERENCE_UTACS if m == module_name and c == class_name)
+
+    # Skip when the installed version is below the contract minimum — the package
+    # may exist on PyPI but lack the DiamondPackage base class added in min_version.
+    try:
+        installed = Version(importlib.metadata.version(pip_name))
+        if installed < Version(min_version):
+            pytest.skip(f"{pip_name} {installed} < required {min_version}")
+    except importlib.metadata.PackageNotFoundError:
+        pass
+
+    factory = next(f for m, c, _, _, f in _REFERENCE_UTACS if m == module_name and c == class_name)
     from diamond_setup.validation import validate_diamond_instance
 
     instance = factory(mod)
