@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "genesis-os"
-version = "1.0.6"
+version = "1.0.7"
 description = "Self-reflecting OS framework with live cosmic-web emergence simulation, Dash GUI, real-time phase transitions, and resonance coupling for GenesisAeon"
 readme = "README.md"
 license = { text = "GPL-3.0-or-later" }
@@ -79,14 +79,11 @@ full-stack = [
     "eml-utac-bridge>=1.0.0",
     "beta-clustering-utac>=1.0.0",
     "afet-tensions>=1.0.0",
-    "universums-sim>=1.0.0",
     "cosmic-moment>=1.0.0",
     "quantum-genesis>=1.0.0",
     "vrig-cosmological>=1.0.0",
     "cellular-genesis>=1.0.0",
     "sa-sv-duality>=1.0.0",
-    "worldview>=1.0.0",
-    "gemeinwohl>=1.0.0",
     "spiking-aeon>=1.0.0",
     "phaethon-chimera>=1.0.0",
     "theta-resonance>=1.0.0",

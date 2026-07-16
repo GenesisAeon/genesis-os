@@ -10,6 +10,28 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.7] — 2026-07-16
+
+### Fixed
+- `scope-resilience>=1.0.0` (P41, `full` extra) now actually resolves —
+  the package didn't exist on PyPI until this same day, so
+  `pip install "genesis-os[full]"` was previously uninstallable. No pin
+  change needed, just a real target to install now.
+
+### Removed
+- Pruned `gemeinwohl`, `worldview`, `universums-sim` from the `full`
+  extra. All three declare `genesis-os` as their own dependency, so
+  `genesis-os[full]` was pulling itself back in transitively
+  (`genesis-os` ↔ `gemeinwohl`/`worldview`/`universums-sim`). Not a
+  build-time cycle, but an architecture smell worth removing. Their
+  `genesis_os.plugins.adapters.*` modules already guard the import with
+  `try/except ImportError` and degrade to `{"<pkg>_available": False}`,
+  so this is a non-breaking change for anyone not already relying on
+  `full` to auto-install these three — install them alongside
+  `genesis-os` explicitly if you want those adapters active.
+
+---
+
 ## [1.0.6] — 2026-07-02
 
 ### Fixed
