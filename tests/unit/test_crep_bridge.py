@@ -18,14 +18,14 @@ class TestCREPBridgeSchema:
 
     def test_crep_score_schema_valid_json(self) -> None:
         schema_path = Path(__file__).parents[2] / "schemas" / "crep_score.schema.json"
-        with open(schema_path) as f:
+        with open(schema_path, encoding="utf-8") as f:
             schema = json.load(f)
         required = {"C", "R", "E", "P", "gamma", "formula"}
         assert required.issubset(set(schema.get("required", [])))
 
     def test_crep_score_schema_fields(self) -> None:
         schema_path = Path(__file__).parents[2] / "schemas" / "crep_score.schema.json"
-        with open(schema_path) as f:
+        with open(schema_path, encoding="utf-8") as f:
             schema = json.load(f)
         props = schema.get("properties", {})
         for field in ("C", "R", "E", "P", "gamma", "formula"):

@@ -82,7 +82,7 @@ class TestSigillinSync:
             base = Path(tmpdir)
             content = {"beta": 7.4, "description": "Test."}
             written = self.sync.generate_trilayer(content, base, "bio_params")
-            with open(written["json"]) as f:
+            with open(written["json"], encoding="utf-8") as f:
                 data = json.load(f)
             assert data["beta"] == pytest.approx(7.4)
 
@@ -91,7 +91,7 @@ class TestSigillinSync:
             base = Path(tmpdir)
             content = {"beta": 11.0, "description": "Climate β parameter."}
             written = self.sync.generate_trilayer(content, base, "climate_params")
-            md = Path(written["md"]).read_text()
+            md = Path(written["md"]).read_text(encoding="utf-8")
             assert "Climate Params" in md
             assert "Climate β parameter." in md
 

@@ -117,18 +117,18 @@ class SigillinSync:
         # YAML
         yaml_path = base / f"{concept_name}.yaml"
         if _YAML_AVAILABLE:
-            with open(yaml_path, "w") as f:
+            with open(yaml_path, "w", encoding="utf-8") as f:
                 yaml.dump(content, f, default_flow_style=False, allow_unicode=True)
         else:
             # Fallback: write as simple key: value text
-            with open(yaml_path, "w") as f:
+            with open(yaml_path, "w", encoding="utf-8") as f:
                 for k, v in content.items():
                     f.write(f"{k}: {v!r}\n")
         written["yaml"] = yaml_path
 
         # JSON
         json_path = base / f"{concept_name}.json"
-        with open(json_path, "w") as f:
+        with open(json_path, "w", encoding="utf-8") as f:
             json.dump(content, f, indent=2, ensure_ascii=False, default=str)
         written["json"] = json_path
 
@@ -148,7 +148,7 @@ class SigillinSync:
             if k != "description":
                 md_lines.append(f"- **{k}**: `{v}`")
         md_lines.append("")
-        with open(md_path, "w") as f:
+        with open(md_path, "w", encoding="utf-8") as f:
             f.write("\n".join(md_lines))
         written["md"] = md_path
 
