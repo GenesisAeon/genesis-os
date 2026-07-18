@@ -10,20 +10,34 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
-## [1.0.8] — 2026-07-18
+## [1.0.9] — 2026-07-18
 
 ### Fixed
+- **`release.yml`: invalid `env.IS_CANARY` reference in job-level `if:`
+  conditions (real bug, found while verifying a secret fix).** The
+  `env` context is not available in a job's own `if:` — only within its
+  steps — so every job gated by `if: ${{ env.IS_CANARY == '...' }}`
+  (`publish-pypi`, `publish-testpypi`, `publish-zenodo`,
+  `publish-zenodo-sandbox`) failed GitHub's workflow-validation step
+  with `Unrecognized named-value: 'env'`, which invalidates the *entire*
+  run before any job (including `build`/`test`) is scheduled. This means
+  **no job in this workflow had ever actually executed in CI**, for any
+  tag, ever — not just the publish step. Replaced all four with the
+  direct `contains(github.ref_name, '-rc') || ...` expression (the
+  pattern already used correctly by sibling packages, e.g. `amoc-utac`).
+  Rescanned all 51 packages' `release.yml` for the same `if:.*env\.`
+  pattern via the (unauthenticated) GitHub API — unique to `genesis-os`.
 - CI release pipeline: the `PYPI_API_TOKEN` GitHub Actions secret was
-  missing from the `production` **Environment** (not the same store as a
-  repo-level Actions secret — see `release.yml`'s own header comment,
-  which already documented that these should be Environment secrets).
-  This caused the automated `Publish to PyPI` step to fail with 403 on
-  every tagged release since `v1.0.0`; releases were always shipped
-  manually via `twine` instead as a workaround. Added the secret to the
-  `production` environment; `release.yml` itself needed no code change,
-  the `secrets.PYPI_API_TOKEN` reference was already correct.
-- This tag is a live, real-tag verification of that fix — version bump
-  and this changelog entry only, no functional/API change.
+  also missing from the `production` **Environment** (not the same
+  store as a repo-level Actions secret — see this file's own header
+  comment, which already documented that these should be Environment
+  secrets). Both problems needed fixing for the pipeline to actually
+  work: the secret alone would not have been enough, since the
+  `if:` bug above blocked every job from starting regardless.
+- This tag (`v1.0.9`) is the live, real-tag verification of both fixes,
+  superseding `v1.0.8` (tagged a few minutes earlier, before the
+  `release.yml` bug above was found — that tag's CI run failed exactly
+  the same way, `0` jobs scheduled, and is superseded by this one).
 
 ---
 

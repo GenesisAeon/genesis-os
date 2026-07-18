@@ -135,7 +135,7 @@ jobs:
   publish-pypi:
     name: Publish to PyPI (production)
     needs: [build, test]
-    if: ${{ env.IS_CANARY == 'false' }}
+    if: ${{ !contains(github.ref_name, '-rc') && !contains(github.ref_name, '-alpha') && !contains(github.ref_name, '-beta') }}
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -156,7 +156,7 @@ jobs:
   publish-testpypi:
     name: Publish to Test PyPI (canary)
     needs: [build, test]
-    if: ${{ env.IS_CANARY == 'true' }}
+    if: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') }}
     runs-on: ubuntu-latest
     environment: canary
     steps:
@@ -204,7 +204,7 @@ jobs:
   publish-zenodo:
     name: Publish to Zenodo (production)
     needs: github-release
-    if: ${{ env.IS_CANARY == 'false' }}
+    if: ${{ !contains(github.ref_name, '-rc') && !contains(github.ref_name, '-alpha') && !contains(github.ref_name, '-beta') }}
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -254,7 +254,7 @@ jobs:
   publish-zenodo-sandbox:
     name: Publish to Zenodo (sandbox / canary)
     needs: github-release
-    if: ${{ env.IS_CANARY == 'true' }}
+    if: ${{ contains(github.ref_name, '-rc') || contains(github.ref_name, '-alpha') || contains(github.ref_name, '-beta') }}
     runs-on: ubuntu-latest
     environment: canary
     steps:
