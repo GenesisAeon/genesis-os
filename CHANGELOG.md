@@ -10,6 +10,34 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.10] — 2026-07-18
+
+### Fixed
+- **`release.yml`: removed the workflow-level `id-token: write` permission
+  (real bug, found by actually running v1.0.9's tag and reading the CI
+  failure instead of assuming the fix was complete).** With that
+  permission granted, `pypa/gh-action-pypi-publish` prefers OIDC Trusted
+  Publishing over the supplied `password:` whenever an OIDC token is
+  available — regardless of whether a valid token/secret is *also*
+  passed. This repo's GitHub Environments (`production`/`canary`) were
+  never registered as PyPI Trusted Publishers, so once v1.0.9 fixed
+  build/test actually running, the publish step failed instead with
+  PyPI's `invalid-publisher: valid token, but no corresponding
+  publisher`. Removed the permission (not needed — this package
+  publishes via the `PYPI_API_TOKEN`/`TEST_PYPI_API_TOKEN` Environment
+  secrets, not OIDC) so the action falls back to password-based auth.
+  Alternative not taken here: registering genesis-os as a PyPI Trusted
+  Publisher instead (matches the ~37 other GenesisAeon packages that use
+  OIDC) — would remove the need for the token/secret entirely, but
+  requires manual pypi.org account configuration; noted in
+  `mandala/HANDOVER.md` as a possible follow-up, not required for this
+  fix.
+- This tag (`v1.0.10`) is the live, real-tag verification — third in
+  this chain (supersedes `v1.0.8` and `v1.0.9`, each of which fixed one
+  real bug this diagnosis surfaced but didn't yet complete the chain).
+
+---
+
 ## [1.0.9] — 2026-07-18
 
 ### Fixed

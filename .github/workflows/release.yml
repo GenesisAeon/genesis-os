@@ -63,7 +63,15 @@ on:
 
 permissions:
   contents: write
-  id-token: write
+  # No id-token: write here on purpose. pypa/gh-action-pypi-publish prefers
+  # OIDC Trusted Publishing over the supplied `password:` whenever an OIDC
+  # token is available (i.e. whenever this permission is granted) - and this
+  # repo's GitHub Environments are not registered as PyPI Trusted Publishers,
+  # so granting it just makes every publish step fail with
+  # "invalid-publisher: valid token, but no corresponding publisher" instead
+  # of using the PYPI_API_TOKEN/TEST_PYPI_API_TOKEN Environment secrets that
+  # are actually configured. See mandala/HANDOVER.md for the option to
+  # switch to Trusted Publishing ecosystem-wide instead.
 
 env:
   # A tag is considered a "canary" release if it contains rc, alpha, or beta.
