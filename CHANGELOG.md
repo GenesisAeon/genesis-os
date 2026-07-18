@@ -10,6 +10,29 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.11] — 2026-07-18
+
+### Fixed
+- **Root cause of the whole PyPI-publish CI chain (`v1.0.8`–`v1.0.11`):**
+  the `production` environment's `PYPI_API_TOKEN` secret had actually
+  been created under the name `PYPITOKEN` (repo-level, no underscores),
+  which doesn't match what `release.yml` references — GitHub Actions
+  silently resolves an unknown secret name to an empty string rather
+  than erroring, which is why `v1.0.10`'s fix (removing `id-token:
+  write`) still failed, just with a different OIDC error, instead of
+  falling back to password auth as expected. Re-added the secret under
+  the correct name `PYPI_API_TOKEN` (both repo-level and on the
+  `production` environment). No code change in this release — this tag
+  is the live, real-tag verification that the automated PyPI publish
+  step now actually succeeds end-to-end.
+- Closes out the chain: `v1.0.8` (env-context bug in job `if:`, meant no
+  job in this workflow had ever run in CI for any tag), `v1.0.9` (build/
+  test ran for the first time, but publish preferred OIDC over the
+  supplied password), `v1.0.10` (removed `id-token: write`, exposed the
+  empty-secret symptom), `v1.0.11` (this release: correct secret name).
+
+---
+
 ## [1.0.10] — 2026-07-18
 
 ### Fixed
