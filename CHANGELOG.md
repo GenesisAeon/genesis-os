@@ -10,6 +10,23 @@ versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.0.8] — 2026-07-18
+
+### Fixed
+- CI release pipeline: the `PYPI_API_TOKEN` GitHub Actions secret was
+  missing from the `production` **Environment** (not the same store as a
+  repo-level Actions secret — see `release.yml`'s own header comment,
+  which already documented that these should be Environment secrets).
+  This caused the automated `Publish to PyPI` step to fail with 403 on
+  every tagged release since `v1.0.0`; releases were always shipped
+  manually via `twine` instead as a workaround. Added the secret to the
+  `production` environment; `release.yml` itself needed no code change,
+  the `secrets.PYPI_API_TOKEN` reference was already correct.
+- This tag is a live, real-tag verification of that fix — version bump
+  and this changelog entry only, no functional/API change.
+
+---
+
 ## [1.0.7] — 2026-07-16
 
 ### Fixed
