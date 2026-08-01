@@ -135,7 +135,7 @@ Homepage = "https://github.com/GenesisAeon/genesis-os"
 Documentation = "https://genesisaeon.github.io/genesis-os"
 Repository = "https://github.com/GenesisAeon/genesis-os"
 "Bug Tracker" = "https://github.com/GenesisAeon/genesis-os/issues"
-Zenodo = "https://doi.org/10.5281/zenodo.genesis-os"
+Zenodo = "https://doi.org/10.5281/zenodo.21430125"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/genesis_os"]

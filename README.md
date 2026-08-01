@@ -11,7 +11,7 @@
   <a href="https://pypi.org/project/genesis-os/"><img src="https://img.shields.io/pypi/v/genesis-os.svg" alt="PyPI version"/></a>
   <a href="https://pypi.org/project/genesis-os/"><img src="https://img.shields.io/pypi/pyversions/genesis-os.svg" alt="Python versions"/></a>
   <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://github.com/GenesisAeon/genesis-os/workflows/CI/badge.svg" alt="CI status"/></a>
-  <a href="https://doi.org/10.5281/zenodo.19645351"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19645351.svg" alt="DOI"/></a>
+  <a href="https://doi.org/10.5281/zenodo.21430125"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21430125.svg" alt="DOI"/></a>
   <a href="docs/whitepaper.md"><img src="https://img.shields.io/badge/whitepaper-v1.0.0-blue" alt="Whitepaper"/></a>
   <a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://img.shields.io/badge/coverage-92%25-brightgreen" alt="92% test coverage"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPLv3-blue.svg" alt="GPLv3 License"/></a>
@@ -441,8 +441,8 @@ If you use **genesis-os** in academic work, please cite:
   year         = {2026},
   publisher    = {Zenodo},
   version      = {v1.0.6},
-  doi          = {10.5281/zenodo.19645351},
-  url          = {https://doi.org/10.5281/zenodo.19645351}
+  doi          = {10.5281/zenodo.21430125},
+  url          = {https://doi.org/10.5281/zenodo.21430125}
 }
 ```
 
