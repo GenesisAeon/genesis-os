@@ -3,6 +3,7 @@
 </p>
 
 <h1 align="center">genesis-os</h1>
+<p align="center"><b>GenesisAeon Package P62</b></p>
 <p align="center">
   <b>Self-reflecting OS framework with live cosmic-web emergence simulation, Dash GUI,<br>real-time phase transitions, and resonance coupling for GenesisAeon.</b>
 </p>
