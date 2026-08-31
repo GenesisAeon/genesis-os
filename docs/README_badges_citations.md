@@ -22,7 +22,7 @@
 
 <!-- Test coverage -->
 <a href="https://github.com/GenesisAeon/genesis-os/actions">
-  <img src="https://img.shields.io/badge/coverage-99.1%25-brightgreen" alt="99.1% test coverage"/>
+  <img src="https://img.shields.io/badge/coverage-92%25-brightgreen" alt="92% test coverage"/>
 </a>
 
 <!-- OpenAIRE -->
@@ -36,7 +36,7 @@ Rendered:
 <a href="https://doi.org/10.5281/zenodo.19645351"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.19645351.svg" alt="DOI"/></a>
 <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"/></a>
 <a href="https://creativecommons.org/licenses/by/4.0/"><img src="https://img.shields.io/badge/docs-CC%20BY%204.0-lightblue.svg" alt="CC BY 4.0"/></a>
-<a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://img.shields.io/badge/coverage-99.1%25-brightgreen" alt="99.1% test coverage"/></a>
+<a href="https://github.com/GenesisAeon/genesis-os/actions"><img src="https://img.shields.io/badge/coverage-92%25-brightgreen" alt="92% test coverage"/></a>
 <a href="https://explore.openaire.eu/search/software?pid=10.5281%2Fzenodo.19645351"><img src="https://img.shields.io/badge/OpenAIRE-indexed-blue?logo=openaire" alt="OpenAIRE"/></a>
 
 ---
@@ -45,7 +45,7 @@ Rendered:
 
 | Version | Title | DOI / Link | Format |
 |---------|-------|-----------|--------|
-| **V2 (peer-review)** | GenesisAeon v0.3.1: A Unified Variational Framework for Emergent Criticality Across Physical Domains | [10.5281/zenodo.19645351](https://doi.org/10.5281/zenodo.19645351) | Article |
+| **V2 (preprint, not peer-reviewed)** | GenesisAeon v0.3.1: A Unified Variational Framework for Emergent Criticality Across Physical Domains | [10.5281/zenodo.19645351](https://doi.org/10.5281/zenodo.19645351) | Zenodo preprint |
 | **V1 (whitepaper)** | GenesisAeon v0.3.1: A Self-Reflective Thermodynamic Operating System for Emergent Realities | [zenodo.org/records/19654248](https://zenodo.org/records/19654248) | Whitepaper |
 | **Software** | genesis-os: GenesisAeon Unified Framework — Python Implementation | [github.com/GenesisAeon/genesis-os](https://github.com/GenesisAeon/genesis-os) | Software |
 
@@ -61,12 +61,13 @@ Downloads:
 ### BibTeX
 
 ```bibtex
-%% Cite the peer-review paper (V2)
-@article{roemer2026genesisaeon_v2,
+%% Cite the V2 preprint (not peer-reviewed -- Zenodo is a repository, not a journal)
+@misc{roemer2026genesisaeon_v2,
   author       = {Römer, Johann},
   title        = {{GenesisAeon v0.3.1}: A Unified Variational Framework
                   for Emergent Criticality Across Physical Domains},
-  journal      = {Zenodo},
+  publisher    = {Zenodo},
+  note         = {Preprint, not peer-reviewed},
   year         = {2026},
   month        = apr,
   version      = {v2},
@@ -152,7 +153,7 @@ C_μν = ∂_μ Γ · ∂_ν Γ / |∇Γ|²
 | Climate / Arctic | ERA5 sea-ice extent | CREP-σ correlation at transition | **r = 0.91** | r = 0.74 |
 | Cosmology | GADGET-4 N-body | Filament emergence rate (normalised) | **0.87 ± 0.04** | 0.79 ± 0.06 |
 | Cosmology | IllustrisTNG | Density contrast at σ_Φ boundary | **Δρ/ρ = 4.1** | Δρ/ρ = 3.2 |
-| Software | Unit tests | Coverage | **99.1 %** | — |
+| Software | Unit tests | Coverage | **92 %** | — |
 | Software | ODE reproducibility | Deterministic (seed=42) | **100 %** | — |
 
 ---
@@ -221,6 +222,6 @@ genesis-os/
 │   ├── genesisaeon_citations.bib       # Complete BibTeX (25 entries)
 │   ├── whitepaper.md                   # Whitepaper (Zenodo V1)
 │   └── README_badges_citations.md      # This file
-├── tests/                  # 99.1 % coverage
+├── tests/                  # 92 % coverage
 └── pyproject.toml
 ```

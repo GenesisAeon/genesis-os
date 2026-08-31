@@ -416,14 +416,14 @@ mkdocs serve
 
 If you use **genesis-os** in academic work, please cite:
 
-**Paper (V2 — peer-review expanded):**
+**Paper (V2 — expanded preprint, not peer-reviewed):**
 
 ```bibtex
-@article{roemer2026genesisaeon_v2,
+@misc{roemer2026genesisaeon_v2,
   author       = {Römer, Johann},
   title        = {{GenesisAeon v0.3.1}: A Unified Variational Framework
                   for Emergent Criticality Across Physical Domains},
-  journal      = {Zenodo},
+  note         = {Preprint, not peer-reviewed},
   year         = {2026},
   month        = apr,
   version      = {v2},

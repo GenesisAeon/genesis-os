@@ -15,7 +15,7 @@ PHASE 1 — TIEFENANALYSE: STRUKTUR, SYNERGIEN, MODUL-MAPPING
 - Sprache: 100% Englisch, ruff/mypy/pytest, MIT+CC BY 4.0
 - Stack: src/genesis_os/{core,runtime,dashboard,cli,plugins}
 - Releases: v0.1.0, v0.2.0 (März 2026)
-- Test-Coverage: 99.1% (Badge verified)
+- Test-Coverage: 92% (Badge verified)
 - Kern-Axiom: Unified Lagrangian L = T - V + Φ(H) + Γ(C,R,E,P)
 - UTAC-ODE: dH/dt = r·H·(1-H/K)·tanh(σ·Γ) [deterministische ODE]
 - Selbstreflexion: Φ_{n+1}(H) = Φ_n(H)·(1 + α·∇_H L)
@@ -540,7 +540,7 @@ Scientific content (papers, data, formulas): CC BY 4.0
 - ruff check src tests  → 0 Fehler
 - mypy src → 0 Fehler (CREPScore-Felder vollständig typisiert)
 - pytest tests/test_utac_stoch_bridge.py -v → 100% Pass
-- Bestehende Tests: pytest → weiterhin 99%+ Coverage
+- Bestehende Tests: pytest → weiterhin 92%+ Coverage
 
 ### Ausgabe
 Zeige alle geänderten/erstellten Dateien mit vollständigem Inhalt.
@@ -638,7 +638,7 @@ Erstelle unified-mandala/tests/unit/crep-bridge.test.ts:
 - ruff + mypy in genesis-os → 0 Fehler
 - ESLint in unified-mandala crep-bridge → 0 Fehler
 - pytest tests/test_crep_bridge.py -v -k "not remote" → 100% Pass
-- Genesis-os bestehende Tests: weiterhin 99%+ Coverage
+- Genesis-os bestehende Tests: weiterhin 92%+ Coverage
 
 ════════════════════════════════════════════════════════════════════
 PROMPT C — THERMOBRÜCKE (baut auf Phase A auf)
@@ -765,7 +765,7 @@ Erstelle `tests/test_thermobridge.py`:
 ### Qualitätsanforderungen
 - ruff + mypy → 0 Fehler (alle Typ-Annotationen vollständig)
 - pytest tests/test_thermobridge.py -v → 100% Pass
-- Bestehende Tests: weiterhin 99%+ Coverage
+- Bestehende Tests: weiterhin 92%+ Coverage
 
 ════════════════════════════════════════════════════════════════════
 PROMPT D — COLLAPSE↔TRANSITION-DETEKTOR (baut auf A, C auf)

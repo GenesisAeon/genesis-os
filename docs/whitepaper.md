@@ -23,7 +23,7 @@ $$\frac{dH}{dt} = r\,H\!\left(1 - \frac{H}{K}\right)\tanh(\sigma\,\Gamma)$$
 
 where $\Gamma(C,R,E,P)$ is the **CREP coupling tensor** encoding Coherence, Resonance, Emergence, and Poetics. Five novel contributions are introduced: UTAC, CREP metrics, AFET (Allgemeine Feld-Entropie-Theorie), the v_RIG information-geometric framework, and the $\sigma_\Phi \approx 1/16$ Frame Principle.
 
-Two independent benchmarks validate the framework. First, a UTAC climate model trained on ERA5 Arctic sea ice data (1940–2010) achieves **37.3% RMSE reduction** (0.7711 vs. 1.2290) over a linear baseline on the 2011–2023 holdout set, with automatic detection of a critical transition at **~1998** consistent with observed Arctic amplification. Second, the CosmicWebSimulator reproduces GADGET-4 reference filament/void structure signatures at 1–50 Mpc/h scales within statistical error bars. The full Python implementation is open-source under MIT licence with 99.1% test coverage and deterministic reproducibility.
+Two independent benchmarks validate the framework. First, a UTAC climate model trained on ERA5 Arctic sea ice data (1940–2010) achieves **37.3% RMSE reduction** (0.7711 vs. 1.2290) over a linear baseline on the 2011–2023 holdout set, with automatic detection of a critical transition at **~1998** consistent with observed Arctic amplification. Second, the CosmicWebSimulator reproduces GADGET-4 reference filament/void structure signatures at 1–50 Mpc/h scales within statistical error bars. The full Python implementation is open-source under MIT licence with 92% test coverage and deterministic reproducibility. (The RMSE reduction above is measured against a linear baseline, not a stronger seasonal/nonlinear baseline -- treat it as a lower bound on model quality, not a validated benchmark result.)
 
 ---
 
@@ -262,7 +262,7 @@ jupyter nbconvert --to notebook --execute notebooks/benchmark_utac_vs_cmip6.ipyn
 genesis-os cycle --simulate --max-cycles 100 --seed 42
 ```
 
-The ERA5 proxy data (`data/era5_kipppunkte.csv`, 84 rows) is included in the repository — no external API calls are required for benchmark reproduction. All random seeds are fixed (`np.random.seed(42)`). Test coverage: **99.10%** (pytest, CI via GitHub Actions). The Dash web GUI is available via `genesis-os cycle --gui`.
+The ERA5 proxy data (`data/era5_kipppunkte.csv`, 84 rows) is included in the repository — no external API calls are required for benchmark reproduction. All random seeds are fixed (`np.random.seed(42)`). Test coverage: **92%** (pytest, CI via GitHub Actions; corrected 2026-08-31 from a stale 99.10% claim -- see README.md's own badge and AUDIT_REPORT_v1.0.5.md's independently measured 91%, both closer to the real figure than 99.1% ever was). The Dash web GUI is available via `genesis-os cycle --gui`.
 
 ---
 
