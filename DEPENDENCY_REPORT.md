@@ -68,27 +68,7 @@ Cases where a repo requires a higher version of a sibling package than its
 
 | Repository | Dependency | Required | Current (release_map) |
 |---|---|---|---|
-| climate-dashboard | entropy-table | `>=1.0.1` | `0.1.0` |
-| climate-dashboard | implosive-genesis | `>=0.4.0` | `0.1.0` |
-| cosmic-moment | entropy-table | `>=1.0.1` | `0.1.0` |
-| cosmic-moment | implosive-genesis | `>=0.4.0` | `0.1.0` |
-| cosmic-web | entropy-table | `>=1.0.1` | `0.1.0` |
-| cosmic-web | implosive-genesis | `>=0.4.0` | `0.1.0` |
-| entropy-governance | implosive-genesis | `>=0.4.0` | `0.1.0` |
-| fieldtheory | entropy-table | `>=1.0.1` | `0.1.0` |
-| fieldtheory | implosive-genesis | `>=0.4.0` | `0.1.0` |
-| mandala-visualize | entropy-table | `>=1.0.1` | `0.1.0` |
-| mandala-visualize | implosive-genesis | `>=0.4.0` | `0.1.0` |
-| medium-modulation | entropy-table | `>=1.0.1` | `0.1.0` |
-| medium-modulation | implosive-genesis | `>=0.4.0` | `0.1.0` |
-| mirror-machine | entropy-table | `>=1.0.1` | `0.1.0` |
-| mirror-machine | implosive-genesis | `>=0.4.0` | `0.1.0` |
-| sigillin | entropy-table | `>=1.0.1` | `0.1.0` |
-| sigillin | implosive-genesis | `>=0.4.0` | `0.1.0` |
-| sonification | entropy-table | `>=1.0.1` | `0.1.0` |
-| sonification | implosive-genesis | `>=0.4.0` | `0.1.0` |
-| utac-core | entropy-table | `>=1.0.1` | `0.1.0` |
-| utac-core | implosive-genesis | `>=0.4.0` | `0.1.0` |
+| implosive-origin-utac | utac-core | `>=0.3.1` | `0.1.0` |
 
 ## 4. Unresolved (External) Dependencies
 
@@ -378,7 +358,7 @@ Dependencies that are not part of the GenesisAeon ecosystem (third-party PyPI pa
 - `typer>=0.15.0`
 
 </details>
-<details><summary><b>entropy-table</b> (16 external deps)</summary>
+<details><summary><b>entropy-table</b> (18 external deps)</summary>
 
 - `black>=24.8`
 - `jsonschema>=4.17`
@@ -396,6 +376,8 @@ Dependencies that are not part of the GenesisAeon ecosystem (third-party PyPI pa
 - `ruff>=0.6`
 - `sympy>=1.13`
 - `typer[all]>=0.12`
+- `types-PyYAML>=6.0`
+- `types-jsonschema>=4.17`
 
 </details>
 <details><summary><b>epi-sigillin</b> (11 external deps)</summary>
@@ -944,7 +926,7 @@ Dependencies that are not part of the GenesisAeon ecosystem (third-party PyPI pa
 | genesis-scope | — |
 | hikari-ledger | — |
 | implosive-genesis | — |
-| implosive-origin-utac | — |
+| implosive-origin-utac | implosive-genesis, utac-core |
 | mandala-visualize | cosmic-moment, entropy-governance, entropy-table, implosive-genesis, medium-modulation, sigillin, utac-core |
 | medium-modulation | entropy-governance, entropy-table, implosive-genesis |
 | mirror-machine | climate-dashboard, cosmic-moment, entropy-governance, entropy-table, fieldtheory, implosive-genesis, mandala-visualize, medium-modulation, sigillin, sonification, utac-core |
